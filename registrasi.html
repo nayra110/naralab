@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Naralab - Daftar</title>
+    <title>Naralab - Login</title>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -22,6 +22,7 @@
             background: #f0f0f0;
         }
 
+        /* Login Container */
         .login-container {
             width: 100%;
             max-width: 400px;
@@ -39,6 +40,7 @@
             border-radius: 20px;
         }
 
+        /* Efek dekoratif background */
         .login-container::before {
             content: '';
             position: absolute;
@@ -63,6 +65,7 @@
             pointer-events: none;
         }
 
+        /* Partikel dekoratif */
         .particle {
             position: absolute;
             background: rgba(255, 255, 255, 0.08);
@@ -95,6 +98,7 @@
             animation-delay: 4s;
         }
 
+        /* Logo kecil */
         .logo-small {
             font-size: 34px;
             color: #FFFFFF;
@@ -104,6 +108,7 @@
             position: relative;
         }
 
+        /* Judul halaman */
         .page-title {
             color: #FFFFFF;
             font-size: 24px;
@@ -119,6 +124,7 @@
             font-weight: 300;
         }
 
+        /* Subtitle */
         .subtitle {
             color: rgba(255, 255, 255, 0.6);
             font-size: 12px;
@@ -129,6 +135,7 @@
             position: relative;
         }
 
+        /* Form container */
         .form-container {
             width: 100%;
             max-width: 280px;
@@ -136,6 +143,7 @@
             position: relative;
         }
 
+        /* Input group */
         .input-group {
             position: relative;
             margin-bottom: 10px;
@@ -173,6 +181,7 @@
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
         }
 
+        /* Tombol Login */
         .btn-login {
             width: 100%;
             padding: 11px;
@@ -197,6 +206,7 @@
             transform: scale(0.98);
         }
 
+        /* Divider */
         .divider-text {
             color: rgba(255, 255, 255, 0.4);
             font-size: 11px;
@@ -219,6 +229,7 @@
             margin: 0 8px;
         }
 
+        /* Tombol Google */
         .btn-google {
             width: 100%;
             padding: 10px;
@@ -246,6 +257,7 @@
             color: #FFFFFF;
         }
 
+        /* Link daftar */
         .register-link {
             color: rgba(255, 255, 255, 0.6);
             font-size: 12px;
@@ -267,6 +279,7 @@
             text-decoration: underline;
         }
 
+        /* Pesan error/sukses */
         .message {
             font-size: 12px;
             font-weight: 300;
@@ -285,6 +298,17 @@
             color: #51cf66;
         }
 
+        /* Mode Register */
+        .register-mode .btn-login {
+            background: #FFFFFF;
+            color: #6A00FF;
+        }
+
+        .register-mode .btn-login:hover {
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Animasi */
         @keyframes floatParticle {
             0%, 100% {
                 transform: translate(0, 0) scale(1);
@@ -294,6 +318,7 @@
             }
         }
 
+        /* Responsive */
         @media (max-width: 480px) {
             .login-container {
                 max-height: 100vh;
@@ -323,184 +348,274 @@
 </head>
 <body>
 
-    <div class="login-container">
+    <div class="login-container" id="loginContainer">
+        <!-- Partikel dekoratif -->
         <div class="particle particle-1"></div>
         <div class="particle particle-2"></div>
         <div class="particle particle-3"></div>
 
+        <!-- Logo kecil -->
         <i class="fas fa-flask logo-small"></i>
-        <h1 class="page-title">Daftar <span>Akun</span></h1>
-        <p class="subtitle">• Buat Akun Baru •</p>
 
+        <!-- Judul -->
+        <h1 class="page-title" id="pageTitle">Nara<span>Lab</span></h1>
+        <p class="subtitle" id="subtitle">• Login •</p>
+
+        <!-- Form -->
         <div class="form-container">
-            <div class="input-group">
+            <!-- Input Username (untuk register) / Email (untuk login) -->
+            <div class="input-group" id="usernameGroup">
                 <i class="fas fa-user"></i>
                 <input type="text" id="username" placeholder="Username">
             </div>
+
+            <!-- Input Email -->
             <div class="input-group">
                 <i class="fas fa-envelope"></i>
                 <input type="email" id="email" placeholder="Email (Gmail)">
             </div>
+
+            <!-- Input Password -->
             <div class="input-group">
                 <i class="fas fa-lock"></i>
                 <input type="password" id="password" placeholder="Password">
             </div>
 
+            <!-- Pesan -->
             <div class="message" id="message"></div>
-            <button class="btn-login" id="submitBtn">Daftar</button>
 
+            <!-- Tombol Login/Daftar -->
+            <button class="btn-login" id="submitBtn">Login</button>
+
+            <!-- Divider -->
             <div class="divider-text">atau</div>
+
+            <!-- Tombol Google -->
             <button class="btn-google" id="googleBtn">
                 <i class="fab fa-google"></i>
-                Daftar dengan Google
+                Login dengan Google
             </button>
 
-            <p class="register-link">
-                Sudah punya akun? <a href="login.html">Login sekarang</a>
+            <!-- Link ganti mode -->
+            <p class="register-link" id="toggleLink">
+                Belum punya akun? <a href="#" id="toggleMode">Daftar sekarang</a>
             </p>
         </div>
     </div>
 
-    <!-- Firebase SDK -->
-    <script type="importmap">
-        {
-            "imports": {
-                "firebase/app": "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js",
-                "firebase/auth": "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js",
-                "firebase/database": "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js"
+    <script>
+        // Database lokal menggunakan localStorage
+        const DB = {
+            getUsers() {
+                const users = localStorage.getItem('naralab_users');
+                return users ? JSON.parse(users) : {};
+            },
+            saveUsers(users) {
+                localStorage.setItem('naralab_users', JSON.stringify(users));
+            },
+            getUser(email) {
+                const users = this.getUsers();
+                return users[email] || null;
+            },
+            createUser(email, password, username) {
+                const users = this.getUsers();
+                if (users[email]) {
+                    return { success: false, message: 'Email sudah terdaftar' };
+                }
+                users[email] = {
+                    username: username,
+                    password: password,
+                    email: email,
+                    createdAt: new Date().toISOString()
+                };
+                this.saveUsers(users);
+                return { success: true, message: 'Akun berhasil dibuat' };
+            },
+            loginUser(email, password) {
+                const user = this.getUser(email);
+                if (!user) {
+                    return { success: false, message: 'Email tidak terdaftar' };
+                }
+                if (user.password !== password) {
+                    return { success: false, message: 'Password salah' };
+                }
+                // Simpan session
+                localStorage.setItem('naralab_session', JSON.stringify({
+                    email: email,
+                    username: user.username,
+                    loginTime: new Date().toISOString()
+                }));
+                return { success: true, message: 'Login berhasil' };
+            },
+            getSession() {
+                const session = localStorage.getItem('naralab_session');
+                return session ? JSON.parse(session) : null;
+            },
+            logout() {
+                localStorage.removeItem('naralab_session');
             }
-        }
-    </script>
-
-    <script type="module">
-        import { initializeApp } from "firebase/app";
-        import { 
-            getAuth, 
-            createUserWithEmailAndPassword,
-            GoogleAuthProvider,
-            signInWithPopup,
-            onAuthStateChanged
-        } from "firebase/auth";
-        import { getDatabase, ref, set, get } from "firebase/database";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCp3MPtlE7vUua7UwD9gjRlDeHeg7KWUk0",
-            authDomain: "naralab-1ec88.firebaseapp.com",
-            databaseURL: "https://naralab-1ec88-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "naralab-1ec88",
-            storageBucket: "naralab-1ec88.firebasestorage.app",
-            messagingSenderId: "620262646867",
-            appId: "1:620262646867:web:8e6728f597c794e55992a6",
-            measurementId: "G-ERY5XFD9LC"
         };
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getDatabase(app);
-        const googleProvider = new GoogleAuthProvider();
-
+        // Elemen DOM
         const usernameInput = document.getElementById('username');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
         const submitBtn = document.getElementById('submitBtn');
         const googleBtn = document.getElementById('googleBtn');
+        const toggleLink = document.getElementById('toggleLink');
+        const toggleMode = document.getElementById('toggleMode');
+        const pageTitle = document.getElementById('pageTitle');
+        const subtitle = document.getElementById('subtitle');
         const message = document.getElementById('message');
+        const usernameGroup = document.getElementById('usernameGroup');
+        const loginContainer = document.getElementById('loginContainer');
 
-        // Daftar dengan email/password
+        // Mode state
+        let isRegisterMode = false;
+
+        // Toggle mode
+        toggleMode.addEventListener('click', (e) => {
+            e.preventDefault();
+            isRegisterMode = !isRegisterMode;
+            
+            if (isRegisterMode) {
+                // Mode Register
+                pageTitle.innerHTML = 'Daftar <span>Akun</span>';
+                subtitle.textContent = '• Buat Akun Baru •';
+                submitBtn.textContent = 'Daftar';
+                toggleMode.textContent = 'Login sekarang';
+                toggleLink.innerHTML = 'Sudah punya akun? <a href="#" id="toggleMode">Login sekarang</a>';
+                usernameGroup.style.display = 'block';
+                loginContainer.classList.add('register-mode');
+            } else {
+                // Mode Login
+                pageTitle.innerHTML = 'Nara<span>Lab</span>';
+                subtitle.textContent = '• Login •';
+                submitBtn.textContent = 'Login';
+                toggleMode.textContent = 'Daftar sekarang';
+                toggleLink.innerHTML = 'Belum punya akun? <a href="#" id="toggleMode">Daftar sekarang</a>';
+                usernameGroup.style.display = 'none';
+                loginContainer.classList.remove('register-mode');
+            }
+            
+            // Re-attach event listener untuk toggle baru
+            document.getElementById('toggleMode').addEventListener('click', toggleModeHandler);
+            message.textContent = '';
+        });
+
+        function toggleModeHandler(e) {
+            e.preventDefault();
+            toggleMode.click();
+        }
+
+        // Submit form
         submitBtn.addEventListener('click', async () => {
             const email = emailInput.value.trim();
             const password = passwordInput.value;
             const username = usernameInput.value.trim();
 
-            if (!email || !password || !username) {
-                showMessage('Semua field wajib diisi!', 'error');
+            // Validasi
+            if (!email || !password) {
+                showMessage('Email dan password wajib diisi!', 'error');
+                return;
+            }
+
+            if (isRegisterMode && !username) {
+                showMessage('Username wajib diisi untuk daftar!', 'error');
                 return;
             }
 
             try {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-                
-                await set(ref(db, 'users/' + user.uid), {
-                    username: username,
-                    email: email,
-                    createdAt: new Date().toISOString()
-                });
-                
-                showMessage('Akun berhasil dibuat! Mengarahkan...', 'success');
-                setTimeout(() => {
-                    window.location.href = 'home.html';
-                }, 2000);
-            } catch (error) {
-                let errorMessage = 'Terjadi kesalahan. Silakan coba lagi.';
-                switch (error.code) {
-                    case 'auth/email-already-in-use':
-                        errorMessage = 'Email sudah terdaftar. Silakan login.';
-                        break;
-                    case 'auth/invalid-email':
-                        errorMessage = 'Format email tidak valid.';
-                        break;
-                    case 'auth/weak-password':
-                        errorMessage = 'Password minimal 6 karakter.';
-                        break;
+                if (isRegisterMode) {
+                    // REGISTER
+                    const result = DB.createUser(email, password, username);
+                    if (result.success) {
+                        showMessage('Akun berhasil dibuat! Mengarahkan...', 'success');
+                        setTimeout(() => {
+                            window.location.href = 'home.html';
+                        }, 2000);
+                    } else {
+                        showMessage(result.message, 'error');
+                    }
+                } else {
+                    // LOGIN
+                    const result = DB.loginUser(email, password);
+                    if (result.success) {
+                        showMessage('Login berhasil! Mengarahkan...', 'success');
+                        setTimeout(() => {
+                            window.location.href = 'home.html';
+                        }, 2000);
+                    } else {
+                        showMessage(result.message, 'error');
+                    }
                 }
-                showMessage(errorMessage, 'error');
+            } catch (error) {
+                showMessage('Terjadi kesalahan. Silakan coba lagi.', 'error');
             }
         });
 
-        // Daftar dengan Google
+        // Login dengan Google (simulasi)
         googleBtn.addEventListener('click', async () => {
             try {
-                const result = await signInWithPopup(auth, googleProvider);
-                const user = result.user;
+                // Simulasi login Google dengan data dummy
+                const dummyEmail = 'user.google@gmail.com';
+                const dummyUsername = 'User Google';
+                const dummyPassword = 'google_123';
                 
-                const userRef = ref(db, 'users/' + user.uid);
-                const snapshot = await get(userRef);
-                
-                if (!snapshot.exists()) {
-                    await set(userRef, {
-                        username: user.displayName || 'User Google',
-                        email: user.email,
-                        createdAt: new Date().toISOString(),
-                        authProvider: 'google'
-                    });
+                // Cek apakah user sudah ada
+                let user = DB.getUser(dummyEmail);
+                if (!user) {
+                    // Buat akun baru
+                    DB.createUser(dummyEmail, dummyPassword, dummyUsername);
                 }
                 
-                showMessage('Pendaftaran Google berhasil! Mengarahkan...', 'success');
-                setTimeout(() => {
-                    window.location.href = 'home.html';
-                }, 2000);
+                // Login
+                const result = DB.loginUser(dummyEmail, dummyPassword);
+                if (result.success) {
+                    showMessage('Login Google berhasil! Mengarahkan...', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'home.html';
+                    }, 2000);
+                }
             } catch (error) {
-                let errorMessage = 'Pendaftaran Google gagal.';
-                if (error.code === 'auth/popup-closed-by-user') {
-                    errorMessage = 'Popup ditutup. Silakan coba lagi.';
-                }
-                showMessage(errorMessage, 'error');
+                showMessage('Login Google gagal. Silakan coba lagi.', 'error');
             }
         });
 
+        // Helper function untuk menampilkan pesan
         function showMessage(text, type) {
             message.textContent = text;
             message.className = 'message ' + type;
-            setTimeout(() => {
-                if (message.textContent === text) {
-                    message.textContent = '';
-                    message.className = 'message';
-                }
-            }, 3000);
+            
+            // Reset setelah 3 detik
+            if (text !== '') {
+                setTimeout(() => {
+                    if (message.textContent === text) {
+                        message.textContent = '';
+                        message.className = 'message';
+                    }
+                }, 3000);
+            }
         }
 
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                console.log('User sudah login:', user.email);
-            }
-        });
+        // Cek status login
+        const session = DB.getSession();
+        if (session) {
+            // Jika sudah login, redirect ke home
+            console.log('User sudah login:', session.email);
+            // Uncomment untuk redirect otomatis saat halaman dimuat
+            // window.location.href = 'home.html';
+        }
 
+        // Enter key untuk submit
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 submitBtn.click();
             }
         });
+
+        // Set initial mode
+        usernameGroup.style.display = 'none';
     </script>
 </body>
 </html>
