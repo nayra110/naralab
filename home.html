@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Fisikaku · Dashboard</title>
 
   <!-- Google Font & Icons -->
@@ -26,36 +26,43 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      min-height: 100dvh; /* dynamic viewport height untuk mobile */
       font-family: 'Inter', -apple-system, sans-serif;
-      padding: 16px;
+      padding: 12px;
       overflow-x: hidden;
     }
 
     /* ----- PHONE FRAME ----- */
     .phone {
       width: 100%;
-      max-width: 390px;
+      max-width: 430px;
       background: #f8fcff;
-      border-radius: 40px;
+      border-radius: 36px;
       box-shadow: 0 30px 60px rgba(0, 20, 40, 0.12);
       overflow: hidden;
       position: relative;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      max-height: 900px;
+      min-height: 100dvh;
     }
 
     /* ----- SCROLLABLE CONTENT ----- */
     .scroll-content {
-      max-height: 100vh;
+      flex: 1;
       overflow-y: auto;
-      padding-bottom: 90px;
+      padding-bottom: 80px;
       scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
     }
 
     /* ----- HEADER (gradient + glass) ----- */
     .header {
       background: linear-gradient(145deg, #4b1dd6, #7f3eff);
-      padding: 28px 22px 60px 22px;
-      border-bottom-left-radius: 44px;
-      border-bottom-right-radius: 44px;
+      padding: clamp(20px, 6vw, 28px) clamp(16px, 5vw, 22px) clamp(50px, 12vw, 60px) clamp(16px, 5vw, 22px);
+      border-bottom-left-radius: clamp(32px, 8vw, 44px);
+      border-bottom-right-radius: clamp(32px, 8vw, 44px);
       position: relative;
       color: #fff;
     }
@@ -78,17 +85,21 @@
       justify-content: space-between;
       position: relative;
       z-index: 2;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     .profile-left {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: clamp(10px, 3vw, 14px);
+      flex: 1;
+      min-width: 0;
     }
 
     .avatar-frame {
-      width: 56px;
-      height: 56px;
+      width: clamp(46px, 12vw, 56px);
+      height: clamp(46px, 12vw, 56px);
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.2);
       backdrop-filter: blur(4px);
@@ -124,22 +135,25 @@
       justify-content: center;
       background: rgba(255, 255, 255, 0.15);
       color: rgba(255, 255, 255, 0.6);
-      font-size: 28px;
+      font-size: clamp(20px, 6vw, 28px);
       border: 2px solid rgba(255, 255, 255, 0.3);
     }
 
     .greeting {
-      font-size: 15px;
+      font-size: clamp(13px, 3.5vw, 15px);
       font-weight: 700;
       letter-spacing: -0.2px;
       line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .sub-text-compact {
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 11px;
+      gap: 4px;
+      font-size: clamp(9px, 2.4vw, 11px);
       font-weight: 500;
       opacity: 0.85;
       margin-top: 2px;
@@ -155,8 +169,8 @@
     .semester-row {
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 11px;
+      gap: 4px;
+      font-size: clamp(9px, 2.4vw, 11px);
       font-weight: 500;
       opacity: 0.8;
       margin-top: 1px;
@@ -170,8 +184,8 @@
 
     .header-actions {
       display: flex;
-      gap: 16px;
-      font-size: 20px;
+      gap: clamp(10px, 3vw, 16px);
+      font-size: clamp(16px, 4vw, 20px);
       opacity: 0.9;
       position: relative;
       z-index: 2;
@@ -197,6 +211,7 @@
       left: 0;
       width: 100%;
       height: 100%;
+      height: 100dvh;
       background: rgba(0, 0, 0, 0.6);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
@@ -205,7 +220,7 @@
       align-items: center;
       z-index: 9999;
       animation: overlayFadeIn 0.3s ease;
-      padding: 24px;
+      padding: clamp(16px, 4vw, 24px);
     }
 
     .overlay-popup.show {
@@ -229,9 +244,9 @@
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border-radius: 32px;
-      padding: 32px 28px;
-      max-width: 340px;
+      border-radius: clamp(24px, 6vw, 32px);
+      padding: clamp(20px, 5vw, 32px) clamp(16px, 5vw, 28px);
+      max-width: 380px;
       width: 100%;
       box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
       animation: contentPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -252,14 +267,14 @@
 
     .overlay-close {
       position: absolute;
-      top: 12px;
-      right: 16px;
+      top: 10px;
+      right: 14px;
       background: rgba(0, 0, 0, 0.05);
       border: none;
-      width: 36px;
-      height: 36px;
+      width: clamp(30px, 7vw, 36px);
+      height: clamp(30px, 7vw, 36px);
       border-radius: 50%;
-      font-size: 18px;
+      font-size: 16px;
       color: #6b7b93;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -280,7 +295,7 @@
     }
 
     .clock-overlay .big-clock {
-      font-size: 64px;
+      font-size: clamp(40px, 12vw, 64px);
       font-weight: 700;
       color: #4b1dd6;
       letter-spacing: 2px;
@@ -289,21 +304,21 @@
     }
 
     .clock-overlay .big-clock small {
-      font-size: 24px;
+      font-size: clamp(16px, 5vw, 24px);
       font-weight: 500;
       color: #8d9bb0;
       margin-left: 4px;
     }
 
     .clock-overlay .clock-date {
-      font-size: 16px;
+      font-size: clamp(13px, 3.5vw, 16px);
       color: #6b7b93;
       margin-top: 4px;
       font-weight: 500;
     }
 
     .clock-overlay .clock-label {
-      font-size: 13px;
+      font-size: clamp(11px, 2.5vw, 13px);
       color: #8d9bb0;
       font-weight: 500;
       letter-spacing: 2px;
@@ -313,34 +328,36 @@
 
     /* --- NOTIFICATION OVERLAY --- */
     .notif-overlay .overlay-content {
-      padding: 24px 20px;
+      padding: clamp(16px, 4vw, 24px) clamp(14px, 4vw, 20px);
     }
 
     .notif-overlay .notif-header {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-      padding-bottom: 12px;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      flex-wrap: wrap;
     }
 
     .notif-overlay .notif-header h2 {
-      font-size: 18px;
+      font-size: clamp(16px, 4vw, 18px);
       font-weight: 700;
       color: #1a2538;
     }
 
     .notif-overlay .notif-header i {
-      font-size: 22px;
+      font-size: clamp(18px, 4.5vw, 22px);
       color: #4b1dd6;
     }
 
     .notif-overlay .notif-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      max-height: 340px;
+      gap: 10px;
+      max-height: 300px;
+      max-height: 60vh;
       overflow-y: auto;
     }
 
@@ -360,8 +377,8 @@
     .notif-overlay .notif-card {
       display: flex;
       align-items: flex-start;
-      gap: 14px;
-      padding: 12px 14px;
+      gap: clamp(8px, 2vw, 14px);
+      padding: clamp(8px, 2vw, 12px) clamp(10px, 2.5vw, 14px);
       background: rgba(75, 29, 214, 0.03);
       border-radius: 16px;
       transition: all 0.3s ease;
@@ -375,13 +392,13 @@
     }
 
     .notif-overlay .notif-card .notif-icon {
-      width: 40px;
-      height: 40px;
+      width: clamp(34px, 8vw, 40px);
+      height: clamp(34px, 8vw, 40px);
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: clamp(15px, 4vw, 18px);
       flex-shrink: 0;
     }
 
@@ -403,20 +420,20 @@
     }
 
     .notif-overlay .notif-card .notif-body h4 {
-      font-size: 13px;
+      font-size: clamp(12px, 2.8vw, 13px);
       font-weight: 600;
       color: #1a2538;
       margin-bottom: 2px;
     }
 
     .notif-overlay .notif-card .notif-body p {
-      font-size: 11.5px;
+      font-size: clamp(10px, 2.4vw, 11.5px);
       color: #6b7b93;
       font-weight: 400;
     }
 
     .notif-overlay .notif-card .notif-time {
-      font-size: 10px;
+      font-size: 9px;
       color: #8d9bb0;
       font-weight: 500;
       flex-shrink: 0;
@@ -427,8 +444,8 @@
        CONTENT CARDS
        ============================================================ */
     .content {
-      margin-top: -46px;
-      padding: 0 16px 16px 16px;
+      margin-top: clamp(-40px, -8vw, -46px);
+      padding: 0 clamp(12px, 4vw, 16px) clamp(12px, 4vw, 16px) clamp(12px, 4vw, 16px);
       position: relative;
       z-index: 5;
     }
@@ -437,9 +454,9 @@
       background: rgba(255, 255, 255, 0.8);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border-radius: 28px;
-      padding: 20px 16px;
-      margin-bottom: 18px;
+      border-radius: clamp(22px, 5vw, 28px);
+      padding: clamp(14px, 4vw, 20px) clamp(12px, 3vw, 16px);
+      margin-bottom: clamp(12px, 3vw, 18px);
       box-shadow: 0 8px 28px rgba(0, 0, 0, 0.02), 0 2px 8px rgba(0, 0, 0, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.5);
       transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), 
@@ -454,20 +471,20 @@
     }
 
     .card-title {
-      font-size: 12px;
+      font-size: clamp(10px, 2.5vw, 12px);
       font-weight: 700;
       letter-spacing: 0.4px;
       text-transform: uppercase;
       color: #2e3a4f;
       opacity: 0.6;
-      margin-bottom: 14px;
+      margin-bottom: clamp(10px, 3vw, 14px);
       display: flex;
       align-items: center;
       gap: 6px;
     }
 
     .card-title i {
-      font-size: 14px;
+      font-size: clamp(12px, 3vw, 14px);
       color: #5b2bff;
       opacity: 0.7;
     }
@@ -478,18 +495,19 @@
     .analysis-wrapper {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: clamp(10px, 3vw, 16px);
     }
 
     .analysis-top {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: clamp(10px, 3vw, 16px);
+      flex-wrap: wrap;
     }
 
     .chart-wrapper {
-      flex: 0 0 120px;
-      height: 120px;
+      flex: 0 0 clamp(90px, 28vw, 120px);
+      height: clamp(90px, 28vw, 120px);
       position: relative;
       transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
@@ -513,14 +531,14 @@
     }
 
     .chart-center-text .big {
-      font-size: 20px;
+      font-size: clamp(16px, 4.5vw, 20px);
       font-weight: 700;
       color: #1a2538;
       line-height: 1;
     }
 
     .chart-center-text .small {
-      font-size: 9px;
+      font-size: clamp(7px, 2vw, 9px);
       font-weight: 500;
       color: #8d9bb0;
       letter-spacing: 0.3px;
@@ -530,13 +548,13 @@
       flex: 1;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      gap: clamp(4px, 1.5vw, 8px);
     }
 
     .stat-item {
       background: rgba(75, 29, 214, 0.04);
-      border-radius: 14px;
-      padding: 10px 8px;
+      border-radius: clamp(10px, 2.5vw, 14px);
+      padding: clamp(6px, 2vw, 10px) clamp(4px, 1.5vw, 8px);
       text-align: center;
       transition: all 0.3s ease;
       border: 1px solid transparent;
@@ -549,7 +567,7 @@
     }
 
     .stat-item .number {
-      font-size: 18px;
+      font-size: clamp(14px, 4vw, 18px);
       font-weight: 700;
       color: #1a2538;
       line-height: 1.2;
@@ -568,7 +586,7 @@
     }
 
     .stat-item .label {
-      font-size: 9px;
+      font-size: clamp(8px, 2vw, 9px);
       font-weight: 500;
       color: #8d9bb0;
       letter-spacing: 0.2px;
@@ -578,36 +596,36 @@
     .analysis-bottom {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      padding-top: 12px;
+      gap: 6px;
+      padding-top: clamp(8px, 2vw, 12px);
       border-top: 1px solid rgba(0, 0, 0, 0.04);
     }
 
     .progress-bar-group {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
     }
 
     .progress-bar-item {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .progress-bar-item .bar-label {
-      font-size: 10px;
+      font-size: clamp(9px, 2.2vw, 10px);
       font-weight: 500;
       color: #3d4a5e;
-      min-width: 70px;
+      min-width: clamp(55px, 16vw, 70px);
       display: flex;
       align-items: center;
       gap: 4px;
     }
 
     .progress-bar-item .bar-label .dot {
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
       border-radius: 50%;
       display: inline-block;
       flex-shrink: 0;
@@ -641,11 +659,16 @@
     }
 
     .progress-bar-item .bar-value {
-      font-size: 10px;
+      font-size: clamp(9px, 2.2vw, 10px);
       font-weight: 600;
       color: #1a2538;
-      min-width: 32px;
+      min-width: 28px;
       text-align: right;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
     }
 
     /* ============================================================
@@ -654,20 +677,21 @@
     .progress-wrapper {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: clamp(10px, 3vw, 16px);
+      flex-wrap: wrap;
     }
 
     .progress-ring-container {
       flex-shrink: 0;
       position: relative;
-      width: 68px;
-      height: 68px;
+      width: clamp(50px, 15vw, 68px);
+      height: clamp(50px, 15vw, 68px);
     }
 
     .progress-ring-container svg {
       transform: rotate(-90deg);
-      width: 68px;
-      height: 68px;
+      width: 100%;
+      height: 100%;
     }
 
     .progress-ring-container .ring-bg {
@@ -693,14 +717,14 @@
     }
 
     .progress-ring-container .ring-center .pct {
-      font-size: 18px;
+      font-size: clamp(13px, 4vw, 18px);
       font-weight: 700;
       color: #1a2538;
       line-height: 1;
     }
 
     .progress-ring-container .ring-center .pct-label {
-      font-size: 7px;
+      font-size: clamp(6px, 1.5vw, 7px);
       font-weight: 500;
       color: #8d9bb0;
       letter-spacing: 0.3px;
@@ -712,27 +736,30 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
+      min-width: 150px;
     }
 
     .progress-info .progress-label {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 12px;
+      font-size: clamp(10px, 2.6vw, 12px);
       font-weight: 600;
       color: #1a2538;
+      flex-wrap: wrap;
+      gap: 4px;
     }
 
     .progress-info .progress-label span i {
       color: #5b2bff;
       margin-right: 6px;
-      font-size: 13px;
+      font-size: clamp(11px, 2.8vw, 13px);
     }
 
     .progress-info .progress-sub {
       display: flex;
-      gap: 12px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
@@ -740,14 +767,14 @@
       display: flex;
       align-items: center;
       gap: 4px;
-      font-size: 9.5px;
+      font-size: clamp(8px, 2vw, 9.5px);
       font-weight: 500;
       color: #6b7b93;
     }
 
     .progress-info .progress-sub .sub-item .dot {
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
       border-radius: 50%;
       display: inline-block;
       flex-shrink: 0;
@@ -760,22 +787,24 @@
 
     .action-group {
       display: flex;
-      gap: 10px;
-      margin-top: 6px;
+      gap: clamp(6px, 2vw, 10px);
+      margin-top: 4px;
+      flex-wrap: wrap;
     }
 
     .action-group a {
       flex: 1;
+      min-width: 70px;
       text-decoration: none;
     }
 
     .action-group button {
       width: 100%;
       border: none;
-      padding: 10px 4px;
-      border-radius: 18px;
+      padding: clamp(7px, 2vw, 10px) 4px;
+      border-radius: clamp(14px, 3vw, 18px);
       font-weight: 600;
-      font-size: 12px;
+      font-size: clamp(10px, 2.3vw, 12px);
       background: #f0f4fe;
       color: #1f2a3e;
       cursor: pointer;
@@ -785,7 +814,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 4px;
       position: relative;
       overflow: hidden;
     }
@@ -850,8 +879,16 @@
     .subject-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-top: 4px;
+      gap: clamp(6px, 2vw, 12px);
+      margin-top: 2px;
+    }
+
+    /* Responsif: jika layar terlalu kecil, pakai 3 kolom */
+    @media (max-width: 350px) {
+      .subject-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+      }
     }
 
     .subject-item {
@@ -861,8 +898,8 @@
       text-align: center;
       text-decoration: none;
       color: inherit;
-      padding: 14px 6px 12px 6px;
-      border-radius: 20px;
+      padding: clamp(8px, 2.5vw, 14px) clamp(3px, 1.5vw, 6px) clamp(6px, 2vw, 12px) clamp(3px, 1.5vw, 6px);
+      border-radius: clamp(14px, 4vw, 20px);
       background: #ffffff;
       border: 1px solid rgba(0, 0, 0, 0.04);
       transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -878,7 +915,7 @@
       background: linear-gradient(135deg, rgba(75, 29, 214, 0.06), rgba(127, 62, 255, 0.02));
       opacity: 0;
       transition: opacity 0.4s ease;
-      border-radius: 20px;
+      border-radius: inherit;
     }
 
     .subject-item::after {
@@ -891,20 +928,17 @@
       background: linear-gradient(90deg, #4b1dd6, #7f3eff);
       opacity: 0;
       transition: opacity 0.4s ease;
-      border-radius: 20px 20px 0 0;
+      border-radius: inherit;
     }
 
     .subject-item:hover {
-      transform: translateY(-6px) scale(1.04);
+      transform: translateY(-4px) scale(1.03);
       border-color: rgba(75, 29, 214, 0.12);
-      box-shadow: 0 16px 40px rgba(75, 29, 214, 0.10), 0 4px 12px rgba(75, 29, 214, 0.04);
+      box-shadow: 0 12px 30px rgba(75, 29, 214, 0.10);
       background: #ffffff;
     }
 
-    .subject-item:hover::before {
-      opacity: 1;
-    }
-
+    .subject-item:hover::before,
     .subject-item:hover::after {
       opacity: 1;
     }
@@ -914,29 +948,29 @@
     }
 
     .subject-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 16px;
+      width: clamp(38px, 11vw, 52px);
+      height: clamp(38px, 11vw, 52px);
+      border-radius: clamp(10px, 3vw, 16px);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
+      font-size: clamp(16px, 4.5vw, 22px);
       color: #4b1dd6;
       background: rgba(75, 29, 214, 0.06);
       transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-      margin-bottom: 6px;
+      margin-bottom: 5px;
       position: relative;
       z-index: 1;
     }
 
     .subject-item:hover .subject-icon {
       background: rgba(75, 29, 214, 0.12);
-      transform: scale(1.1) rotate(-4deg) translateY(-2px);
-      box-shadow: 0 8px 20px rgba(75, 29, 214, 0.10);
+      transform: scale(1.08) rotate(-3deg) translateY(-2px);
+      box-shadow: 0 6px 16px rgba(75, 29, 214, 0.10);
     }
 
     .subject-item span {
-      font-size: 9.5px;
+      font-size: clamp(7.5px, 2vw, 9.5px);
       font-weight: 600;
       color: #3d4a5e;
       letter-spacing: -0.1px;
@@ -959,24 +993,24 @@
     .subject-item:nth-child(7) .subject-icon { color: #1abc9c; background: rgba(26, 188, 156, 0.08); }
     .subject-item:nth-child(8) .subject-icon { color: #f39c12; background: rgba(243, 156, 18, 0.08); }
 
-    .subject-item:nth-child(1):hover .subject-icon { background: rgba(75, 29, 214, 0.16); box-shadow: 0 8px 20px rgba(75, 29, 214, 0.12); }
-    .subject-item:nth-child(2):hover .subject-icon { background: rgba(230, 126, 34, 0.16); box-shadow: 0 8px 20px rgba(230, 126, 34, 0.12); }
-    .subject-item:nth-child(3):hover .subject-icon { background: rgba(46, 204, 113, 0.16); box-shadow: 0 8px 20px rgba(46, 204, 113, 0.12); }
-    .subject-item:nth-child(4):hover .subject-icon { background: rgba(231, 76, 60, 0.16); box-shadow: 0 8px 20px rgba(231, 76, 60, 0.12); }
-    .subject-item:nth-child(5):hover .subject-icon { background: rgba(52, 152, 219, 0.16); box-shadow: 0 8px 20px rgba(52, 152, 219, 0.12); }
-    .subject-item:nth-child(6):hover .subject-icon { background: rgba(155, 89, 182, 0.16); box-shadow: 0 8px 20px rgba(155, 89, 182, 0.12); }
-    .subject-item:nth-child(7):hover .subject-icon { background: rgba(26, 188, 156, 0.16); box-shadow: 0 8px 20px rgba(26, 188, 156, 0.12); }
-    .subject-item:nth-child(8):hover .subject-icon { background: rgba(243, 156, 18, 0.16); box-shadow: 0 8px 20px rgba(243, 156, 18, 0.12); }
+    .subject-item:nth-child(1):hover .subject-icon { background: rgba(75, 29, 214, 0.16); box-shadow: 0 6px 16px rgba(75, 29, 214, 0.12); }
+    .subject-item:nth-child(2):hover .subject-icon { background: rgba(230, 126, 34, 0.16); box-shadow: 0 6px 16px rgba(230, 126, 34, 0.12); }
+    .subject-item:nth-child(3):hover .subject-icon { background: rgba(46, 204, 113, 0.16); box-shadow: 0 6px 16px rgba(46, 204, 113, 0.12); }
+    .subject-item:nth-child(4):hover .subject-icon { background: rgba(231, 76, 60, 0.16); box-shadow: 0 6px 16px rgba(231, 76, 60, 0.12); }
+    .subject-item:nth-child(5):hover .subject-icon { background: rgba(52, 152, 219, 0.16); box-shadow: 0 6px 16px rgba(52, 152, 219, 0.12); }
+    .subject-item:nth-child(6):hover .subject-icon { background: rgba(155, 89, 182, 0.16); box-shadow: 0 6px 16px rgba(155, 89, 182, 0.12); }
+    .subject-item:nth-child(7):hover .subject-icon { background: rgba(26, 188, 156, 0.16); box-shadow: 0 6px 16px rgba(26, 188, 156, 0.12); }
+    .subject-item:nth-child(8):hover .subject-icon { background: rgba(243, 156, 18, 0.16); box-shadow: 0 6px 16px rgba(243, 156, 18, 0.12); }
 
     .subject-item .progress-badge {
       position: absolute;
-      top: 6px;
-      right: 6px;
-      font-size: 7px;
+      top: 4px;
+      right: 4px;
+      font-size: 6.5px;
       font-weight: 700;
       color: #fff;
       background: #4b1dd6;
-      padding: 1px 8px;
+      padding: 1px 6px;
       border-radius: 20px;
       opacity: 0;
       transform: scale(0.8);
@@ -1004,23 +1038,23 @@
     .live-slider-wrapper {
       position: relative;
       overflow: hidden;
-      margin: 4px -4px 0 -4px;
-      padding: 0 4px;
+      margin: 2px -2px 0 -2px;
+      padding: 0 2px;
     }
 
     .live-slider-track {
       display: flex;
-      gap: 14px;
+      gap: clamp(8px, 2.5vw, 14px);
       transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
       will-change: transform;
       padding: 4px 0;
     }
 
     .live-card {
-      flex: 0 0 calc(50% - 7px);
-      min-width: 140px;
+      flex: 0 0 calc(50% - 5px);
+      min-width: 130px;
       background: #fff;
-      border-radius: 22px;
+      border-radius: clamp(16px, 4vw, 22px);
       overflow: hidden;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.01);
       border: 1px solid rgba(0, 0, 0, 0.02);
@@ -1031,8 +1065,8 @@
     }
 
     .live-card:hover {
-      transform: translateY(-6px) scale(1.02);
-      box-shadow: 0 16px 40px rgba(75, 29, 214, 0.12);
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(75, 29, 214, 0.12);
       border-color: rgba(75, 29, 214, 0.1);
     }
 
@@ -1042,7 +1076,7 @@
 
     .live-card img {
       width: 100%;
-      height: 130px;
+      height: clamp(90px, 25vw, 130px);
       object-fit: cover;
       display: block;
       background: #d5dee9;
@@ -1054,11 +1088,11 @@
     }
 
     .live-info {
-      padding: 10px 10px 10px 10px;
+      padding: clamp(6px, 2vw, 10px);
     }
 
     .live-info h4 {
-      font-size: 13.5px;
+      font-size: clamp(11px, 2.8vw, 13.5px);
       font-weight: 600;
       color: #1a2538;
       margin-bottom: 1px;
@@ -1070,7 +1104,7 @@
     }
 
     .live-info p {
-      font-size: 10.5px;
+      font-size: clamp(9px, 2.2vw, 10.5px);
       color: #6b7b93;
       font-weight: 500;
     }
@@ -1080,11 +1114,11 @@
       color: #fff;
       font-size: 7px;
       font-weight: 700;
-      padding: 2px 10px;
+      padding: 2px 8px;
       border-radius: 40px;
       letter-spacing: 0.6px;
       display: inline-block;
-      margin-top: 4px;
+      margin-top: 3px;
       transition: all 0.3s ease;
     }
 
@@ -1097,14 +1131,14 @@
     .slider-dots {
       display: flex;
       justify-content: center;
-      gap: 6px;
-      margin-top: 14px;
+      gap: 5px;
+      margin-top: clamp(8px, 2vw, 14px);
       padding: 2px 0;
     }
 
     .slider-dot {
-      width: 7px;
-      height: 7px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: rgba(75, 29, 214, 0.15);
       border: none;
@@ -1115,7 +1149,7 @@
 
     .slider-dot.active {
       background: #4b1dd6;
-      width: 24px;
+      width: 20px;
       border-radius: 10px;
     }
 
@@ -1123,17 +1157,13 @@
       transform: scale(1.2);
     }
 
-    .slider-dot.active:hover {
-      transform: scale(1);
-    }
-
     /* ============================================================
        SOAL & MATERI PAGE
        ============================================================ */
     .page-content {
       display: none;
-      padding: 0 16px 16px 16px;
-      margin-top: -46px;
+      padding: 0 clamp(12px, 4vw, 16px) clamp(12px, 4vw, 16px) clamp(12px, 4vw, 16px);
+      margin-top: clamp(-40px, -8vw, -46px);
     }
 
     .page-content.active {
@@ -1141,17 +1171,17 @@
     }
 
     .page-content .page-header {
-      margin-bottom: 16px;
+      margin-bottom: clamp(10px, 3vw, 16px);
     }
 
     .page-content .page-header h2 {
-      font-size: 18px;
+      font-size: clamp(16px, 4vw, 18px);
       font-weight: 700;
       color: #1a2538;
     }
 
     .page-content .page-header p {
-      font-size: 13px;
+      font-size: clamp(11px, 2.8vw, 13px);
       color: #6b7b93;
       margin-top: 2px;
     }
@@ -1159,9 +1189,9 @@
     .soal-item, .materi-item {
       background: rgba(255, 255, 255, 0.8);
       backdrop-filter: blur(12px);
-      border-radius: 20px;
-      padding: 16px;
-      margin-bottom: 12px;
+      border-radius: clamp(14px, 4vw, 20px);
+      padding: clamp(12px, 3vw, 16px);
+      margin-bottom: clamp(8px, 2vw, 12px);
       border: 1px solid rgba(255, 255, 255, 0.5);
       transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
       cursor: pointer;
@@ -1169,7 +1199,7 @@
 
     .soal-item:hover, .materi-item:hover {
       transform: translateY(-3px);
-      box-shadow: 0 12px 32px rgba(75, 29, 214, 0.08);
+      box-shadow: 0 10px 25px rgba(75, 29, 214, 0.08);
       border-color: rgba(75, 29, 214, 0.1);
     }
 
@@ -1177,19 +1207,21 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
+      flex-wrap: wrap;
+      gap: 4px;
     }
 
     .soal-item .soal-header h4, .materi-item .materi-header h4 {
-      font-size: 14px;
+      font-size: clamp(12px, 3.2vw, 14px);
       font-weight: 600;
       color: #1a2538;
     }
 
     .soal-item .soal-header .badge, .materi-item .materi-header .badge {
-      font-size: 9px;
+      font-size: 8px;
       font-weight: 700;
-      padding: 2px 12px;
+      padding: 2px 10px;
       border-radius: 20px;
       background: rgba(75, 29, 214, 0.08);
       color: #4b1dd6;
@@ -1201,7 +1233,7 @@
     .soal-item .soal-header .badge.easy { background: rgba(46, 204, 113, 0.1); color: #2ecc71; }
 
     .soal-item p, .materi-item p {
-      font-size: 12px;
+      font-size: clamp(10px, 2.6vw, 12px);
       color: #6b7b93;
       line-height: 1.5;
     }
@@ -1210,23 +1242,25 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 10px;
-      padding-top: 10px;
+      margin-top: 8px;
+      padding-top: 8px;
       border-top: 1px solid rgba(0, 0, 0, 0.04);
+      flex-wrap: wrap;
+      gap: 6px;
     }
 
     .soal-item .soal-footer span, .materi-item .materi-footer span {
-      font-size: 10px;
+      font-size: 9px;
       color: #8d9bb0;
     }
 
     .soal-item .soal-footer .btn-kerjakan, .materi-item .materi-footer .btn-baca {
-      padding: 4px 16px;
+      padding: 4px 14px;
       border: none;
       border-radius: 12px;
       background: #4b1dd6;
       color: #fff;
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -1242,8 +1276,8 @@
        ============================================================ */
     .profile-page {
       display: none;
-      padding: 0 16px 16px 16px;
-      margin-top: -46px;
+      padding: 0 clamp(12px, 4vw, 16px) clamp(12px, 4vw, 16px) clamp(12px, 4vw, 16px);
+      margin-top: clamp(-40px, -8vw, -46px);
     }
 
     .profile-page.active {
@@ -1252,22 +1286,22 @@
 
     .profile-page .profile-header {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: clamp(14px, 4vw, 20px);
     }
 
     .profile-page .profile-avatar-large {
-      width: 100px;
-      height: 100px;
+      width: clamp(70px, 20vw, 100px);
+      height: clamp(70px, 20vw, 100px);
       border-radius: 50%;
       object-fit: cover;
-      border: 4px solid #4b1dd6;
-      box-shadow: 0 8px 24px rgba(75, 29, 214, 0.15);
-      margin: 0 auto 12px;
+      border: 3px solid #4b1dd6;
+      box-shadow: 0 6px 20px rgba(75, 29, 214, 0.15);
+      margin: 0 auto 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       background: #eef2f8;
-      font-size: 48px;
+      font-size: clamp(30px, 10vw, 48px);
       color: #8d9bb0;
       overflow: hidden;
     }
@@ -1285,31 +1319,31 @@
       width: 100%;
       height: 100%;
       color: #8d9bb0;
-      font-size: 48px;
+      font-size: inherit;
     }
 
     .profile-page .profile-name {
-      font-size: 20px;
+      font-size: clamp(16px, 4.5vw, 20px);
       font-weight: 700;
       color: #1a2538;
     }
 
     .profile-page .profile-nim {
-      font-size: 13px;
+      font-size: clamp(11px, 2.8vw, 13px);
       color: #8d9bb0;
       font-weight: 500;
     }
 
     .profile-page .form-group {
-      margin-bottom: 14px;
+      margin-bottom: clamp(10px, 2.5vw, 14px);
     }
 
     .profile-page .form-group label {
       display: block;
-      font-size: 11px;
+      font-size: clamp(9px, 2.2vw, 11px);
       font-weight: 600;
       color: #3d4a5e;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
       letter-spacing: 0.3px;
     }
 
@@ -1317,10 +1351,10 @@
     .profile-page .form-group textarea,
     .profile-page .form-group select {
       width: 100%;
-      padding: 10px 14px;
+      padding: clamp(8px, 2vw, 10px) clamp(10px, 3vw, 14px);
       border: 1px solid rgba(0, 0, 0, 0.06);
       border-radius: 14px;
-      font-size: 13px;
+      font-size: clamp(11px, 2.8vw, 13px);
       font-family: 'Inter', sans-serif;
       background: rgba(255, 255, 255, 0.7);
       backdrop-filter: blur(8px);
@@ -1338,7 +1372,7 @@
 
     .profile-page .form-group textarea {
       resize: vertical;
-      min-height: 70px;
+      min-height: 60px;
     }
 
     .profile-page .form-group .file-input-wrapper {
@@ -1361,13 +1395,13 @@
     .profile-page .form-group .file-input-label {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
+      gap: 8px;
+      padding: clamp(8px, 2vw, 10px) clamp(10px, 3vw, 14px);
       border: 2px dashed rgba(75, 29, 214, 0.15);
       border-radius: 14px;
       background: rgba(75, 29, 214, 0.03);
       color: #6b7b93;
-      font-size: 12px;
+      font-size: clamp(10px, 2.4vw, 12px);
       cursor: pointer;
       transition: all 0.3s ease;
     }
@@ -1378,25 +1412,25 @@
     }
 
     .profile-page .form-group .file-input-label i {
-      font-size: 18px;
+      font-size: clamp(14px, 3.5vw, 18px);
       color: #4b1dd6;
     }
 
     .profile-page .btn-save {
       width: 100%;
-      padding: 12px;
+      padding: clamp(10px, 2.5vw, 12px);
       border: none;
       border-radius: 18px;
       background: linear-gradient(135deg, #4b1dd6, #7f3eff);
       color: #fff;
-      font-size: 14px;
+      font-size: clamp(12px, 3vw, 14px);
       font-weight: 600;
       cursor: pointer;
       transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       margin-top: 4px;
     }
 
@@ -1412,20 +1446,21 @@
     .profile-page .toast {
       display: none;
       position: fixed;
-      bottom: 100px;
+      bottom: 90px;
       left: 50%;
       transform: translateX(-50%);
       background: rgba(0, 0, 0, 0.8);
       backdrop-filter: blur(12px);
       color: #fff;
-      padding: 12px 24px;
+      padding: 10px 20px;
       border-radius: 16px;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
       z-index: 999;
       animation: toastIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      max-width: 320px;
+      max-width: 300px;
       text-align: center;
+      white-space: nowrap;
     }
 
     .profile-page .toast.show {
@@ -1449,36 +1484,38 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.75);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       display: flex;
       justify-content: space-around;
-      padding: 12px 10px 18px 10px;
+      padding: clamp(8px, 2vw, 12px) clamp(6px, 2vw, 10px) clamp(14px, 3vw, 18px) clamp(6px, 2vw, 10px);
       border-top: 1px solid rgba(255, 255, 255, 0.3);
       box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.02);
       z-index: 50;
-      border-radius: 0 0 40px 40px;
+      border-radius: 0 0 36px 36px;
+      /* Safe area untuk iPhone */
+      padding-bottom: calc(clamp(14px, 3vw, 18px) + env(safe-area-inset-bottom, 0px));
     }
 
     .nav-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      font-size: 10.5px;
+      font-size: clamp(9px, 2.2vw, 10.5px);
       font-weight: 600;
       color: #8d9bb0;
-      gap: 3px;
+      gap: 2px;
       transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
       cursor: pointer;
       text-decoration: none;
-      padding: 4px 12px;
+      padding: 3px 10px;
       border-radius: 16px;
       position: relative;
     }
 
     .nav-item i {
-      font-size: 22px;
+      font-size: clamp(18px, 4.5vw, 22px);
       transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
@@ -1490,27 +1527,19 @@
       color: #4b1dd6;
     }
 
-    .nav-item.active i {
-      transform: scale(1.02);
-    }
-
     .nav-item:hover {
       color: #4b1dd6;
-      transform: translateY(-3px);
+      transform: translateY(-2px);
     }
 
     .nav-item:hover i {
-      transform: scale(1.15) rotate(-5deg);
-    }
-
-    .nav-item.active:hover i {
-      transform: scale(1.2) rotate(-5deg);
+      transform: scale(1.12) rotate(-3deg);
     }
 
     .nav-item::after {
       content: '';
       position: absolute;
-      bottom: -2px;
+      bottom: -1px;
       left: 50%;
       width: 0;
       height: 3px;
@@ -1521,54 +1550,160 @@
     }
 
     .nav-item.active::after {
-      width: 24px;
+      width: 20px;
     }
 
     .nav-item:hover::after {
-      width: 28px;
+      width: 24px;
     }
 
-    /* ----- RESPONSIVE ----- */
+    /* ----- RESPONSIVE ENHANCEMENTS ----- */
     @media (max-width: 420px) {
-      body { padding: 0; }
-      .phone { border-radius: 0; max-width: 100%; box-shadow: none; min-height: 100vh; }
-      .header { border-radius: 0 0 32px 32px; padding-left: 18px; padding-right: 18px; }
-      .content { padding: 0 12px 12px 12px; }
-      .card { padding: 16px 14px; }
-      .bottom-nav { border-radius: 0; }
-      .overlay-content { max-width: 100%; margin: 0 16px; padding: 24px 20px; }
-      .clock-overlay .big-clock { font-size: 48px; }
-      .analysis-top { flex-direction: row; }
-      .chart-wrapper { flex: 0 0 100px; height: 100px; }
-      .stat-item .number { font-size: 16px; }
-      .progress-wrapper { gap: 12px; }
-      .progress-ring-container { width: 58px; height: 58px; }
-      .progress-ring-container svg { width: 58px; height: 58px; }
-      .progress-ring-container .ring-center .pct { font-size: 15px; }
-      .subject-grid { gap: 8px; }
-      .subject-item { padding: 10px 4px 8px 4px; }
-      .subject-icon { width: 44px; height: 44px; font-size: 18px; }
-      .subject-item span { font-size: 8.5px; }
-      .profile-page .profile-avatar-large { width: 80px; height: 80px; font-size: 36px; }
-      .page-content { padding: 0 12px 12px 12px; }
+      body { 
+        padding: 0; 
+      }
+      .phone { 
+        border-radius: 0; 
+        max-width: 100%; 
+        box-shadow: none; 
+        min-height: 100vh;
+        min-height: 100dvh;
+        max-height: none;
+      }
+      .header { 
+        border-radius: 0 0 clamp(24px, 7vw, 32px) clamp(24px, 7vw, 32px); 
+      }
+      .bottom-nav { 
+        border-radius: 0; 
+      }
+      .overlay-content { 
+        max-width: 100%; 
+        margin: 0 12px; 
+      }
     }
 
     @media (max-width: 360px) {
-      .subject-icon { width: 38px; height: 38px; font-size: 16px; }
-      .subject-item { padding: 8px 3px 6px 3px; }
-      .subject-item span { font-size: 7.5px; }
-      .action-group button { font-size: 10px; padding: 8px 4px; }
-      .chart-wrapper { flex: 0 0 90px; height: 90px; }
-      .analysis-stats { gap: 4px; }
-      .stat-item { padding: 6px 4px; }
-      .stat-item .number { font-size: 14px; }
-      .live-card { flex: 0 0 calc(50% - 6px); min-width: 120px; }
-      .progress-ring-container { width: 50px; height: 50px; }
-      .progress-ring-container svg { width: 50px; height: 50px; }
-      .progress-ring-container .ring-center .pct { font-size: 13px; }
-      .progress-info .progress-label { font-size: 11px; }
-      .progress-info .progress-sub .sub-item { font-size: 8.5px; }
-      .subject-grid { gap: 6px; }
+      .subject-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5px;
+      }
+      .subject-icon { 
+        width: 36px; 
+        height: 36px; 
+        font-size: 14px; 
+        border-radius: 10px;
+      }
+      .subject-item { 
+        padding: 8px 3px 6px 3px; 
+        border-radius: 14px;
+      }
+      .subject-item span { 
+        font-size: 7px; 
+      }
+      .action-group button { 
+        font-size: 9px; 
+        padding: 7px 3px; 
+      }
+      .chart-wrapper { 
+        flex: 0 0 75px; 
+        height: 75px; 
+      }
+      .analysis-stats { 
+        gap: 3px; 
+      }
+      .stat-item { 
+        padding: 5px 3px; 
+        border-radius: 10px;
+      }
+      .stat-item .number { 
+        font-size: 12px; 
+      }
+      .live-card { 
+        flex: 0 0 calc(50% - 4px); 
+        min-width: 110px; 
+      }
+      .progress-ring-container { 
+        width: 45px; 
+        height: 45px; 
+      }
+      .progress-ring-container .ring-center .pct { 
+        font-size: 12px; 
+      }
+      .progress-info .progress-label { 
+        font-size: 10px; 
+      }
+      .progress-info .progress-sub .sub-item { 
+        font-size: 8px; 
+      }
+      .soal-item .soal-header h4, 
+      .materi-item .materi-header h4 {
+        font-size: 11px;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .subject-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4px;
+      }
+      .subject-icon { 
+        width: 32px; 
+        height: 32px; 
+        font-size: 12px; 
+      }
+      .subject-item { 
+        padding: 6px 2px 4px 2px; 
+      }
+      .subject-item span { 
+        font-size: 6.5px; 
+      }
+      .action-group {
+        flex-direction: column;
+        gap: 4px;
+      }
+      .action-group a {
+        min-width: auto;
+      }
+      .header {
+        padding: 16px 12px 40px 12px;
+      }
+      .avatar-frame {
+        width: 38px;
+        height: 38px;
+      }
+      .greeting {
+        font-size: 12px;
+      }
+      .header-actions {
+        font-size: 15px;
+        gap: 8px;
+      }
+      .progress-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .progress-info {
+        width: 100%;
+      }
+    }
+
+    /* Fix untuk layar sangat kecil (iPhone SE 1st gen, dll) */
+    @media (max-width: 280px) {
+      .subject-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .analysis-top {
+        flex-direction: column;
+        align-items: center;
+      }
+      .analysis-stats {
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+      }
+      .live-card {
+        flex: 0 0 calc(50% - 3px);
+        min-width: 100px;
+      }
     }
   </style>
 </head>
@@ -1756,12 +1891,12 @@
       <div class="card" style="margin-bottom:10px;">
         <div class="card-title" style="display:flex; justify-content:space-between; align-items:center;">
           <span><i class="fas fa-circle-play"></i> Live Now</span>
-          <span style="background:#ff3b5c; padding:2px 12px; border-radius:40px; font-size:8px; color:#fff; font-weight:700; letter-spacing:0.5px;">● LIVE</span>
+          <span style="background:#ff3b5c; padding:2px 10px; border-radius:40px; font-size:7px; color:#fff; font-weight:700; letter-spacing:0.5px;">● LIVE</span>
         </div>
         <div class="live-slider-wrapper">
           <div class="live-slider-track" id="liveSlider">
             <a href="#live-praktikum" class="live-card">
-              <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=300&h=200&fit=crop&crop=center" alt="lab" />
+              <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=300&h=200&fit=crop&crop=center" alt="lab" loading="lazy" />
               <div class="live-info">
                 <h4>Praktikum Fisika</h4>
                 <p>Optik & Gelombang</p>
@@ -1769,7 +1904,7 @@
               </div>
             </a>
             <a href="#live-kalkulus" class="live-card">
-              <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=300&h=200&fit=crop&crop=center" alt="kuliah" />
+              <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=300&h=200&fit=crop&crop=center" alt="kuliah" loading="lazy" />
               <div class="live-info">
                 <h4>Kalkulus Lanjut</h4>
                 <p>Turunan Parsial</p>
@@ -1777,7 +1912,7 @@
               </div>
             </a>
             <a href="#live-fisika" class="live-card">
-              <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=300&h=200&fit=crop&crop=center" alt="fisika" />
+              <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=300&h=200&fit=crop&crop=center" alt="fisika" loading="lazy" />
               <div class="live-info">
                 <h4>Fisika Kuantum</h4>
                 <p>Teori Dasar</p>
@@ -1785,7 +1920,7 @@
               </div>
             </a>
             <a href="#live-astronomi" class="live-card">
-              <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=300&h=200&fit=crop&crop=center" alt="astronomi" />
+              <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=300&h=200&fit=crop&crop=center" alt="astronomi" loading="lazy" />
               <div class="live-info">
                 <h4>Astronomi Dasar</h4>
                 <p>Tata Surya</p>
@@ -1795,10 +1930,10 @@
           </div>
         </div>
         <div class="slider-dots" id="sliderDots">
-          <button class="slider-dot active" data-index="0"></button>
-          <button class="slider-dot" data-index="1"></button>
-          <button class="slider-dot" data-index="2"></button>
-          <button class="slider-dot" data-index="3"></button>
+          <button class="slider-dot active" data-index="0" aria-label="Slide 1"></button>
+          <button class="slider-dot" data-index="1" aria-label="Slide 2"></button>
+          <button class="slider-dot" data-index="2" aria-label="Slide 3"></button>
+          <button class="slider-dot" data-index="3" aria-label="Slide 4"></button>
         </div>
       </div>
     </div>
@@ -2297,37 +2432,30 @@
     // ============================================================
     // SOAL & MATERI NAVIGATION - Redirect ke HTML terpisah
     // ============================================================
-    // Tombol Kerjakan Soal
     document.querySelectorAll('.btn-kerjakan').forEach(btn => {
       btn.addEventListener('click', function(e) {
         e.stopPropagation();
         const soalId = this.dataset.soal || '1';
-        // Arahkan ke soal1.html dengan parameter soal
         window.location.href = 'soal1.html?id=' + soalId;
       });
     });
 
-    // Klik pada item soal juga bisa navigasi
     document.querySelectorAll('.soal-item').forEach(item => {
       item.addEventListener('click', function(e) {
-        // Hindari jika yang diklik adalah tombol (sudah di-handle di atas)
         if (e.target.classList.contains('btn-kerjakan')) return;
         const soalId = this.dataset.soal || '1';
         window.location.href = 'soal1.html?id=' + soalId;
       });
     });
 
-    // Tombol Baca Materi
     document.querySelectorAll('.btn-baca').forEach(btn => {
       btn.addEventListener('click', function(e) {
         e.stopPropagation();
         const materiId = this.dataset.materi || '1';
-        // Arahkan ke materi1.html dengan parameter
         window.location.href = 'materi1.html?id=' + materiId;
       });
     });
 
-    // Klik pada item materi juga bisa navigasi
     document.querySelectorAll('.materi-item').forEach(item => {
       item.addEventListener('click', function(e) {
         if (e.target.classList.contains('btn-baca')) return;
@@ -2423,8 +2551,8 @@
     function getSlideWidth() {
       const card = document.querySelector('.live-card');
       if (!card) return 160;
-      const gap = 14;
-      const containerWidth = sliderTrack.parentElement.offsetWidth - 8;
+      const gap = parseInt(getComputedStyle(sliderTrack).gap) || 14;
+      const containerWidth = sliderTrack.parentElement.offsetWidth - 4;
       const cardWidth = (containerWidth - gap) / 2;
       return cardWidth + gap;
     }
