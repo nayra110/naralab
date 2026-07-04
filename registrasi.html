@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Naralab - Login</title>
+    <title>Naralab - Daftar</title>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -22,7 +22,6 @@
             background: #f0f0f0;
         }
 
-        /* Login Container */
         .login-container {
             width: 100%;
             max-width: 400px;
@@ -40,7 +39,6 @@
             border-radius: 20px;
         }
 
-        /* Efek dekoratif background */
         .login-container::before {
             content: '';
             position: absolute;
@@ -65,7 +63,6 @@
             pointer-events: none;
         }
 
-        /* Partikel dekoratif */
         .particle {
             position: absolute;
             background: rgba(255, 255, 255, 0.08);
@@ -98,7 +95,6 @@
             animation-delay: 4s;
         }
 
-        /* Logo kecil */
         .logo-small {
             font-size: 34px;
             color: #FFFFFF;
@@ -108,7 +104,6 @@
             position: relative;
         }
 
-        /* Judul halaman */
         .page-title {
             color: #FFFFFF;
             font-size: 24px;
@@ -124,7 +119,6 @@
             font-weight: 300;
         }
 
-        /* Subtitle */
         .subtitle {
             color: rgba(255, 255, 255, 0.6);
             font-size: 12px;
@@ -135,7 +129,6 @@
             position: relative;
         }
 
-        /* Form container */
         .form-container {
             width: 100%;
             max-width: 280px;
@@ -143,7 +136,6 @@
             position: relative;
         }
 
-        /* Input group */
         .input-group {
             position: relative;
             margin-bottom: 10px;
@@ -181,7 +173,6 @@
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
         }
 
-        /* Tombol Login */
         .btn-login {
             width: 100%;
             padding: 11px;
@@ -206,7 +197,6 @@
             transform: scale(0.98);
         }
 
-        /* Divider */
         .divider-text {
             color: rgba(255, 255, 255, 0.4);
             font-size: 11px;
@@ -229,7 +219,6 @@
             margin: 0 8px;
         }
 
-        /* Tombol Google */
         .btn-google {
             width: 100%;
             padding: 10px;
@@ -257,7 +246,6 @@
             color: #FFFFFF;
         }
 
-        /* Link daftar */
         .register-link {
             color: rgba(255, 255, 255, 0.6);
             font-size: 12px;
@@ -279,7 +267,6 @@
             text-decoration: underline;
         }
 
-        /* Pesan error/sukses */
         .message {
             font-size: 12px;
             font-weight: 300;
@@ -298,17 +285,6 @@
             color: #51cf66;
         }
 
-        /* Mode Register */
-        .register-mode .btn-login {
-            background: #FFFFFF;
-            color: #6A00FF;
-        }
-
-        .register-mode .btn-login:hover {
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
-        }
-
-        /* Animasi */
         @keyframes floatParticle {
             0%, 100% {
                 transform: translate(0, 0) scale(1);
@@ -318,7 +294,6 @@
             }
         }
 
-        /* Responsive */
         @media (max-width: 480px) {
             .login-container {
                 max-height: 100vh;
@@ -348,57 +323,40 @@
 </head>
 <body>
 
-    <div class="login-container" id="loginContainer">
-        <!-- Partikel dekoratif -->
+    <div class="login-container">
         <div class="particle particle-1"></div>
         <div class="particle particle-2"></div>
         <div class="particle particle-3"></div>
 
-        <!-- Logo kecil -->
         <i class="fas fa-flask logo-small"></i>
+        <h1 class="page-title">Daftar <span>Akun</span></h1>
+        <p class="subtitle">• Buat Akun Baru •</p>
 
-        <!-- Judul -->
-        <h1 class="page-title" id="pageTitle">Nara<span>Lab</span></h1>
-        <p class="subtitle" id="subtitle">• Login •</p>
-
-        <!-- Form -->
         <div class="form-container">
-            <!-- Input Username (untuk register) / Email (untuk login) -->
-            <div class="input-group" id="usernameGroup">
+            <div class="input-group">
                 <i class="fas fa-user"></i>
                 <input type="text" id="username" placeholder="Username">
             </div>
-
-            <!-- Input Email -->
             <div class="input-group">
                 <i class="fas fa-envelope"></i>
                 <input type="email" id="email" placeholder="Email (Gmail)">
             </div>
-
-            <!-- Input Password -->
             <div class="input-group">
                 <i class="fas fa-lock"></i>
                 <input type="password" id="password" placeholder="Password">
             </div>
 
-            <!-- Pesan -->
             <div class="message" id="message"></div>
+            <button class="btn-login" id="submitBtn">Daftar</button>
 
-            <!-- Tombol Login/Daftar -->
-            <button class="btn-login" id="submitBtn">Login</button>
-
-            <!-- Divider -->
             <div class="divider-text">atau</div>
-
-            <!-- Tombol Google -->
             <button class="btn-google" id="googleBtn">
                 <i class="fab fa-google"></i>
-                Login dengan Google
+                Daftar dengan Google
             </button>
 
-            <!-- Link ganti mode -->
-            <p class="register-link" id="toggleLink">
-                Belum punya akun? <a href="#" id="toggleMode">Daftar sekarang</a>
+            <p class="register-link">
+                Sudah punya akun? <a href="login.html">Login sekarang</a>
             </p>
         </div>
     </div>
@@ -418,15 +376,13 @@
         import { initializeApp } from "firebase/app";
         import { 
             getAuth, 
-            createUserWithEmailAndPassword, 
-            signInWithEmailAndPassword,
+            createUserWithEmailAndPassword,
             GoogleAuthProvider,
             signInWithPopup,
             onAuthStateChanged
         } from "firebase/auth";
         import { getDatabase, ref, set, get } from "firebase/database";
 
-        // Konfigurasi Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyCp3MPtlE7vUua7UwD9gjRlDeHeg7KWUk0",
             authDomain: "naralab-1ec88.firebaseapp.com",
@@ -438,109 +394,45 @@
             measurementId: "G-ERY5XFD9LC"
         };
 
-        // Inisialisasi Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getDatabase(app);
         const googleProvider = new GoogleAuthProvider();
 
-        // Elemen DOM
         const usernameInput = document.getElementById('username');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
         const submitBtn = document.getElementById('submitBtn');
         const googleBtn = document.getElementById('googleBtn');
-        const toggleLink = document.getElementById('toggleLink');
-        const toggleMode = document.getElementById('toggleMode');
-        const pageTitle = document.getElementById('pageTitle');
-        const subtitle = document.getElementById('subtitle');
         const message = document.getElementById('message');
-        const usernameGroup = document.getElementById('usernameGroup');
-        const loginContainer = document.getElementById('loginContainer');
 
-        // Mode state
-        let isRegisterMode = false;
-
-        // Toggle mode
-        toggleMode.addEventListener('click', (e) => {
-            e.preventDefault();
-            isRegisterMode = !isRegisterMode;
-            
-            if (isRegisterMode) {
-                // Mode Register
-                pageTitle.innerHTML = 'Daftar <span>Akun</span>';
-                subtitle.textContent = '• Buat Akun Baru •';
-                submitBtn.textContent = 'Daftar';
-                toggleMode.textContent = 'Login sekarang';
-                toggleLink.innerHTML = 'Sudah punya akun? <a href="#" id="toggleMode">Login sekarang</a>';
-                usernameGroup.style.display = 'block';
-                loginContainer.classList.add('register-mode');
-            } else {
-                // Mode Login
-                pageTitle.innerHTML = 'Nara<span>Lab</span>';
-                subtitle.textContent = '• Login •';
-                submitBtn.textContent = 'Login';
-                toggleMode.textContent = 'Daftar sekarang';
-                toggleLink.innerHTML = 'Belum punya akun? <a href="#" id="toggleMode">Daftar sekarang</a>';
-                usernameGroup.style.display = 'none';
-                loginContainer.classList.remove('register-mode');
-            }
-            
-            // Re-attach event listener untuk toggle baru
-            document.getElementById('toggleMode').addEventListener('click', toggleModeHandler);
-            message.textContent = '';
-        });
-
-        function toggleModeHandler(e) {
-            e.preventDefault();
-            toggleMode.click();
-        }
-
-        // Submit form
+        // Daftar dengan email/password
         submitBtn.addEventListener('click', async () => {
             const email = emailInput.value.trim();
             const password = passwordInput.value;
             const username = usernameInput.value.trim();
 
-            // Validasi
-            if (!email || !password) {
-                showMessage('Email dan password wajib diisi!', 'error');
-                return;
-            }
-
-            if (isRegisterMode && !username) {
-                showMessage('Username wajib diisi untuk daftar!', 'error');
+            if (!email || !password || !username) {
+                showMessage('Semua field wajib diisi!', 'error');
                 return;
             }
 
             try {
-                if (isRegisterMode) {
-                    // REGISTER
-                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                    const user = userCredential.user;
-                    
-                    // Simpan username ke Realtime Database
-                    await set(ref(db, 'users/' + user.uid), {
-                        username: username,
-                        email: email,
-                        createdAt: new Date().toISOString()
-                    });
-                    
-                    showMessage('Akun berhasil dibuat! Mengarahkan...', 'success');
-                    setTimeout(() => {
-                        window.location.href = 'home.html'; // Diubah ke home.html
-                    }, 2000);
-                } else {
-                    // LOGIN
-                    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                    showMessage('Login berhasil! Mengarahkan...', 'success');
-                    setTimeout(() => {
-                        window.location.href = 'home.html'; // Diubah ke home.html
-                    }, 2000);
-                }
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                
+                await set(ref(db, 'users/' + user.uid), {
+                    username: username,
+                    email: email,
+                    createdAt: new Date().toISOString()
+                });
+                
+                showMessage('Akun berhasil dibuat! Mengarahkan...', 'success');
+                setTimeout(() => {
+                    window.location.href = 'home.html';
+                }, 2000);
             } catch (error) {
                 let errorMessage = 'Terjadi kesalahan. Silakan coba lagi.';
-                
                 switch (error.code) {
                     case 'auth/email-already-in-use':
                         errorMessage = 'Email sudah terdaftar. Silakan login.';
@@ -551,28 +443,17 @@
                     case 'auth/weak-password':
                         errorMessage = 'Password minimal 6 karakter.';
                         break;
-                    case 'auth/user-not-found':
-                        errorMessage = 'Email tidak terdaftar.';
-                        break;
-                    case 'auth/wrong-password':
-                        errorMessage = 'Password salah.';
-                        break;
-                    case 'auth/too-many-requests':
-                        errorMessage = 'Terlalu banyak percobaan. Coba lagi nanti.';
-                        break;
                 }
-                
                 showMessage(errorMessage, 'error');
             }
         });
 
-        // Login dengan Google
+        // Daftar dengan Google
         googleBtn.addEventListener('click', async () => {
             try {
                 const result = await signInWithPopup(auth, googleProvider);
                 const user = result.user;
                 
-                // Simpan data user ke database jika belum ada
                 const userRef = ref(db, 'users/' + user.uid);
                 const snapshot = await get(userRef);
                 
@@ -585,12 +466,12 @@
                     });
                 }
                 
-                showMessage('Login Google berhasil! Mengarahkan...', 'success');
+                showMessage('Pendaftaran Google berhasil! Mengarahkan...', 'success');
                 setTimeout(() => {
-                    window.location.href = 'home.html'; // Diubah ke home.html
+                    window.location.href = 'home.html';
                 }, 2000);
             } catch (error) {
-                let errorMessage = 'Login Google gagal.';
+                let errorMessage = 'Pendaftaran Google gagal.';
                 if (error.code === 'auth/popup-closed-by-user') {
                     errorMessage = 'Popup ditutup. Silakan coba lagi.';
                 }
@@ -598,41 +479,28 @@
             }
         });
 
-        // Helper function untuk menampilkan pesan
         function showMessage(text, type) {
             message.textContent = text;
             message.className = 'message ' + type;
-            
-            // Reset setelah 3 detik
-            if (text !== '') {
-                setTimeout(() => {
-                    if (message.textContent === text) {
-                        message.textContent = '';
-                        message.className = 'message';
-                    }
-                }, 3000);
-            }
+            setTimeout(() => {
+                if (message.textContent === text) {
+                    message.textContent = '';
+                    message.className = 'message';
+                }
+            }, 3000);
         }
 
-        // Cek status login
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Jika sudah login, redirect ke home
                 console.log('User sudah login:', user.email);
-                // Uncomment untuk redirect otomatis saat halaman dimuat
-                // window.location.href = 'home.html';
             }
         });
 
-        // Enter key untuk submit
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 submitBtn.click();
             }
         });
-
-        // Set initial mode
-        usernameGroup.style.display = 'none';
     </script>
 </body>
 </html>
