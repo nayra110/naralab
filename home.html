@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Fisikaku · Beranda</title>
 
   <!-- Google Font & Icons -->
@@ -13,7 +13,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
   <style>
-    /* ----- RESET & BASE (responsif) ----- */
+    /* ----- RESET & BASE ----- */
     * {
       margin: 0;
       padding: 0;
@@ -27,20 +27,19 @@
       align-items: center;
       min-height: 100vh;
       font-family: 'Inter', -apple-system, sans-serif;
-      padding: 12px;
+      padding: 16px;
       overflow-x: hidden;
     }
 
-    /* ----- PHONE FRAME (responsif) ----- */
+    /* ----- PHONE FRAME ----- */
     .phone {
       width: 100%;
-      max-width: 480px;        /* lebih lebar untuk desktop kecil */
+      max-width: 390px;
       background: #f8fcff;
       border-radius: 40px;
       box-shadow: 0 30px 60px rgba(0, 20, 40, 0.12);
       overflow: hidden;
       position: relative;
-      transition: max-width 0.3s ease;
     }
 
     /* ----- SCROLLABLE CONTENT ----- */
@@ -79,16 +78,12 @@
       justify-content: space-between;
       position: relative;
       z-index: 2;
-      flex-wrap: wrap;
-      gap: 8px 12px;
     }
 
     .profile-left {
       display: flex;
       align-items: center;
       gap: 14px;
-      flex: 1 1 auto;
-      min-width: 160px;
     }
 
     .avatar-frame {
@@ -134,7 +129,7 @@
     }
 
     .greeting {
-      font-size: clamp(14px, 4vw, 20px);
+      font-size: 15px;
       font-weight: 700;
       letter-spacing: -0.2px;
       line-height: 1.3;
@@ -144,7 +139,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      font-size: clamp(10px, 2.5vw, 13px);
+      font-size: 11px;
       font-weight: 500;
       opacity: 0.85;
       margin-top: 2px;
@@ -161,7 +156,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      font-size: clamp(10px, 2.5vw, 13px);
+      font-size: 11px;
       font-weight: 500;
       opacity: 0.8;
       margin-top: 1px;
@@ -175,12 +170,11 @@
 
     .header-actions {
       display: flex;
-      gap: clamp(12px, 3vw, 24px);
-      font-size: clamp(18px, 4vw, 24px);
+      gap: 16px;
+      font-size: 20px;
       opacity: 0.9;
       position: relative;
       z-index: 2;
-      flex-shrink: 0;
     }
 
     .header-actions .icon-wrap {
@@ -237,7 +231,7 @@
       -webkit-backdrop-filter: blur(20px);
       border-radius: 32px;
       padding: 32px 28px;
-      max-width: 400px;
+      max-width: 340px;
       width: 100%;
       box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
       animation: contentPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -286,7 +280,7 @@
     }
 
     .clock-overlay .big-clock {
-      font-size: clamp(48px, 12vw, 72px);
+      font-size: 64px;
       font-weight: 700;
       color: #4b1dd6;
       letter-spacing: 2px;
@@ -295,14 +289,14 @@
     }
 
     .clock-overlay .big-clock small {
-      font-size: clamp(20px, 4vw, 28px);
+      font-size: 24px;
       font-weight: 500;
       color: #8d9bb0;
       margin-left: 4px;
     }
 
     .clock-overlay .clock-date {
-      font-size: clamp(14px, 3vw, 18px);
+      font-size: 16px;
       color: #6b7b93;
       margin-top: 4px;
       font-weight: 500;
@@ -329,17 +323,16 @@
       margin-bottom: 20px;
       padding-bottom: 12px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-      flex-wrap: wrap;
     }
 
     .notif-overlay .notif-header h2 {
-      font-size: clamp(16px, 4vw, 22px);
+      font-size: 18px;
       font-weight: 700;
       color: #1a2538;
     }
 
     .notif-overlay .notif-header i {
-      font-size: clamp(20px, 4vw, 26px);
+      font-size: 22px;
       color: #4b1dd6;
     }
 
@@ -410,20 +403,20 @@
     }
 
     .notif-overlay .notif-card .notif-body h4 {
-      font-size: clamp(12px, 2.5vw, 15px);
+      font-size: 13px;
       font-weight: 600;
       color: #1a2538;
       margin-bottom: 2px;
     }
 
     .notif-overlay .notif-card .notif-body p {
-      font-size: clamp(10px, 2vw, 13px);
+      font-size: 11.5px;
       color: #6b7b93;
       font-weight: 400;
     }
 
     .notif-overlay .notif-card .notif-time {
-      font-size: clamp(9px, 1.8vw, 12px);
+      font-size: 10px;
       color: #8d9bb0;
       font-weight: 500;
       flex-shrink: 0;
@@ -445,7 +438,7 @@
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-radius: 28px;
-      padding: clamp(16px, 4vw, 24px) clamp(14px, 3vw, 22px);
+      padding: 20px 16px;
       margin-bottom: 18px;
       box-shadow: 0 8px 28px rgba(0, 0, 0, 0.02), 0 2px 8px rgba(0, 0, 0, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.5);
@@ -461,7 +454,7 @@
     }
 
     .card-title {
-      font-size: clamp(11px, 2.5vw, 15px);
+      font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.4px;
       text-transform: uppercase;
@@ -474,7 +467,7 @@
     }
 
     .card-title i {
-      font-size: clamp(13px, 2.5vw, 17px);
+      font-size: 14px;
       color: #5b2bff;
       opacity: 0.7;
     }
@@ -491,13 +484,12 @@
     .analysis-top {
       display: flex;
       align-items: center;
-      gap: clamp(12px, 3vw, 24px);
-      flex-wrap: wrap;
+      gap: 16px;
     }
 
     .chart-wrapper {
-      flex: 0 0 clamp(100px, 22vw, 150px);
-      height: clamp(100px, 22vw, 150px);
+      flex: 0 0 120px;
+      height: 120px;
       position: relative;
       transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
@@ -521,14 +513,14 @@
     }
 
     .chart-center-text .big {
-      font-size: clamp(18px, 4vw, 28px);
+      font-size: 20px;
       font-weight: 700;
       color: #1a2538;
       line-height: 1;
     }
 
     .chart-center-text .small {
-      font-size: clamp(8px, 1.8vw, 12px);
+      font-size: 9px;
       font-weight: 500;
       color: #8d9bb0;
       letter-spacing: 0.3px;
@@ -538,14 +530,13 @@
       flex: 1;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: clamp(6px, 1.5vw, 12px);
-      min-width: 140px;
+      gap: 8px;
     }
 
     .stat-item {
       background: rgba(75, 29, 214, 0.04);
       border-radius: 14px;
-      padding: clamp(8px, 2vw, 14px) clamp(6px, 1.5vw, 12px);
+      padding: 10px 8px;
       text-align: center;
       transition: all 0.3s ease;
       border: 1px solid transparent;
@@ -558,7 +549,7 @@
     }
 
     .stat-item .number {
-      font-size: clamp(16px, 3.5vw, 24px);
+      font-size: 18px;
       font-weight: 700;
       color: #1a2538;
       line-height: 1.2;
@@ -566,18 +557,18 @@
 
     .stat-item .number .trend-up {
       color: #2ecc71;
-      font-size: clamp(8px, 1.5vw, 12px);
+      font-size: 10px;
       margin-left: 2px;
     }
 
     .stat-item .number .trend-down {
       color: #e74c3c;
-      font-size: clamp(8px, 1.5vw, 12px);
+      font-size: 10px;
       margin-left: 2px;
     }
 
     .stat-item .label {
-      font-size: clamp(8px, 1.8vw, 12px);
+      font-size: 9px;
       font-weight: 500;
       color: #8d9bb0;
       letter-spacing: 0.2px;
@@ -601,15 +592,14 @@
     .progress-bar-item {
       display: flex;
       align-items: center;
-      gap: clamp(6px, 1.5vw, 14px);
-      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .progress-bar-item .bar-label {
-      font-size: clamp(9px, 2vw, 13px);
+      font-size: 10px;
       font-weight: 500;
       color: #3d4a5e;
-      min-width: clamp(60px, 15vw, 90px);
+      min-width: 70px;
       display: flex;
       align-items: center;
       gap: 4px;
@@ -630,7 +620,6 @@
       border-radius: 20px;
       overflow: hidden;
       position: relative;
-      min-width: 60px;
     }
 
     .progress-bar-item .bar-track .bar-fill {
@@ -652,10 +641,10 @@
     }
 
     .progress-bar-item .bar-value {
-      font-size: clamp(9px, 1.8vw, 12px);
+      font-size: 10px;
       font-weight: 600;
       color: #1a2538;
-      min-width: 28px;
+      min-width: 32px;
       text-align: right;
     }
 
@@ -665,21 +654,20 @@
     .progress-wrapper {
       display: flex;
       align-items: center;
-      gap: clamp(12px, 3vw, 24px);
-      flex-wrap: wrap;
+      gap: 16px;
     }
 
     .progress-ring-container {
       flex-shrink: 0;
       position: relative;
-      width: clamp(60px, 14vw, 85px);
-      height: clamp(60px, 14vw, 85px);
+      width: 68px;
+      height: 68px;
     }
 
     .progress-ring-container svg {
       transform: rotate(-90deg);
-      width: 100%;
-      height: 100%;
+      width: 68px;
+      height: 68px;
     }
 
     .progress-ring-container .ring-bg {
@@ -705,14 +693,14 @@
     }
 
     .progress-ring-container .ring-center .pct {
-      font-size: clamp(16px, 3.5vw, 24px);
+      font-size: 18px;
       font-weight: 700;
       color: #1a2538;
       line-height: 1;
     }
 
     .progress-ring-container .ring-center .pct-label {
-      font-size: clamp(7px, 1.4vw, 10px);
+      font-size: 7px;
       font-weight: 500;
       color: #8d9bb0;
       letter-spacing: 0.3px;
@@ -725,28 +713,26 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
-      min-width: 140px;
     }
 
     .progress-info .progress-label {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: clamp(11px, 2.5vw, 15px);
+      font-size: 12px;
       font-weight: 600;
       color: #1a2538;
-      flex-wrap: wrap;
     }
 
     .progress-info .progress-label span i {
       color: #5b2bff;
       margin-right: 6px;
-      font-size: clamp(12px, 2.5vw, 16px);
+      font-size: 13px;
     }
 
     .progress-info .progress-sub {
       display: flex;
-      gap: clamp(8px, 2vw, 16px);
+      gap: 12px;
       flex-wrap: wrap;
     }
 
@@ -754,7 +740,7 @@
       display: flex;
       align-items: center;
       gap: 4px;
-      font-size: clamp(9px, 1.8vw, 12px);
+      font-size: 9.5px;
       font-weight: 500;
       color: #6b7b93;
     }
@@ -774,24 +760,22 @@
 
     .action-group {
       display: flex;
-      gap: clamp(6px, 1.5vw, 12px);
+      gap: 10px;
       margin-top: 6px;
-      flex-wrap: wrap;
     }
 
     .action-group a {
-      flex: 1 1 auto;
-      min-width: 60px;
+      flex: 1;
       text-decoration: none;
     }
 
     .action-group button {
       width: 100%;
       border: none;
-      padding: clamp(8px, 2vw, 12px) clamp(4px, 1vw, 10px);
+      padding: 10px 4px;
       border-radius: 18px;
       font-weight: 600;
-      font-size: clamp(10px, 2vw, 14px);
+      font-size: 12px;
       background: #f0f4fe;
       color: #1f2a3e;
       cursor: pointer;
@@ -804,7 +788,6 @@
       gap: 6px;
       position: relative;
       overflow: hidden;
-      white-space: nowrap;
     }
 
     .action-group button::after {
@@ -866,8 +849,8 @@
        ============================================================ */
     .subject-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(clamp(60px, 15vw, 85px), 1fr));
-      gap: clamp(8px, 2vw, 16px);
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
       margin-top: 4px;
     }
 
@@ -878,7 +861,7 @@
       text-align: center;
       text-decoration: none;
       color: inherit;
-      padding: clamp(10px, 2.5vw, 18px) clamp(4px, 1vw, 10px);
+      padding: 14px 6px 12px 6px;
       border-radius: 20px;
       background: #ffffff;
       border: 1px solid rgba(0, 0, 0, 0.04);
@@ -931,13 +914,13 @@
     }
 
     .subject-icon {
-      width: clamp(40px, 10vw, 60px);
-      height: clamp(40px, 10vw, 60px);
+      width: 52px;
+      height: 52px;
       border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: clamp(18px, 4vw, 26px);
+      font-size: 22px;
       color: #4b1dd6;
       background: rgba(75, 29, 214, 0.06);
       transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -953,7 +936,7 @@
     }
 
     .subject-item span {
-      font-size: clamp(8px, 1.8vw, 12px);
+      font-size: 9.5px;
       font-weight: 600;
       color: #3d4a5e;
       letter-spacing: -0.1px;
@@ -989,7 +972,7 @@
       position: absolute;
       top: 6px;
       right: 6px;
-      font-size: clamp(6px, 1.2vw, 9px);
+      font-size: 7px;
       font-weight: 700;
       color: #fff;
       background: #4b1dd6;
@@ -1027,15 +1010,15 @@
 
     .live-slider-track {
       display: flex;
-      gap: clamp(10px, 2vw, 18px);
+      gap: 14px;
       transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
       will-change: transform;
       padding: 4px 0;
     }
 
     .live-card {
-      flex: 0 0 calc(50% - clamp(5px, 1vw, 10px));
-      min-width: clamp(120px, 30vw, 200px);
+      flex: 0 0 calc(50% - 7px);
+      min-width: 140px;
       background: #fff;
       border-radius: 22px;
       overflow: hidden;
@@ -1059,7 +1042,7 @@
 
     .live-card img {
       width: 100%;
-      height: clamp(100px, 20vw, 160px);
+      height: 130px;
       object-fit: cover;
       display: block;
       background: #d5dee9;
@@ -1071,11 +1054,11 @@
     }
 
     .live-info {
-      padding: clamp(8px, 2vw, 14px) clamp(8px, 2vw, 14px);
+      padding: 10px 10px 10px 10px;
     }
 
     .live-info h4 {
-      font-size: clamp(12px, 2.5vw, 16px);
+      font-size: 13.5px;
       font-weight: 600;
       color: #1a2538;
       margin-bottom: 1px;
@@ -1087,7 +1070,7 @@
     }
 
     .live-info p {
-      font-size: clamp(9px, 1.8vw, 13px);
+      font-size: 10.5px;
       color: #6b7b93;
       font-weight: 500;
     }
@@ -1095,7 +1078,7 @@
     .live-badge {
       background: #ff3b5c;
       color: #fff;
-      font-size: clamp(7px, 1.4vw, 10px);
+      font-size: 7px;
       font-weight: 700;
       padding: 2px 10px;
       border-radius: 40px;
@@ -1120,8 +1103,8 @@
     }
 
     .slider-dot {
-      width: clamp(6px, 1.4vw, 9px);
-      height: clamp(6px, 1.4vw, 9px);
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: rgba(75, 29, 214, 0.15);
       border: none;
@@ -1132,7 +1115,7 @@
 
     .slider-dot.active {
       background: #4b1dd6;
-      width: clamp(18px, 4vw, 28px);
+      width: 24px;
       border-radius: 10px;
     }
 
@@ -1155,41 +1138,36 @@
       -webkit-backdrop-filter: blur(18px);
       display: flex;
       justify-content: space-around;
-      padding: clamp(8px, 2vw, 14px) clamp(6px, 1.5vw, 12px) clamp(14px, 3vw, 22px);
+      padding: 12px 10px 18px 10px;
       border-top: 1px solid rgba(255, 255, 255, 0.3);
       box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.02);
       z-index: 50;
       border-radius: 0 0 40px 40px;
-      gap: 4px;
     }
 
     .nav-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      font-size: clamp(9px, 2vw, 13px);
+      font-size: 10.5px;
       font-weight: 600;
       color: #8d9bb0;
       gap: 3px;
       transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
       cursor: pointer;
       text-decoration: none;
-      padding: clamp(4px, 1vw, 8px) clamp(6px, 1.5vw, 14px);
+      padding: 4px 12px;
       border-radius: 16px;
       position: relative;
-      flex: 1 1 auto;
-      min-width: 40px;
-      text-align: center;
     }
 
     .nav-item i {
-      font-size: clamp(18px, 4.5vw, 26px);
+      font-size: 22px;
       transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .nav-item span {
       transition: all 0.3s ease;
-      font-size: clamp(7px, 1.6vw, 11px);
     }
 
     .nav-item.active {
@@ -1243,28 +1221,48 @@
       .card { padding: 16px 14px; }
       .bottom-nav { border-radius: 0; }
       .overlay-content { max-width: 100%; margin: 0 16px; padding: 24px 20px; }
+      .clock-overlay .big-clock { font-size: 48px; }
+      .analysis-top { flex-direction: row; }
+      .chart-wrapper { flex: 0 0 100px; height: 100px; }
+      .stat-item .number { font-size: 16px; }
+      .progress-wrapper { gap: 12px; }
+      .progress-ring-container { width: 58px; height: 58px; }
+      .progress-ring-container svg { width: 58px; height: 58px; }
+      .progress-ring-container .ring-center .pct { font-size: 15px; }
+      .subject-grid { gap: 8px; }
+      .subject-item { padding: 10px 4px 8px 4px; }
+      .subject-icon { width: 44px; height: 44px; font-size: 18px; }
+      .subject-item span { font-size: 8.5px; }
     }
 
     @media (max-width: 360px) {
-      .action-group button { font-size: clamp(8px, 2vw, 11px); padding: 6px 4px; }
-      .subject-grid { grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); }
-      .subject-item { padding: 6px 2px; }
-      .subject-icon { width: 36px; height: 36px; font-size: 16px; }
-      .subject-item span { font-size: 7px; }
-      .live-card { min-width: 100px; }
-      .live-card img { height: 80px; }
+      .subject-icon { width: 38px; height: 38px; font-size: 16px; }
+      .subject-item { padding: 8px 3px 6px 3px; }
+      .subject-item span { font-size: 7.5px; }
+      .action-group button { font-size: 10px; padding: 8px 4px; }
+      .chart-wrapper { flex: 0 0 90px; height: 90px; }
+      .analysis-stats { gap: 4px; }
+      .stat-item { padding: 6px 4px; }
+      .stat-item .number { font-size: 14px; }
+      .live-card { flex: 0 0 calc(50% - 6px); min-width: 120px; }
+      .progress-ring-container { width: 50px; height: 50px; }
+      .progress-ring-container svg { width: 50px; height: 50px; }
+      .progress-ring-container .ring-center .pct { font-size: 13px; }
+      .progress-info .progress-label { font-size: 11px; }
+      .progress-info .progress-sub .sub-item { font-size: 8.5px; }
+      .subject-grid { gap: 6px; }
     }
 
     @media (max-width: 280px) {
-      .header { padding: 16px 10px 40px 10px; }
+      .header { padding: 20px 12px 50px 12px; }
       .greeting { font-size: 12px; }
       .sub-text-compact { font-size: 9px; }
       .semester-row { font-size: 9px; }
       .avatar-frame { width: 40px; height: 40px; }
       .avatar-frame .avatar-placeholder { font-size: 20px; }
       .header-actions { gap: 10px; font-size: 16px; }
-      .card { padding: 10px 8px; }
-      .card-title { font-size: 9px; }
+      .card { padding: 12px 10px; }
+      .card-title { font-size: 10px; }
       .chart-wrapper { flex: 0 0 70px; height: 70px; }
       .chart-center-text .big { font-size: 14px; }
       .chart-center-text .small { font-size: 7px; }
@@ -1272,49 +1270,38 @@
       .stat-item .label { font-size: 7px; }
       .progress-bar-item .bar-label { font-size: 8px; min-width: 50px; }
       .progress-bar-item .bar-value { font-size: 8px; min-width: 24px; }
-      .progress-ring-container { width: 44px; height: 44px; }
-      .progress-ring-container .ring-center .pct { font-size: 12px; }
-      .progress-ring-container .ring-center .pct-label { font-size: 6px; }
+      .progress-ring-container { width: 40px; height: 40px; }
+      .progress-ring-container svg { width: 40px; height: 40px; }
+      .progress-ring-container .ring-center .pct { font-size: 11px; }
+      .progress-ring-container .ring-center .pct-label { font-size: 5px; }
       .progress-info .progress-label { font-size: 10px; }
-      .progress-info .progress-sub .sub-item { font-size: 8px; }
-      .action-group button { font-size: 8px; padding: 4px 2px; }
-      .subject-grid { grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 4px; }
-      .subject-item { padding: 4px 2px; }
-      .subject-icon { width: 28px; height: 28px; font-size: 12px; }
+      .progress-info .progress-sub .sub-item { font-size: 7px; }
+      .action-group button { font-size: 8px; padding: 6px 2px; }
+      .subject-grid { gap: 4px; }
+      .subject-item { padding: 6px 2px 4px 2px; }
+      .subject-icon { width: 30px; height: 30px; font-size: 14px; }
       .subject-item span { font-size: 6px; }
       .subject-item .progress-badge { font-size: 5px; padding: 1px 4px; top: 2px; right: 2px; }
-      .live-card { min-width: 80px; }
-      .live-card img { height: 60px; }
-      .live-info h4 { font-size: 9px; }
-      .live-info p { font-size: 7px; }
+      .live-card { min-width: 90px; }
+      .live-card img { height: 80px; }
+      .live-info h4 { font-size: 10px; }
+      .live-info p { font-size: 8px; }
       .live-badge { font-size: 6px; padding: 1px 6px; }
-      .slider-dots { margin-top: 6px; gap: 4px; }
+      .slider-dots { margin-top: 8px; gap: 4px; }
       .slider-dot { width: 5px; height: 5px; }
-      .slider-dot.active { width: 14px; }
-      .bottom-nav { padding: 6px 2px 10px 2px; }
-      .nav-item { font-size: 7px; padding: 2px 4px; }
-      .nav-item i { font-size: 14px; }
-      .nav-item span { font-size: 6px; }
+      .slider-dot.active { width: 16px; }
+      .bottom-nav { padding: 8px 4px 12px 4px; }
+      .nav-item { font-size: 8px; padding: 2px 6px; }
+      .nav-item i { font-size: 16px; }
       .overlay-content { padding: 16px 12px; }
       .clock-overlay .big-clock { font-size: 32px; }
       .clock-overlay .big-clock small { font-size: 16px; }
       .clock-overlay .clock-date { font-size: 12px; }
-      .notif-overlay .notif-card { padding: 6px 8px; gap: 8px; }
-      .notif-overlay .notif-card .notif-icon { width: 28px; height: 28px; font-size: 12px; }
-      .notif-overlay .notif-card .notif-body h4 { font-size: 10px; }
-      .notif-overlay .notif-card .notif-body p { font-size: 8px; }
-      .notif-overlay .notif-card .notif-time { font-size: 7px; }
-    }
-
-    /* desktop large */
-    @media (min-width: 768px) {
-      body { padding: 24px; }
-      .phone { max-width: 540px; }
-      .header { padding: 36px 32px 64px 32px; }
-      .content { padding: 0 24px 24px 24px; }
-      .card { padding: 28px 24px; margin-bottom: 24px; }
-      .bottom-nav { padding: 16px 20px 24px 20px; }
-      .analysis-top { gap: 28px; }
+      .notif-overlay .notif-card { padding: 8px 10px; gap: 10px; }
+      .notif-overlay .notif-card .notif-icon { width: 30px; height: 30px; font-size: 14px; }
+      .notif-overlay .notif-card .notif-body h4 { font-size: 11px; }
+      .notif-overlay .notif-card .notif-body p { font-size: 9px; }
+      .notif-overlay .notif-card .notif-time { font-size: 8px; }
     }
   </style>
 </head>
@@ -1500,14 +1487,14 @@
       </div>
 
       <div class="card" style="margin-bottom:10px;">
-        <div class="card-title" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+        <div class="card-title" style="display:flex; justify-content:space-between; align-items:center;">
           <span><i class="fas fa-circle-play"></i> Live Now</span>
-          <span style="background:#ff3b5c; padding:2px 12px; border-radius:40px; font-size:clamp(7px,1.4vw,10px); color:#fff; font-weight:700; letter-spacing:0.5px;">● LIVE</span>
+          <span style="background:#ff3b5c; padding:2px 12px; border-radius:40px; font-size:8px; color:#fff; font-weight:700; letter-spacing:0.5px;">● LIVE</span>
         </div>
         <div class="live-slider-wrapper">
           <div class="live-slider-track" id="liveSlider">
             <a href="#live-praktikum" class="live-card">
-              <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=400&h=300&fit=crop&crop=center" alt="lab" />
+              <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=300&h=200&fit=crop&crop=center" alt="lab" />
               <div class="live-info">
                 <h4>Praktikum Fisika</h4>
                 <p>Optik & Gelombang</p>
@@ -1515,7 +1502,7 @@
               </div>
             </a>
             <a href="#live-kalkulus" class="live-card">
-              <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=400&h=300&fit=crop&crop=center" alt="kuliah" />
+              <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=300&h=200&fit=crop&crop=center" alt="kuliah" />
               <div class="live-info">
                 <h4>Kalkulus Lanjut</h4>
                 <p>Turunan Parsial</p>
@@ -1523,7 +1510,7 @@
               </div>
             </a>
             <a href="#live-fisika" class="live-card">
-              <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&crop=center" alt="fisika" />
+              <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=300&h=200&fit=crop&crop=center" alt="fisika" />
               <div class="live-info">
                 <h4>Fisika Kuantum</h4>
                 <p>Teori Dasar</p>
@@ -1531,7 +1518,7 @@
               </div>
             </a>
             <a href="#live-astronomi" class="live-card">
-              <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=400&h=300&fit=crop&crop=center" alt="astronomi" />
+              <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=300&h=200&fit=crop&crop=center" alt="astronomi" />
               <div class="live-info">
                 <h4>Astronomi Dasar</h4>
                 <p>Tata Surya</p>
@@ -1577,7 +1564,7 @@
     <div class="notif-header">
       <i class="fas fa-bell"></i>
       <h2>Notifikasi</h2>
-      <span style="margin-left:auto; background:#ff3b5c; color:#fff; font-size:clamp(9px,2vw,12px); font-weight:700; padding:2px 10px; border-radius:20px;">3 baru</span>
+      <span style="margin-left:auto; background:#ff3b5c; color:#fff; font-size:10px; font-weight:700; padding:2px 10px; border-radius:20px;">3 baru</span>
     </div>
     <div class="notif-list">
       <div class="notif-card">
@@ -1804,7 +1791,7 @@
     function getSlideWidth() {
       const card = document.querySelector('.live-card');
       if (!card) return 160;
-      const gap = parseFloat(getComputedStyle(sliderTrack).gap) || 14;
+      const gap = 14;
       const containerWidth = sliderTrack.parentElement.offsetWidth - 8;
       const cardWidth = (containerWidth - gap) / 2;
       return cardWidth + gap;
