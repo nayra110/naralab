@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Fisikaku · Dashboard</title>
+  <title>Fisikaku · Beranda</title>
 
   <!-- Google Font & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -1127,322 +1127,6 @@
       transform: scale(1);
     }
 
-    /* ============================================================
-       SOAL & MATERI PAGE
-       ============================================================ */
-    .page-content {
-      display: none;
-      padding: 0 16px 16px 16px;
-      margin-top: -46px;
-    }
-
-    .page-content.active {
-      display: block;
-    }
-
-    .page-content .page-header {
-      margin-bottom: 16px;
-    }
-
-    .page-content .page-header h2 {
-      font-size: 18px;
-      font-weight: 700;
-      color: #1a2538;
-    }
-
-    .page-content .page-header p {
-      font-size: 13px;
-      color: #6b7b93;
-      margin-top: 2px;
-    }
-
-    .soal-item, .materi-item {
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(12px);
-      border-radius: 20px;
-      padding: 16px;
-      margin-bottom: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      cursor: pointer;
-    }
-
-    .soal-item:hover, .materi-item:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 32px rgba(75, 29, 214, 0.08);
-      border-color: rgba(75, 29, 214, 0.1);
-    }
-
-    .soal-item .soal-header, .materi-item .materi-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 6px;
-    }
-
-    .soal-item .soal-header h4, .materi-item .materi-header h4 {
-      font-size: 14px;
-      font-weight: 600;
-      color: #1a2538;
-    }
-
-    .soal-item .soal-header .badge, .materi-item .materi-header .badge {
-      font-size: 9px;
-      font-weight: 700;
-      padding: 2px 12px;
-      border-radius: 20px;
-      background: rgba(75, 29, 214, 0.08);
-      color: #4b1dd6;
-      white-space: nowrap;
-    }
-
-    .soal-item .soal-header .badge.hard { background: rgba(231, 76, 60, 0.1); color: #e74c3c; }
-    .soal-item .soal-header .badge.medium { background: rgba(243, 156, 18, 0.1); color: #f39c12; }
-    .soal-item .soal-header .badge.easy { background: rgba(46, 204, 113, 0.1); color: #2ecc71; }
-
-    .soal-item p, .materi-item p {
-      font-size: 12px;
-      color: #6b7b93;
-      line-height: 1.5;
-    }
-
-    .soal-item .soal-footer, .materi-item .materi-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px solid rgba(0, 0, 0, 0.04);
-    }
-
-    .soal-item .soal-footer span, .materi-item .materi-footer span {
-      font-size: 10px;
-      color: #8d9bb0;
-    }
-
-    .soal-item .soal-footer .btn-kerjakan, .materi-item .materi-footer .btn-baca {
-      padding: 4px 16px;
-      border: none;
-      border-radius: 12px;
-      background: #4b1dd6;
-      color: #fff;
-      font-size: 10px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .soal-item .soal-footer .btn-kerjakan:hover, .materi-item .materi-footer .btn-baca:hover {
-      background: #7f3eff;
-      transform: scale(1.05);
-    }
-
-    /* ============================================================
-       PROFIL PAGE
-       ============================================================ */
-    .profile-page {
-      display: none;
-      padding: 0 16px 16px 16px;
-      margin-top: -46px;
-    }
-
-    .profile-page.active {
-      display: block;
-    }
-
-    .profile-page .profile-header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .profile-page .profile-avatar-large {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid #4b1dd6;
-      box-shadow: 0 8px 24px rgba(75, 29, 214, 0.15);
-      margin: 0 auto 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #eef2f8;
-      font-size: 48px;
-      color: #8d9bb0;
-      overflow: hidden;
-    }
-
-    .profile-page .profile-avatar-large img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .profile-page .profile-avatar-large .avatar-placeholder {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-      color: #8d9bb0;
-      font-size: 48px;
-    }
-
-    .profile-page .profile-name {
-      font-size: 20px;
-      font-weight: 700;
-      color: #1a2538;
-    }
-
-    .profile-page .profile-nim {
-      font-size: 13px;
-      color: #8d9bb0;
-      font-weight: 500;
-    }
-
-    .profile-page .form-group {
-      margin-bottom: 14px;
-    }
-
-    .profile-page .form-group label {
-      display: block;
-      font-size: 11px;
-      font-weight: 600;
-      color: #3d4a5e;
-      margin-bottom: 4px;
-      letter-spacing: 0.3px;
-    }
-
-    .profile-page .form-group input,
-    .profile-page .form-group textarea,
-    .profile-page .form-group select {
-      width: 100%;
-      padding: 10px 14px;
-      border: 1px solid rgba(0, 0, 0, 0.06);
-      border-radius: 14px;
-      font-size: 13px;
-      font-family: 'Inter', sans-serif;
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(8px);
-      transition: all 0.3s ease;
-      color: #1a2538;
-    }
-
-    .profile-page .form-group input:focus,
-    .profile-page .form-group textarea:focus,
-    .profile-page .form-group select:focus {
-      outline: none;
-      border-color: #4b1dd6;
-      box-shadow: 0 0 0 3px rgba(75, 29, 214, 0.08);
-    }
-
-    .profile-page .form-group textarea {
-      resize: vertical;
-      min-height: 70px;
-    }
-
-    .profile-page .form-group .file-input-wrapper {
-      position: relative;
-      overflow: hidden;
-      display: inline-block;
-      width: 100%;
-    }
-
-    .profile-page .form-group .file-input-wrapper input[type="file"] {
-      position: absolute;
-      left: 0;
-      top: 0;
-      opacity: 0;
-      width: 100%;
-      height: 100%;
-      cursor: pointer;
-    }
-
-    .profile-page .form-group .file-input-label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      border: 2px dashed rgba(75, 29, 214, 0.15);
-      border-radius: 14px;
-      background: rgba(75, 29, 214, 0.03);
-      color: #6b7b93;
-      font-size: 12px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .profile-page .form-group .file-input-label:hover {
-      border-color: #4b1dd6;
-      background: rgba(75, 29, 214, 0.06);
-    }
-
-    .profile-page .form-group .file-input-label i {
-      font-size: 18px;
-      color: #4b1dd6;
-    }
-
-    .profile-page .btn-save {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 18px;
-      background: linear-gradient(135deg, #4b1dd6, #7f3eff);
-      color: #fff;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 4px;
-    }
-
-    .profile-page .btn-save:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(75, 29, 214, 0.25);
-    }
-
-    .profile-page .btn-save:active {
-      transform: scale(0.97);
-    }
-
-    .profile-page .toast {
-      display: none;
-      position: fixed;
-      bottom: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(12px);
-      color: #fff;
-      padding: 12px 24px;
-      border-radius: 16px;
-      font-size: 13px;
-      font-weight: 500;
-      z-index: 999;
-      animation: toastIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      max-width: 320px;
-      text-align: center;
-    }
-
-    .profile-page .toast.show {
-      display: block;
-    }
-
-    @keyframes toastIn {
-      from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(20px) scale(0.9);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0) scale(1);
-      }
-    }
-
     /* ----- BOTTOM NAV ----- */
     .bottom-nav {
       position: absolute;
@@ -1549,8 +1233,6 @@
       .subject-item { padding: 10px 4px 8px 4px; }
       .subject-icon { width: 44px; height: 44px; font-size: 18px; }
       .subject-item span { font-size: 8.5px; }
-      .profile-page .profile-avatar-large { width: 80px; height: 80px; font-size: 36px; }
-      .page-content { padding: 0 12px 12px 12px; }
     }
 
     @media (max-width: 360px) {
@@ -1569,6 +1251,57 @@
       .progress-info .progress-label { font-size: 11px; }
       .progress-info .progress-sub .sub-item { font-size: 8.5px; }
       .subject-grid { gap: 6px; }
+    }
+
+    @media (max-width: 280px) {
+      .header { padding: 20px 12px 50px 12px; }
+      .greeting { font-size: 12px; }
+      .sub-text-compact { font-size: 9px; }
+      .semester-row { font-size: 9px; }
+      .avatar-frame { width: 40px; height: 40px; }
+      .avatar-frame .avatar-placeholder { font-size: 20px; }
+      .header-actions { gap: 10px; font-size: 16px; }
+      .card { padding: 12px 10px; }
+      .card-title { font-size: 10px; }
+      .chart-wrapper { flex: 0 0 70px; height: 70px; }
+      .chart-center-text .big { font-size: 14px; }
+      .chart-center-text .small { font-size: 7px; }
+      .stat-item .number { font-size: 12px; }
+      .stat-item .label { font-size: 7px; }
+      .progress-bar-item .bar-label { font-size: 8px; min-width: 50px; }
+      .progress-bar-item .bar-value { font-size: 8px; min-width: 24px; }
+      .progress-ring-container { width: 40px; height: 40px; }
+      .progress-ring-container svg { width: 40px; height: 40px; }
+      .progress-ring-container .ring-center .pct { font-size: 11px; }
+      .progress-ring-container .ring-center .pct-label { font-size: 5px; }
+      .progress-info .progress-label { font-size: 10px; }
+      .progress-info .progress-sub .sub-item { font-size: 7px; }
+      .action-group button { font-size: 8px; padding: 6px 2px; }
+      .subject-grid { gap: 4px; }
+      .subject-item { padding: 6px 2px 4px 2px; }
+      .subject-icon { width: 30px; height: 30px; font-size: 14px; }
+      .subject-item span { font-size: 6px; }
+      .subject-item .progress-badge { font-size: 5px; padding: 1px 4px; top: 2px; right: 2px; }
+      .live-card { min-width: 90px; }
+      .live-card img { height: 80px; }
+      .live-info h4 { font-size: 10px; }
+      .live-info p { font-size: 8px; }
+      .live-badge { font-size: 6px; padding: 1px 6px; }
+      .slider-dots { margin-top: 8px; gap: 4px; }
+      .slider-dot { width: 5px; height: 5px; }
+      .slider-dot.active { width: 16px; }
+      .bottom-nav { padding: 8px 4px 12px 4px; }
+      .nav-item { font-size: 8px; padding: 2px 6px; }
+      .nav-item i { font-size: 16px; }
+      .overlay-content { padding: 16px 12px; }
+      .clock-overlay .big-clock { font-size: 32px; }
+      .clock-overlay .big-clock small { font-size: 16px; }
+      .clock-overlay .clock-date { font-size: 12px; }
+      .notif-overlay .notif-card { padding: 8px 10px; gap: 10px; }
+      .notif-overlay .notif-card .notif-icon { width: 30px; height: 30px; font-size: 14px; }
+      .notif-overlay .notif-card .notif-body h4 { font-size: 11px; }
+      .notif-overlay .notif-card .notif-body p { font-size: 9px; }
+      .notif-overlay .notif-card .notif-time { font-size: 8px; }
     }
   </style>
 </head>
@@ -1803,196 +1536,14 @@
       </div>
     </div>
 
-    <!-- SOAL PAGE -->
-    <div class="page-content" id="soalPage">
-      <div class="card">
-        <div class="page-header">
-          <h2><i class="fas fa-pencil" style="color:#4b1dd6; margin-right:8px;"></i>Kumpulan Soal</h2>
-          <p>Kerjakan soal-soal fisika untuk mengasah pemahamanmu</p>
-        </div>
-        <div class="soal-item" data-soal="1">
-          <div class="soal-header">
-            <h4>Fisika Modern - Teori Relativitas</h4>
-            <span class="badge hard">Sulit</span>
-          </div>
-          <p>Sebuah partikel bergerak dengan kecepatan 0.8c. Hitunglah faktor Lorentz-nya!</p>
-          <div class="soal-footer">
-            <span><i class="far fa-clock"></i> 15 menit</span>
-            <button class="btn-kerjakan" data-soal="1">Kerjakan</button>
-          </div>
-        </div>
-        <div class="soal-item" data-soal="2">
-          <div class="soal-header">
-            <h4>Mekanika - Hukum Newton</h4>
-            <span class="badge medium">Sedang</span>
-          </div>
-          <p>Sebuah benda bermassa 5 kg ditarik dengan gaya 20 N. Berapa percepatan benda?</p>
-          <div class="soal-footer">
-            <span><i class="far fa-clock"></i> 10 menit</span>
-            <button class="btn-kerjakan" data-soal="2">Kerjakan</button>
-          </div>
-        </div>
-        <div class="soal-item" data-soal="3">
-          <div class="soal-header">
-            <h4>Listrik Magnet - Hukum Ohm</h4>
-            <span class="badge easy">Mudah</span>
-          </div>
-          <p>Sebuah resistor 10 Ω dialiri arus 2 A. Berapa tegangan yang mengalir?</p>
-          <div class="soal-footer">
-            <span><i class="far fa-clock"></i> 5 menit</span>
-            <button class="btn-kerjakan" data-soal="3">Kerjakan</button>
-          </div>
-        </div>
-        <div class="soal-item" data-soal="4">
-          <div class="soal-header">
-            <h4>Astronomi - Tata Surya</h4>
-            <span class="badge medium">Sedang</span>
-          </div>
-          <p>Jelaskan perbedaan antara planet terestrial dan planet Jovian!</p>
-          <div class="soal-footer">
-            <span><i class="far fa-clock"></i> 20 menit</span>
-            <button class="btn-kerjakan" data-soal="4">Kerjakan</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- MATERI PAGE -->
-    <div class="page-content" id="materiPage">
-      <div class="card">
-        <div class="page-header">
-          <h2><i class="fas fa-book-open" style="color:#4b1dd6; margin-right:8px;"></i>Materi Pembelajaran</h2>
-          <p>Pelajari materi fisika secara lengkap dan terstruktur</p>
-        </div>
-        <div class="materi-item" data-materi="1">
-          <div class="materi-header">
-            <h4>Fisika Modern - Relativitas Khusus</h4>
-            <span class="badge">Bab 1</span>
-          </div>
-          <p>Materi tentang teori relativitas khusus Einstein, transformasi Lorentz, dan dilatasi waktu.</p>
-          <div class="materi-footer">
-            <span><i class="fas fa-file-alt"></i> 12 halaman</span>
-            <button class="btn-baca" data-materi="1">Baca</button>
-          </div>
-        </div>
-        <div class="materi-item" data-materi="2">
-          <div class="materi-header">
-            <h4>Mekanika - Dinamika Partikel</h4>
-            <span class="badge">Bab 2</span>
-          </div>
-          <p>Pembahasan tentang Hukum Newton, gaya gesek, dan aplikasi dalam kehidupan sehari-hari.</p>
-          <div class="materi-footer">
-            <span><i class="fas fa-file-alt"></i> 8 halaman</span>
-            <button class="btn-baca" data-materi="2">Baca</button>
-          </div>
-        </div>
-        <div class="materi-item" data-materi="3">
-          <div class="materi-header">
-            <h4>Listrik Magnet - Rangkaian Listrik</h4>
-            <span class="badge">Bab 3</span>
-          </div>
-          <p>Materi tentang rangkaian seri dan paralel, Hukum Kirchhoff, dan analisis rangkaian.</p>
-          <div class="materi-footer">
-            <span><i class="fas fa-file-alt"></i> 10 halaman</span>
-            <button class="btn-baca" data-materi="3">Baca</button>
-          </div>
-        </div>
-        <div class="materi-item" data-materi="4">
-          <div class="materi-header">
-            <h4>Astronomi - Pengenalan Tata Surya</h4>
-            <span class="badge">Bab 4</span>
-          </div>
-          <p>Pengenalan tentang planet-planet, asteroid, komet, dan struktur tata surya.</p>
-          <div class="materi-footer">
-            <span><i class="fas fa-file-alt"></i> 6 halaman</span>
-            <button class="btn-baca" data-materi="4">Baca</button>
-          </div>
-        </div>
-        <div class="materi-item" data-materi="5">
-          <div class="materi-header">
-            <h4>Fisika Matematika - Kalkulus Dasar</h4>
-            <span class="badge">Bab 5</span>
-          </div>
-          <p>Materi tentang turunan, integral, dan aplikasinya dalam fisika.</p>
-          <div class="materi-footer">
-            <span><i class="fas fa-file-alt"></i> 14 halaman</span>
-            <button class="btn-baca" data-materi="5">Baca</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PROFIL PAGE -->
-    <div class="profile-page" id="profilePage">
-      <div class="card">
-        <div class="card-title"><i class="fas fa-user"></i> Edit Profil</div>
-        <div class="profile-header">
-          <div class="profile-avatar-large" id="profileAvatar">
-            <div class="avatar-placeholder"><i class="fas fa-user"></i></div>
-          </div>
-          <div class="profile-name" id="profileNameDisplay">Nayla Arziki</div>
-          <div class="profile-nim" id="profileNimDisplay">NIM: 202401001</div>
-        </div>
-
-        <div class="form-group">
-          <label><i class="fas fa-user"></i> Nama Lengkap</label>
-          <input type="text" id="inputName" placeholder="Masukkan nama lengkap" />
-        </div>
-
-        <div class="form-group">
-          <label><i class="fas fa-id-card"></i> NIM</label>
-          <input type="text" id="inputNim" placeholder="Masukkan NIM" />
-        </div>
-
-        <div class="form-group">
-          <label><i class="fas fa-graduation-cap"></i> Program Studi</label>
-          <input type="text" id="inputProdi" placeholder="Masukkan program studi" />
-        </div>
-
-        <div class="form-group">
-          <label><i class="far fa-calendar-alt"></i> Semester</label>
-          <select id="inputSemester">
-            <option value="1">Semester 1</option>
-            <option value="2">Semester 2</option>
-            <option value="3">Semester 3</option>
-            <option value="4" selected>Semester 4</option>
-            <option value="5">Semester 5</option>
-            <option value="6">Semester 6</option>
-            <option value="7">Semester 7</option>
-            <option value="8">Semester 8</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label><i class="fas fa-file-alt"></i> Bio</label>
-          <textarea id="inputBio" placeholder="Tuliskan bio singkat tentang diri Anda..."></textarea>
-        </div>
-
-        <div class="form-group">
-          <label><i class="fas fa-image"></i> Foto Profil</label>
-          <div class="file-input-wrapper">
-            <div class="file-input-label">
-              <i class="fas fa-cloud-upload-alt"></i>
-              <span id="fileLabel">Klik untuk upload foto</span>
-            </div>
-            <input type="file" id="inputAvatar" accept="image/*" />
-          </div>
-        </div>
-
-        <button class="btn-save" id="saveProfileBtn">
-          <i class="fas fa-save"></i> Simpan Profil
-        </button>
-      </div>
-    </div>
-
   </div> <!-- /scroll-content -->
 
   <!-- BOTTOM NAV -->
   <div class="bottom-nav">
     <a href="#beranda" class="nav-item active" data-page="dashboard"><i class="fas fa-house"></i><span>Beranda</span></a>
-    <a href="#soal" class="nav-item" data-page="soal"><i class="fas fa-pencil"></i><span>Soal</span></a>
-    <a href="#materi" class="nav-item" data-page="materi"><i class="fas fa-book-open"></i><span>Materi</span></a>
-    <a href="#profil" class="nav-item" data-page="profil"><i class="fas fa-user"></i><span>Profil</span></a>
+    <a href="soal1.html" class="nav-item" data-page="soal"><i class="fas fa-pencil"></i><span>Soal</span></a>
+    <a href="materi1.html" class="nav-item" data-page="materi"><i class="fas fa-book-open"></i><span>Materi</span></a>
+    <a href="profil1.html" class="nav-item" data-page="profil"><i class="fas fa-user"></i><span>Profil</span></a>
   </div>
 
 </div> <!-- /phone -->
@@ -2052,10 +1603,6 @@
   </div>
 </div>
 
-<div class="profile-page">
-  <div class="toast" id="toast"></div>
-</div>
-
 <script>
   // Chart.js
   (function() {
@@ -2086,69 +1633,10 @@
   })();
 
   // ============================================================
-  // INDEXED DB - PROFIL STORAGE
-  // ============================================================
-  const DB_NAME = 'FisikakuDB';
-  const STORE_NAME = 'profil';
-  let db = null;
-
-  function openDB() {
-    return new Promise((resolve, reject) => {
-      const request = indexedDB.open(DB_NAME, 1);
-      request.onerror = () => reject(request.error);
-      request.onsuccess = () => {
-        db = request.result;
-        resolve(db);
-      };
-      request.onupgradeneeded = (e) => {
-        const db = e.target.result;
-        if (!db.objectStoreNames.contains(STORE_NAME)) {
-          db.createObjectStore(STORE_NAME, { keyPath: 'id' });
-        }
-      };
-    });
-  }
-
-  function saveProfile(data) {
-    return new Promise((resolve, reject) => {
-      if (!db) return reject('DB not open');
-      const tx = db.transaction(STORE_NAME, 'readwrite');
-      const store = tx.objectStore(STORE_NAME);
-      const request = store.put({ id: 'user', ...data });
-      request.onsuccess = () => resolve();
-      request.onerror = () => reject(request.error);
-    });
-  }
-
-  function loadProfile() {
-    return new Promise((resolve, reject) => {
-      if (!db) return reject('DB not open');
-      const tx = db.transaction(STORE_NAME, 'readonly');
-      const store = tx.objectStore(STORE_NAME);
-      const request = store.get('user');
-      request.onsuccess = () => resolve(request.result || null);
-      request.onerror = () => reject(request.error);
-    });
-  }
-
-  // ============================================================
   // MAIN CONTROLLER
   // ============================================================
   document.addEventListener('DOMContentLoaded', function() {
     // DOM refs
-    const inputName = document.getElementById('inputName');
-    const inputNim = document.getElementById('inputNim');
-    const inputProdi = document.getElementById('inputProdi');
-    const inputSemester = document.getElementById('inputSemester');
-    const inputBio = document.getElementById('inputBio');
-    const inputAvatar = document.getElementById('inputAvatar');
-    const fileLabel = document.getElementById('fileLabel');
-    const saveBtn = document.getElementById('saveProfileBtn');
-    const toast = document.getElementById('toast');
-    
-    const profileAvatarContainer = document.getElementById('profileAvatar');
-    const profileNameDisplay = document.getElementById('profileNameDisplay');
-    const profileNimDisplay = document.getElementById('profileNimDisplay');
     const headerAvatar = document.getElementById('headerAvatar');
     const headerAvatarPlaceholder = document.getElementById('headerAvatarPlaceholder');
     const headerGreeting = document.getElementById('headerGreeting');
@@ -2166,20 +1654,10 @@
 
     let profileData = { ...defaultData };
 
-    function showToast(msg, duration = 2500) {
-      toast.textContent = msg;
-      toast.classList.add('show');
-      clearTimeout(toast._timer);
-      toast._timer = setTimeout(() => toast.classList.remove('show'), duration);
-    }
-
     function updateUI() {
       headerGreeting.textContent = 'Hai, ' + profileData.name;
       headerProdi.innerHTML = '<i class="fas fa-graduation-cap"></i> ' + profileData.prodi;
       headerSemester.innerHTML = '<i class="far fa-calendar-alt"></i> Semester ' + profileData.semester;
-      
-      profileNameDisplay.textContent = profileData.name;
-      profileNimDisplay.textContent = 'NIM: ' + profileData.nim;
       
       if (profileData.avatar) {
         headerAvatar.src = profileData.avatar;
@@ -2189,154 +1667,40 @@
         headerAvatar.style.display = 'none';
         headerAvatarPlaceholder.style.display = 'flex';
       }
-      
-      if (profileData.avatar) {
-        profileAvatarContainer.innerHTML = '<img src="' + profileData.avatar + '" alt="Foto Profil" />';
-      } else {
-        profileAvatarContainer.innerHTML = '<div class="avatar-placeholder"><i class="fas fa-user"></i></div>';
-      }
-      
-      inputName.value = profileData.name || '';
-      inputNim.value = profileData.nim || '';
-      inputProdi.value = profileData.prodi || '';
-      inputSemester.value = profileData.semester || '4';
-      inputBio.value = profileData.bio || '';
     }
 
-    async function loadFromDB() {
-      try {
-        await openDB();
-        const data = await loadProfile();
-        if (data) {
-          profileData = { ...profileData, ...data };
-        }
-        updateUI();
-      } catch (e) {
-        console.warn('DB error, using default:', e);
-        updateUI();
+    // Simulate loading profile data (from localStorage or default)
+    try {
+      const saved = localStorage.getItem('fisikaku_profile');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        profileData = { ...profileData, ...parsed };
       }
+    } catch (e) {
+      console.warn('Failed to load profile from localStorage');
     }
 
-    async function saveToDB() {
-      try {
-        const data = {
-          name: inputName.value.trim() || defaultData.name,
-          nim: inputNim.value.trim() || defaultData.nim,
-          prodi: inputProdi.value.trim() || defaultData.prodi,
-          semester: inputSemester.value || '4',
-          bio: inputBio.value.trim() || '',
-          avatar: profileData.avatar || null
-        };
-        profileData = { ...profileData, ...data };
-        await saveProfile(profileData);
-        updateUI();
-        showToast('✅ Profil berhasil disimpan!');
-      } catch (e) {
-        showToast('❌ Gagal menyimpan profil: ' + e.message);
-        console.error(e);
-      }
-    }
+    updateUI();
 
-    inputAvatar.addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      if (!file.type.startsWith('image/')) {
-        showToast('❌ Harap pilih file gambar');
-        return;
-      }
-      if (file.size > 2 * 1024 * 1024) {
-        showToast('❌ Ukuran file maksimal 2MB');
-        return;
-      }
-      const reader = new FileReader();
-      reader.onload = function(ev) {
-        profileData.avatar = ev.target.result;
-        fileLabel.textContent = file.name;
-        updateUI();
-        showToast('📸 Foto berhasil diupload, klik Simpan untuk menyimpan.');
-      };
-      reader.readAsDataURL(file);
-    });
-
-    saveBtn.addEventListener('click', saveToDB);
-
-    // Navigation
+    // Navigation - only Beranda is active, others redirect to separate HTML
     const navItems = document.querySelectorAll('.nav-item');
-    const dashboardContent = document.getElementById('dashboardContent');
-    const soalPage = document.getElementById('soalPage');
-    const materiPage = document.getElementById('materiPage');
-    const profilePage = document.getElementById('profilePage');
-
-    function showPage(page) {
-      dashboardContent.style.display = 'none';
-      soalPage.classList.remove('active');
-      materiPage.classList.remove('active');
-      profilePage.classList.remove('active');
-
-      if (page === 'dashboard') {
-        dashboardContent.style.display = 'block';
-      } else if (page === 'soal') {
-        soalPage.classList.add('active');
-      } else if (page === 'materi') {
-        materiPage.classList.add('active');
-      } else if (page === 'profil') {
-        profilePage.classList.add('active');
-      }
-    }
-
     navItems.forEach(item => {
       item.addEventListener('click', function(e) {
+        // If it's not the Beranda link, let the href handle navigation
+        if (this.dataset.page !== 'dashboard') {
+          // Allow default navigation to separate HTML files
+          return;
+        }
         e.preventDefault();
-        const page = this.dataset.page;
+        // For Beranda, just keep the active state
         navItems.forEach(n => n.classList.remove('active'));
         this.classList.add('active');
-        showPage(page);
       });
     });
 
     // ============================================================
-    // SOAL & MATERI NAVIGATION - Redirect ke HTML terpisah
+    // CLOCK & NOTIFICATION OVERLAY
     // ============================================================
-    // Tombol Kerjakan Soal
-    document.querySelectorAll('.btn-kerjakan').forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const soalId = this.dataset.soal || '1';
-        // Arahkan ke soal1.html dengan parameter soal
-        window.location.href = 'soal1.html?id=' + soalId;
-      });
-    });
-
-    // Klik pada item soal juga bisa navigasi
-    document.querySelectorAll('.soal-item').forEach(item => {
-      item.addEventListener('click', function(e) {
-        // Hindari jika yang diklik adalah tombol (sudah di-handle di atas)
-        if (e.target.classList.contains('btn-kerjakan')) return;
-        const soalId = this.dataset.soal || '1';
-        window.location.href = 'soal1.html?id=' + soalId;
-      });
-    });
-
-    // Tombol Baca Materi
-    document.querySelectorAll('.btn-baca').forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const materiId = this.dataset.materi || '1';
-        // Arahkan ke materi1.html dengan parameter
-        window.location.href = 'materi1.html?id=' + materiId;
-      });
-    });
-
-    // Klik pada item materi juga bisa navigasi
-    document.querySelectorAll('.materi-item').forEach(item => {
-      item.addEventListener('click', function(e) {
-        if (e.target.classList.contains('btn-baca')) return;
-        const materiId = this.dataset.materi || '1';
-        window.location.href = 'materi1.html?id=' + materiId;
-      });
-    });
-
-    // Clock overlay
     const clockOverlay = document.getElementById('clockOverlay');
     const notifOverlay = document.getElementById('notifOverlay');
     const clockIcon = document.getElementById('clockIcon');
@@ -2402,7 +1766,9 @@
       }
     });
 
-    // Progress ring animation
+    // ============================================================
+    // PROGRESS RING ANIMATION
+    // ============================================================
     const ring = document.getElementById('progressRing');
     if (ring) {
       const radius = 30;
@@ -2414,7 +1780,9 @@
       setTimeout(() => { ring.style.strokeDashoffset = offset; }, 300);
     }
 
-    // Live slider
+    // ============================================================
+    // LIVE SLIDER
+    // ============================================================
     const sliderTrack = document.getElementById('liveSlider');
     const dots = document.querySelectorAll('.slider-dot');
     let currentSlide = 0;
@@ -2517,13 +1885,6 @@
     sliderWrapper.addEventListener('mousedown', stopAutoPlay);
     sliderWrapper.addEventListener('mouseenter', stopAutoPlay);
     sliderWrapper.addEventListener('mouseleave', startAutoPlay);
-
-    // Load profile data
-    loadFromDB();
-
-    // Set default page
-    showPage('dashboard');
-    document.querySelector('.nav-item[data-page="dashboard"]').classList.add('active');
   });
 </script>
 
