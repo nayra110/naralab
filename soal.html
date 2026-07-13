@@ -981,10 +981,10 @@
 
     <!-- BOTTOM NAV (tetap) -->
     <div class="bottom-nav">
-      <a href="#beranda" class="nav-item"><i class="fas fa-house"></i><span>Beranda</span></a>
+      <a href="home.html" class="nav-item"><i class="fas fa-house"></i><span>Beranda</span></a>
       <a href="#quiz" class="nav-item active"><i class="fas fa-pencil"></i><span>Soal</span></a>
-      <a href="#materi" class="nav-item"><i class="fas fa-book-open"></i><span>Materi</span></a>
-      <a href="#profil" class="nav-item"><i class="fas fa-user"></i><span>Profil</span></a>
+      <a href="home.html" class="nav-item"><i class="fas fa-book-open"></i><span>Materi</span></a>
+      <a href="home.html" class="nav-item"><i class="fas fa-user"></i><span>Profil</span></a>
     </div>
 
   </div> <!-- /phone -->
@@ -1160,7 +1160,8 @@
       const navItems = document.querySelectorAll('.nav-item');
       navItems.forEach(item => {
         item.addEventListener('click', function(e) {
-          e.preventDefault();
+          // Jika link mengarah ke # atau home.html, biarkan navigasi default
+          // Tapi kita tetap update class active
           navItems.forEach(n => n.classList.remove('active'));
           this.classList.add('active');
           // scroll ke atas agar quiz terlihat
