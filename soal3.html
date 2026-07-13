@@ -470,6 +470,75 @@
       opacity: 0.7;
     }
 
+    /* ===== SKOR BADGE ===== */
+    .score-badge {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg, #4b1dd6, #7f3eff);
+      border-radius: 18px;
+      padding: 10px 18px;
+      margin-bottom: 18px;
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(75, 29, 214, 0.25);
+      transition: all 0.3s ease;
+    }
+
+    .score-badge .score-label {
+      font-size: 13px;
+      font-weight: 600;
+      opacity: 0.9;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .score-badge .score-label i {
+      font-size: 16px;
+    }
+
+    .score-badge .score-value {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 2px 16px;
+      border-radius: 30px;
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .score-badge .score-value .total {
+      font-size: 14px;
+      font-weight: 600;
+      opacity: 0.7;
+    }
+
+    .score-badge .progress-ring {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ===== PROGRESS BAR MINI ===== */
+    .progress-mini {
+      width: 80px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-mini .fill {
+      height: 100%;
+      background: #fff;
+      border-radius: 10px;
+      width: 0%;
+      transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
     /* --- Quiz Item --- */
     .quiz-item {
       background: #ffffff;
@@ -479,6 +548,7 @@
       border: 1px solid rgba(0, 0, 0, 0.04);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
       transition: all 0.3s ease;
+      position: relative;
     }
 
     .quiz-item:hover {
@@ -521,6 +591,33 @@
     .quiz-item .quiz-header .badge.easy {
       background: rgba(46, 204, 113, 0.1);
       color: #2ecc71;
+    }
+
+    /* status soal (jawab/tidak) */
+    .quiz-item .quiz-header .status-icon {
+      font-size: 16px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.04);
+      transition: all 0.3s ease;
+    }
+
+    .quiz-item .quiz-header .status-icon.done-correct {
+      background: rgba(46, 204, 113, 0.15);
+      color: #2ecc71;
+    }
+
+    .quiz-item .quiz-header .status-icon.done-wrong {
+      background: rgba(231, 76, 60, 0.12);
+      color: #e74c3c;
+    }
+
+    .quiz-item .quiz-header .status-icon i {
+      font-size: 13px;
     }
 
     .quiz-item p {
@@ -590,9 +687,16 @@
       transform: scale(1.04);
     }
 
+    .quiz-item .quiz-footer .btn-jawab:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+    }
+
     .quiz-item .quiz-footer .feedback {
       font-size: 12px;
       font-weight: 600;
+      transition: all 0.3s ease;
     }
 
     .quiz-item .quiz-footer .feedback.benar {
@@ -600,6 +704,9 @@
     }
     .quiz-item .quiz-footer .feedback.salah {
       color: #e74c3c;
+    }
+    .quiz-item .quiz-footer .feedback.neutral {
+      color: #8d9bb0;
     }
 
     /* ----- BOTTOM NAV ----- */
@@ -720,6 +827,18 @@
       .clock-overlay .big-clock {
         font-size: 48px;
       }
+      .score-badge {
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 12px 16px;
+      }
+      .score-badge .score-value {
+        font-size: 18px;
+        padding: 0 12px;
+      }
+      .progress-mini {
+        width: 60px;
+      }
     }
 
     @media (max-width: 360px) {
@@ -729,6 +848,12 @@
       }
       .quiz-item .quiz-header h4 {
         font-size: 13px;
+      }
+      .score-badge .score-label {
+        font-size: 11px;
+      }
+      .score-badge .score-value {
+        font-size: 16px;
       }
     }
 
@@ -763,6 +888,24 @@
         transform: translateY(110vh) rotate(720deg) scale(0.3);
         opacity: 0;
       }
+    }
+
+    /* animasi pulse untuk skor baru */
+    @keyframes scorePop {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.25);
+        color: #ffd700;
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .score-pop {
+      animation: scorePop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
   </style>
 </head>
@@ -805,13 +948,31 @@
       <div class="content" id="quizContent">
         <div class="card">
           <div class="card-title"><i class="fas fa-bolt"></i> Quiz Hukum Ohm</div>
-          <p style="font-size:13px; color:#6b7b93; margin-bottom:16px;">10 soal pilihan ganda tentang Hukum Ohm dan rangkaian listrik.</p>
+
+          <!-- ===== SKOR BADGE ===== -->
+          <div class="score-badge" id="scoreBadge">
+            <div class="score-label">
+              <i class="fas fa-star"></i>
+              <span>Skor Kamu</span>
+            </div>
+            <div class="progress-ring">
+              <div class="progress-mini">
+                <div class="fill" id="progressFill" style="width:0%;"></div>
+              </div>
+              <div class="score-value" id="scoreDisplay">
+                0 <span class="total">/ 10</span>
+              </div>
+            </div>
+          </div>
+
+          <p style="font-size:13px; color:#6b7b93; margin-bottom:16px;">10 soal pilihan ganda tentang Hukum Ohm dan rangkaian listrik. Klik <strong>Jawab</strong> untuk mengecek.</p>
 
           <!-- Soal 1 (Jawaban: A) -->
           <div class="quiz-item" data-quiz="1">
             <div class="quiz-header">
               <h4>Soal 1</h4>
               <span class="badge easy">Mudah</span>
+              <span class="status-icon" id="status1"><i class="far fa-circle"></i></span>
             </div>
             <p>Bunyi Hukum Ohm adalah ...</p>
             <div class="options">
@@ -823,7 +984,7 @@
             <div class="quiz-footer">
               <span></span>
               <button class="btn-jawab" data-quiz="1">Jawab</button>
-              <span class="feedback" id="feedback1"></span>
+              <span class="feedback neutral" id="feedback1">⏳ Belum dijawab</span>
             </div>
           </div>
 
@@ -832,6 +993,7 @@
             <div class="quiz-header">
               <h4>Soal 2</h4>
               <span class="badge easy">Mudah</span>
+              <span class="status-icon" id="status2"><i class="far fa-circle"></i></span>
             </div>
             <p>Rumus Hukum Ohm yang benar adalah ...</p>
             <div class="options">
@@ -843,7 +1005,7 @@
             <div class="quiz-footer">
               <span></span>
               <button class="btn-jawab" data-quiz="2">Jawab</button>
-              <span class="feedback" id="feedback2"></span>
+              <span class="feedback neutral" id="feedback2">⏳ Belum dijawab</span>
             </div>
           </div>
 
@@ -852,6 +1014,7 @@
             <div class="quiz-header">
               <h4>Soal 3</h4>
               <span class="badge medium">Sedang</span>
+              <span class="status-icon" id="status3"><i class="far fa-circle"></i></span>
             </div>
             <p>Sebuah resistor 5 Ω dihubungkan dengan baterai 10 V. Berapa arus yang mengalir?</p>
             <div class="options">
@@ -863,7 +1026,7 @@
             <div class="quiz-footer">
               <span></span>
               <button class="btn-jawab" data-quiz="3">Jawab</button>
-              <span class="feedback" id="feedback3"></span>
+              <span class="feedback neutral" id="feedback3">⏳ Belum dijawab</span>
             </div>
           </div>
 
@@ -872,6 +1035,7 @@
             <div class="quiz-header">
               <h4>Soal 4</h4>
               <span class="badge medium">Sedang</span>
+              <span class="status-icon" id="status4"><i class="far fa-circle"></i></span>
             </div>
             <p>Satuan hambatan listrik dalam SI adalah ...</p>
             <div class="options">
@@ -883,7 +1047,7 @@
             <div class="quiz-footer">
               <span></span>
               <button class="btn-jawab" data-quiz="4">Jawab</button>
-              <span class="feedback" id="feedback4"></span>
+              <span class="feedback neutral" id="feedback4">⏳ Belum dijawab</span>
             </div>
           </div>
 
@@ -892,6 +1056,7 @@
             <div class="quiz-header">
               <h4>Soal 5</h4>
               <span class="badge hard">Sulit</span>
+              <span class="status-icon" id="status5"><i class="far fa-circle"></i></span>
             </div>
             <p>Sebuah kawat memiliki hambatan 20 Ω. Jika tegangan yang diberikan 100 V, berapa arus yang mengalir?</p>
             <div class="options">
@@ -903,7 +1068,7 @@
             <div class="quiz-footer">
               <span></span>
               <button class="btn-jawab" data-quiz="5">Jawab</button>
-              <span class="feedback" id="feedback5"></span>
+              <span class="feedback neutral" id="feedback5">⏳ Belum dijawab</span>
             </div>
           </div>
 
@@ -912,6 +1077,7 @@
             <div class="quiz-header">
               <h4>Soal 6</h4>
               <span class="badge medium">Sedang</span>
+              <span class="status-icon" id="status6"><i class="far fa-circle"></i></span>
             </div>
             <p>Alat yang digunakan untuk mengukur hambatan listrik adalah ...</p>
             <div class="options">
@@ -923,7 +1089,7 @@
             <div class="quiz-footer">
               <span></span>
               <button class="btn-jawab" data-quiz="6">Jawab</button>
-              <span class="feedback" id="feedback6"></span>
+              <span class="feedback neutral" id="feedback6">⏳ Belum dijawab</span>
             </div>
           </div>
 
@@ -932,6 +1098,7 @@
             <div class="quiz-header">
               <h4>Soal 7</h4>
               <span class="badge hard">Sulit</span>
+              <span class="status-icon" id="status7"><i class="far fa-circle"></i></span>
             </div>
             <p>Dua buah resistor 4 Ω dan 6 Ω dirangkai seri. Hambatan totalnya adalah ...</p>
             <div class="options">
@@ -943,7 +1110,7 @@
             <div class="quiz-footer">
               <span></span>
               <button class="btn-jawab" data-quiz="7">Jawab</button>
-              <span class="feedback" id="feedback7"></span>
+              <span class="feedback neutral" id="feedback7">⏳ Belum dijawab</span>
             </div>
           </div>
 
@@ -952,6 +1119,7 @@
             <div class="quiz-header">
               <h4>Soal 8</h4>
               <span class="badge easy">Mudah</span>
+              <span class="status-icon" id="status8"><i class="far fa-circle"></i></span>
             </div>
             <p>Jika hambatan tetap, maka arus listrik akan ... ketika tegangan dinaikkan.</p>
             <div class="options">
@@ -963,7 +1131,7 @@
             <div class="quiz-footer">
               <span></span>
               <button class="btn-jawab" data-quiz="8">Jawab</button>
-              <span class="feedback" id="feedback8"></span>
+              <span class="feedback neutral" id="feedback8">⏳ Belum dijawab</span>
             </div>
           </div>
 
@@ -972,6 +1140,7 @@
             <div class="quiz-header">
               <h4>Soal 9</h4>
               <span class="badge medium">Sedang</span>
+              <span class="status-icon" id="status9"><i class="far fa-circle"></i></span>
             </div>
             <p>Resistor 3 Ω dialiri arus 4 A. Berapa tegangan pada resistor tersebut?</p>
             <div class="options">
@@ -983,7 +1152,7 @@
             <div class="quiz-footer">
               <span></span>
               <button class="btn-jawab" data-quiz="9">Jawab</button>
-              <span class="feedback" id="feedback9"></span>
+              <span class="feedback neutral" id="feedback9">⏳ Belum dijawab</span>
             </div>
           </div>
 
@@ -992,6 +1161,7 @@
             <div class="quiz-header">
               <h4>Soal 10</h4>
               <span class="badge hard">Sulit</span>
+              <span class="status-icon" id="status10"><i class="far fa-circle"></i></span>
             </div>
             <p>Dua resistor 6 Ω dan 12 Ω dirangkai paralel. Hambatan totalnya adalah ...</p>
             <div class="options">
@@ -1003,7 +1173,7 @@
             <div class="quiz-footer">
               <span></span>
               <button class="btn-jawab" data-quiz="10">Jawab</button>
-              <span class="feedback" id="feedback10"></span>
+              <span class="feedback neutral" id="feedback10">⏳ Belum dijawab</span>
             </div>
           </div>
 
@@ -1070,7 +1240,7 @@
   </div>
 
   <!-- ============================================================
-       CONFETTI SCRIPT
+       SCRIPT
        ============================================================ -->
   <script>
     (function() {
@@ -1089,8 +1259,6 @@
         ];
 
         const shapes = ['square', 'circle', 'triangle'];
-
-        // Jumlah confetti
         const count = 80;
 
         for (let i = 0; i < count; i++) {
@@ -1099,16 +1267,11 @@
 
           const color = colors[Math.floor(Math.random() * colors.length)];
           const shape = shapes[Math.floor(Math.random() * shapes.length)];
-
-          // Ukuran bervariasi
           const size = 6 + Math.random() * 10;
           piece.style.width = size + 'px';
           piece.style.height = size + 'px';
-
-          // Warna
           piece.style.backgroundColor = color;
 
-          // Bentuk
           if (shape === 'circle') {
             piece.style.borderRadius = '50%';
           } else if (shape === 'triangle') {
@@ -1120,32 +1283,17 @@
             piece.style.borderBottom = size + 'px solid ' + color;
           }
 
-          // Posisi horizontal acak
-          const left = Math.random() * 100;
-          piece.style.left = left + '%';
-
-          // Durasi animasi bervariasi
-          const duration = 1.5 + Math.random() * 2.5;
-          piece.style.animationDuration = duration + 's';
-
-          // Delay acak
-          const delay = Math.random() * 0.6;
-          piece.style.animationDelay = delay + 's';
-
-          // Rotasi awal acak
+          piece.style.left = Math.random() * 100 + '%';
+          piece.style.animationDuration = (1.5 + Math.random() * 2.5) + 's';
+          piece.style.animationDelay = (Math.random() * 0.6) + 's';
           piece.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
-
           container.appendChild(piece);
         }
 
-        // Hapus container setelah animasi selesai
-        setTimeout(function() {
-          container.remove();
-        }, 4500);
+        setTimeout(function() { container.remove(); }, 4500);
       }
 
       // --- Kunci Jawaban (Hukum Ohm) ---
-      // 1a, 2b, 3a, 4d, 5d, 6a, 7c, 8a, 9d, 10c
       const kunciJawaban = {
         1: 'A',
         2: 'B',
@@ -1159,15 +1307,83 @@
         10: 'C'
       };
 
+      // --- STATE SKOR ---
+      let correctCount = 0;
+      const totalSoal = 10;
+      const answered = {};
+
+      // DOM refs
+      const scoreDisplay = document.getElementById('scoreDisplay');
+      const progressFill = document.getElementById('progressFill');
+      const scoreBadge = document.getElementById('scoreBadge');
+
+      function updateScoreUI() {
+        const scoreText = correctCount + ' <span class="total">/ ' + totalSoal + '</span>';
+        scoreDisplay.innerHTML = scoreText;
+        const pct = (correctCount / totalSoal) * 100;
+        progressFill.style.width = pct + '%';
+
+        scoreDisplay.classList.remove('score-pop');
+        void scoreDisplay.offsetWidth;
+        scoreDisplay.classList.add('score-pop');
+
+        if (correctCount === totalSoal) {
+          scoreBadge.style.background = 'linear-gradient(135deg, #2ecc71, #27ae60)';
+        } else if (correctCount >= 7) {
+          scoreBadge.style.background = 'linear-gradient(135deg, #4b1dd6, #7f3eff)';
+        } else if (correctCount >= 4) {
+          scoreBadge.style.background = 'linear-gradient(135deg, #f39c12, #e67e22)';
+        } else {
+          scoreBadge.style.background = 'linear-gradient(135deg, #4b1dd6, #7f3eff)';
+        }
+      }
+
+      function updateStatusIcon(quizId, isCorrect) {
+        const statusEl = document.getElementById('status' + quizId);
+        if (!statusEl) return;
+        if (isCorrect === true) {
+          statusEl.className = 'status-icon done-correct';
+          statusEl.innerHTML = '<i class="fas fa-check-circle"></i>';
+        } else if (isCorrect === false) {
+          statusEl.className = 'status-icon done-wrong';
+          statusEl.innerHTML = '<i class="fas fa-times-circle"></i>';
+        } else {
+          statusEl.className = 'status-icon';
+          statusEl.innerHTML = '<i class="far fa-circle"></i>';
+        }
+      }
+
+      function updateFeedback(quizId, isCorrect, jawabanBenar) {
+        const feedback = document.getElementById('feedback' + quizId);
+        if (!feedback) return;
+        if (isCorrect === true) {
+          feedback.textContent = '✅ Benar! +1';
+          feedback.className = 'feedback benar';
+        } else if (isCorrect === false) {
+          feedback.textContent = '❌ Salah. Jawaban: ' + jawabanBenar;
+          feedback.className = 'feedback salah';
+        } else {
+          feedback.textContent = '⏳ Belum dijawab';
+          feedback.className = 'feedback neutral';
+        }
+      }
+
+      // --- EVENT JAWAB ---
       const btnJawab = document.querySelectorAll('.btn-jawab');
 
       btnJawab.forEach(btn => {
         btn.addEventListener('click', function() {
-          const quizId = this.dataset.quiz;
+          const quizId = parseInt(this.dataset.quiz);
           const item = this.closest('.quiz-item');
           const radioName = 'q' + quizId;
           const selected = item.querySelector('input[name="' + radioName + '"]:checked');
           const feedback = document.getElementById('feedback' + quizId);
+
+          if (answered[quizId] !== undefined) {
+            feedback.textContent = '⏳ Sudah dijawab';
+            feedback.className = 'feedback neutral';
+            return;
+          }
 
           if (!selected) {
             feedback.textContent = '⚠️ Pilih jawaban dulu!';
@@ -1177,15 +1393,53 @@
 
           const jawabanUser = selected.value;
           const jawabanBenar = kunciJawaban[quizId];
+          const isCorrect = (jawabanUser === jawabanBenar);
 
-          if (jawabanUser === jawabanBenar) {
-            feedback.textContent = '✅ Benar! 🎉';
-            feedback.className = 'feedback benar';
-            // 🎊 LUNCURKAN CONFETTI!
+          answered[quizId] = isCorrect;
+          if (isCorrect) {
+            correctCount++;
+          }
+
+          updateStatusIcon(quizId, isCorrect);
+          updateFeedback(quizId, isCorrect, jawabanBenar);
+          updateScoreUI();
+
+          this.disabled = true;
+
+          if (isCorrect) {
             launchConfetti();
-          } else {
-            feedback.textContent = '❌ Salah. Jawaban: ' + jawabanBenar;
-            feedback.className = 'feedback salah';
+          }
+
+          const totalAnswered = Object.keys(answered).length;
+          if (totalAnswered === totalSoal) {
+            setTimeout(() => {
+              const msg = document.createElement('div');
+              msg.style.cssText =
+                'text-align:center; padding:14px; margin-top:8px; background:rgba(46,204,113,0.08); border-radius:16px; font-weight:600; color:#2ecc71; border:1px solid rgba(46,204,113,0.15);';
+              if (correctCount === totalSoal) {
+                msg.innerHTML =
+                  '🎉 <strong>Sempurna!</strong> Nilai 10/10! Kamu benar-benar menguasai Hukum Ohm! ⚡';
+                launchConfetti();
+                setTimeout(launchConfetti, 800);
+              } else if (correctCount >= 7) {
+                msg.innerHTML =
+                  '🌟 <strong>Bagus!</strong> Skor ' + correctCount +
+                  '/10. Pertahankan semangat belajarmu! 💪';
+              } else if (correctCount >= 4) {
+                msg.innerHTML =
+                  '📖 <strong>Terus belajar!</strong> Skor ' + correctCount +
+                  '/10. Baca ulang materi Hukum Ohm ya. 📚';
+              } else {
+                msg.innerHTML =
+                  '💪 <strong>Jangan menyerah!</strong> Skor ' + correctCount +
+                  '/10. Coba pelajari lagi konsep dasar rangkaian listrik. 🧠';
+              }
+              const card = document.querySelector('.card');
+              const existing = document.querySelector('.quiz-result-msg');
+              if (existing) existing.remove();
+              msg.className = 'quiz-result-msg';
+              card.insertBefore(msg, card.querySelector('.quiz-item'));
+            }, 400);
           }
         });
       });
@@ -1208,8 +1462,8 @@
         const minutes = String(now.getMinutes()).padStart(2, '0');
         fullClock.innerHTML = hours + ':' + minutes + ' <small>WIB</small>';
         const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-        const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober',
-          'November', 'Desember'
+        const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
+          'Oktober', 'November', 'Desember'
         ];
         const dayName = days[now.getDay()];
         const day = now.getDate();
