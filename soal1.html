@@ -731,6 +731,39 @@
         font-size: 13px;
       }
     }
+
+    /* ============================================================
+       CONFETTI STYLES
+       ============================================================ */
+    .confetti-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 99999;
+      overflow: hidden;
+    }
+
+    .confetti-piece {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      top: -10px;
+      animation: confettiFall linear forwards;
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(720deg) scale(0.3);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1036,10 +1069,128 @@
     </div>
   </div>
 
+  <!-- ============================================================
+       CONFETTI SCRIPT
+       ============================================================ -->
   <script>
     (function() {
+      'use strict';
+
+      // --- Confetti Engine ---
+      function launchConfetti() {
+        const container = document.createElement('div');
+        container.className = 'confetti-container';
+        document.body.appendChild(container);
+
+        const colors = [
+          '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4',
+          '#FFEAA7', '#DDA0DD', '#FF8A5C', '#A29BFE',
+          '#FD79A8', '#00CEC9', '#FDCB6E', '#6C5CE7'
+        ];
+
+        const shapes = ['square', 'circle', 'triangle'];
+
+        // Jumlah confetti
+        const count = 80;
+
+        for (let i = 0; i < count; i++) {
+          const piece = document.createElement('div');
+          piece.className = 'confetti-piece';
+
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          const shape = shapes[Math.floor(Math.random() * shapes.length)];
+
+          // Ukuran bervariasi
+          const size = 6 + Math.random() * 10;
+          piece.style.width = size + 'px';
+          piece.style.height = size + 'px';
+
+          // Warna
+          piece.style.backgroundColor = color;
+
+          // Bentuk
+          if (shape === 'circle') {
+            piece.style.borderRadius = '50%';
+          } else if (shape === 'triangle') {
+            piece.style.width = '0';
+            piece.style.height = '0';
+            piece.style.backgroundColor = 'transparent';
+            piece.style.borderLeft = size / 2 + 'px solid transparent';
+            piece.style.borderRight = size / 2 + 'px solid transparent';
+            piece.style.borderBottom = size + 'px solid ' + color;
+          }
+
+          // Posisi horizontal acak
+          const left = Math.random() * 100;
+          piece.style.left = left + '%';
+
+          // Durasi animasi bervariasi
+          const duration = 1.5 + Math.random() * 2.5;
+          piece.style.animationDuration = duration + 's';
+
+          // Delay acak
+          const delay = Math.random() * 0.6;
+          piece.style.animationDelay = delay + 's';
+
+          // Rotasi awal acak
+          piece.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+
+          container.appendChild(piece);
+        }
+
+        // Hapus container setelah animasi selesai
+        setTimeout(function() {
+          container.remove();
+        }, 4500);
+      }
+
+      // --- Hubungkan ke jawaban benar ---
+      const kunciJawaban = {
+        1: 'A',
+        2: 'B',
+        3: 'A',
+        4: 'A',
+        5: 'A',
+        6: 'A',
+        7: 'A',
+        8: 'A',
+        9: 'B',
+        10: 'A'
+      };
+
+      const btnJawab = document.querySelectorAll('.btn-jawab');
+
+      btnJawab.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const quizId = this.dataset.quiz;
+          const item = this.closest('.quiz-item');
+          const radioName = 'q' + quizId;
+          const selected = item.querySelector('input[name="' + radioName + '"]:checked');
+          const feedback = document.getElementById('feedback' + quizId);
+
+          if (!selected) {
+            feedback.textContent = '⚠️ Pilih jawaban dulu!';
+            feedback.className = 'feedback salah';
+            return;
+          }
+
+          const jawabanUser = selected.value;
+          const jawabanBenar = kunciJawaban[quizId];
+
+          if (jawabanUser === jawabanBenar) {
+            feedback.textContent = '✅ Benar! 🎉';
+            feedback.className = 'feedback benar';
+            // 🎊 LUNCURKAN CONFETTI!
+            launchConfetti();
+          } else {
+            feedback.textContent = '❌ Salah. Jawaban: ' + jawabanBenar;
+            feedback.className = 'feedback salah';
+          }
+        });
+      });
+
       // ============================================================
-      // CLOCK & NOTIF OVERLAY
+      // CLOCK & NOTIF OVERLAY (tetap)
       // ============================================================
       const clockOverlay = document.getElementById('clockOverlay');
       const notifOverlay = document.getElementById('notifOverlay');
@@ -1109,62 +1260,13 @@
       });
 
       // ============================================================
-      // QUIZ LOGIC - 10 soal relativitas khusus
-      // ============================================================
-      const kunciJawaban = {
-        1: 'A',
-        2: 'B',
-        3: 'A',
-        4: 'A',
-        5: 'A',
-        6: 'A',
-        7: 'A',
-        8: 'A',
-        9: 'B',
-        10: 'A'
-      };
-
-      // Kumpulkan semua tombol jawab
-      const btnJawab = document.querySelectorAll('.btn-jawab');
-
-      btnJawab.forEach(btn => {
-        btn.addEventListener('click', function() {
-          const quizId = this.dataset.quiz;
-          const item = this.closest('.quiz-item');
-          const radioName = 'q' + quizId;
-          const selected = item.querySelector('input[name="' + radioName + '"]:checked');
-          const feedback = document.getElementById('feedback' + quizId);
-
-          if (!selected) {
-            feedback.textContent = '⚠️ Pilih jawaban dulu!';
-            feedback.className = 'feedback salah';
-            return;
-          }
-
-          const jawabanUser = selected.value;
-          const jawabanBenar = kunciJawaban[quizId];
-
-          if (jawabanUser === jawabanBenar) {
-            feedback.textContent = '✅ Benar!';
-            feedback.className = 'feedback benar';
-          } else {
-            feedback.textContent = '❌ Salah. Jawaban: ' + jawabanBenar;
-            feedback.className = 'feedback salah';
-          }
-        });
-      });
-
-      // ============================================================
-      // NAVIGASI BOTTOM NAV (hanya untuk efek visual, semua tetap di halaman ini)
+      // NAVIGASI BOTTOM NAV
       // ============================================================
       const navItems = document.querySelectorAll('.nav-item');
       navItems.forEach(item => {
         item.addEventListener('click', function(e) {
-          // Jika link mengarah ke # atau home.html, biarkan navigasi default
-          // Tapi kita tetap update class active
           navItems.forEach(n => n.classList.remove('active'));
           this.classList.add('active');
-          // scroll ke atas agar quiz terlihat
           document.querySelector('.scroll-content').scrollTop = 0;
         });
       });
