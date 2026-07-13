@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Fisikaku · Quiz Tata Surya</title>
+
+  <!-- Google Font & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+
+  <style>
+    /* ----- RESET & BASE ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #eef2f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Inter', -apple-system, sans-serif;
+      padding: 16px;
+      overflow-x: hidden;
+    }
+
+    /* ----- PHONE FRAME ----- */
+    .phone {
+      width: 100%;
+      max-width: 390px;
+      background: #f8fcff;
+      border-radius: 40px;
+      box-shadow: 0 30px 60px rgba(0, 20, 40, 0.12);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ----- SCROLLABLE CONTENT ----- */
+    .scroll-content {
+      max-height: 100vh;
+      overflow-y: auto;
+      padding-bottom: 90px;
+      scroll-behavior: smooth;
+    }
+
+    /* ----- HEADER (gradient + glass) ----- */
+    .header {
+      background: linear-gradient(145deg, #4b1dd6, #7f3eff);
+      padding: 28px 22px 60px 22px;
+      border-bottom-left-radius: 44px;
+      border-bottom-right-radius: 44px;
+      position: relative;
+      color: #fff;
+    }
+
+    .header::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+      border-radius: inherit;
+    }
+
+    .profile-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+
+    .profile-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .avatar-frame {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 3px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+      flex-shrink: 0;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar-frame:hover {
+      transform: scale(1.08) rotate(-2deg);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+    }
+
+    .avatar-frame img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      display: block;
+    }
+
+    .avatar-frame .avatar-placeholder {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 28px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .greeting {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      line-height: 1.3;
+    }
+
+    .sub-text-compact {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      opacity: 0.85;
+      margin-top: 2px;
+      letter-spacing: 0.1px;
+      flex-wrap: wrap;
+    }
+
+    .sub-text-compact i {
+      font-size: 10px;
+      opacity: 0.9;
+    }
+
+    .semester-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      opacity: 0.8;
+      margin-top: 1px;
+      letter-spacing: 0.1px;
+    }
+
+    .semester-row i {
+      font-size: 10px;
+      opacity: 0.9;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 16px;
+      font-size: 20px;
+      opacity: 0.9;
+      position: relative;
+      z-index: 2;
+    }
+
+    .header-actions .icon-wrap {
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+    }
+
+    .header-actions .icon-wrap:hover {
+      transform: scale(1.15) rotate(5deg);
+      opacity: 1;
+    }
+
+    /* ============================================================
+       FULLSCREEN OVERLAY POPUP (untuk clock & notif)
+       ============================================================ */
+    .overlay-popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      animation: overlayFadeIn 0.3s ease;
+      padding: 24px;
+    }
+
+    .overlay-popup.show {
+      display: flex;
+    }
+
+    @keyframes overlayFadeIn {
+      from {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+        -webkit-backdrop-filter: blur(0px);
+      }
+      to {
+        opacity: 1;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+    }
+
+    .overlay-content {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 32px;
+      padding: 32px 28px;
+      max-width: 340px;
+      width: 100%;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+      animation: contentPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    @keyframes contentPop {
+      from {
+        opacity: 0;
+        transform: scale(0.85) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .overlay-close {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      background: rgba(0, 0, 0, 0.05);
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 18px;
+      color: #6b7b93;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .overlay-close:hover {
+      background: rgba(255, 59, 92, 0.1);
+      color: #ff3b5c;
+      transform: rotate(90deg);
+    }
+
+    /* --- CLOCK OVERLAY --- */
+    .clock-overlay .overlay-content {
+      text-align: center;
+    }
+
+    .clock-overlay .big-clock {
+      font-size: 64px;
+      font-weight: 700;
+      color: #4b1dd6;
+      letter-spacing: 2px;
+      line-height: 1.1;
+      margin-top: 8px;
+    }
+
+    .clock-overlay .big-clock small {
+      font-size: 24px;
+      font-weight: 500;
+      color: #8d9bb0;
+      margin-left: 4px;
+    }
+
+    .clock-overlay .clock-date {
+      font-size: 16px;
+      color: #6b7b93;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    .clock-overlay .clock-label {
+      font-size: 13px;
+      color: #8d9bb0;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    /* --- NOTIFICATION OVERLAY --- */
+    .notif-overlay .overlay-content {
+      padding: 24px 20px;
+    }
+
+    .notif-overlay .notif-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .notif-overlay .notif-header h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a2538;
+    }
+
+    .notif-overlay .notif-header i {
+      font-size: 22px;
+      color: #4b1dd6;
+    }
+
+    .notif-overlay .notif-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 340px;
+      overflow-y: auto;
+    }
+
+    .notif-overlay .notif-list::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    .notif-overlay .notif-list::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .notif-overlay .notif-list::-webkit-scrollbar-thumb {
+      background: #4b1dd6;
+      border-radius: 10px;
+    }
+
+    .notif-overlay .notif-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 12px 14px;
+      background: rgba(75, 29, 214, 0.03);
+      border-radius: 16px;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+    }
+
+    .notif-overlay .notif-card:hover {
+      background: rgba(75, 29, 214, 0.06);
+      border-color: rgba(75, 29, 214, 0.08);
+      transform: translateX(4px);
+    }
+
+    .notif-overlay .notif-card .notif-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .notif-overlay .notif-card .notif-icon.green {
+      background: rgba(111, 207, 151, 0.15);
+      color: #6fcf97;
+    }
+    .notif-overlay .notif-card .notif-icon.blue {
+      background: rgba(77, 124, 255, 0.15);
+      color: #4d7cff;
+    }
+    .notif-overlay .notif-card .notif-icon.yellow {
+      background: rgba(255, 219, 112, 0.2);
+      color: #f5a623;
+    }
+
+    .notif-overlay .notif-card .notif-body {
+      flex: 1;
+    }
+
+    .notif-overlay .notif-card .notif-body h4 {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1a2538;
+      margin-bottom: 2px;
+    }
+
+    .notif-overlay .notif-card .notif-body p {
+      font-size: 11.5px;
+      color: #6b7b93;
+      font-weight: 400;
+    }
+
+    .notif-overlay .notif-card .notif-time {
+      font-size: 10px;
+      color: #8d9bb0;
+      font-weight: 500;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ============================================================
+       QUIZ SECTION (hanya ini yang tampil selain navbar & header)
+       ============================================================ */
+    .content {
+      margin-top: -46px;
+      padding: 0 16px 16px 16px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 28px;
+      padding: 20px 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.02), 0 2px 8px rgba(0, 0, 0, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.4s ease,
+        border-color 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px) scale(1.005);
+      box-shadow: 0 16px 48px rgba(75, 29, 214, 0.08), 0 4px 16px rgba(0, 0, 0, 0.02);
+      border-color: rgba(75, 29, 214, 0.1);
+    }
+
+    .card-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      color: #2e3a4f;
+      opacity: 0.6;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-title i {
+      font-size: 14px;
+      color: #5b2bff;
+      opacity: 0.7;
+    }
+
+    /* --- Quiz Item --- */
+    .quiz-item {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 14px;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+      transition: all 0.3s ease;
+    }
+
+    .quiz-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(75, 29, 214, 0.06);
+      border-color: rgba(75, 29, 214, 0.08);
+    }
+
+    .quiz-item .quiz-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .quiz-item .quiz-header h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a2538;
+    }
+
+    .quiz-item .quiz-header .badge {
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 12px;
+      border-radius: 20px;
+      background: rgba(75, 29, 214, 0.08);
+      color: #4b1dd6;
+      white-space: nowrap;
+    }
+
+    .quiz-item .quiz-header .badge.hard {
+      background: rgba(231, 76, 60, 0.1);
+      color: #e74c3c;
+    }
+    .quiz-item .quiz-header .badge.medium {
+      background: rgba(243, 156, 18, 0.1);
+      color: #f39c12;
+    }
+    .quiz-item .quiz-header .badge.easy {
+      background: rgba(46, 204, 113, 0.1);
+      color: #2ecc71;
+    }
+
+    .quiz-item p {
+      font-size: 13px;
+      color: #3d4a5e;
+      line-height: 1.5;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .quiz-item .options {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin: 8px 0 10px 0;
+    }
+
+    .quiz-item .options label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: #3d4a5e;
+      background: rgba(0, 0, 0, 0.02);
+      padding: 8px 12px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .quiz-item .options label:hover {
+      background: rgba(75, 29, 214, 0.04);
+      border-color: rgba(75, 29, 214, 0.1);
+    }
+
+    .quiz-item .options input[type="radio"] {
+      accent-color: #4b1dd6;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .quiz-item .quiz-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .quiz-item .quiz-footer .btn-jawab {
+      padding: 6px 20px;
+      border: none;
+      border-radius: 16px;
+      background: #4b1dd6;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .quiz-item .quiz-footer .btn-jawab:hover {
+      background: #7f3eff;
+      transform: scale(1.04);
+    }
+
+    .quiz-item .quiz-footer .feedback {
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .quiz-item .quiz-footer .feedback.benar {
+      color: #2ecc71;
+    }
+    .quiz-item .quiz-footer .feedback.salah {
+      color: #e74c3c;
+    }
+
+    /* ----- BOTTOM NAV ----- */
+    .bottom-nav {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 10px 18px 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.02);
+      z-index: 50;
+      border-radius: 0 0 40px 40px;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #8d9bb0;
+      gap: 3px;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+      text-decoration: none;
+      padding: 4px 12px;
+      border-radius: 16px;
+      position: relative;
+    }
+
+    .nav-item i {
+      font-size: 22px;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .nav-item span {
+      transition: all 0.3s ease;
+    }
+
+    .nav-item.active {
+      color: #4b1dd6;
+    }
+
+    .nav-item.active i {
+      transform: scale(1.02);
+    }
+
+    .nav-item:hover {
+      color: #4b1dd6;
+      transform: translateY(-3px);
+    }
+
+    .nav-item:hover i {
+      transform: scale(1.15) rotate(-5deg);
+    }
+
+    .nav-item.active:hover i {
+      transform: scale(1.2) rotate(-5deg);
+    }
+
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #4b1dd6, #7f3eff);
+      border-radius: 4px;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform: translateX(-50%);
+    }
+
+    .nav-item.active::after {
+      width: 24px;
+    }
+
+    .nav-item:hover::after {
+      width: 28px;
+    }
+
+    /* ----- RESPONSIVE ----- */
+    @media (max-width: 420px) {
+      body {
+        padding: 0;
+      }
+      .phone {
+        border-radius: 0;
+        max-width: 100%;
+        box-shadow: none;
+        min-height: 100vh;
+      }
+      .header {
+        border-radius: 0 0 32px 32px;
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+      .content {
+        padding: 0 12px 12px 12px;
+      }
+      .card {
+        padding: 16px 14px;
+      }
+      .bottom-nav {
+        border-radius: 0;
+      }
+      .overlay-content {
+        max-width: 100%;
+        margin: 0 16px;
+        padding: 24px 20px;
+      }
+      .clock-overlay .big-clock {
+        font-size: 48px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .quiz-item .options label {
+        font-size: 11px;
+        padding: 6px 10px;
+      }
+      .quiz-item .quiz-header h4 {
+        font-size: 13px;
+      }
+    }
+
+    /* ============================================================
+       CONFETTI STYLES
+       ============================================================ */
+    .confetti-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 99999;
+      overflow: hidden;
+    }
+
+    .confetti-piece {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      top: -10px;
+      animation: confettiFall linear forwards;
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(720deg) scale(0.3);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="phone">
+
+    <!-- SCROLLABLE CONTENT -->
+    <div class="scroll-content">
+
+      <!-- HEADER (tetap) -->
+      <header class="header">
+        <div class="profile-row">
+          <div class="profile-left">
+            <div class="avatar-frame">
+              <div class="avatar-placeholder"><i class="fas fa-user"></i></div>
+            </div>
+            <div>
+              <div class="greeting">Hai, Nayla Arziki</div>
+              <div class="sub-text-compact">
+                <i class="fas fa-graduation-cap"></i> Pendidikan Fisika
+              </div>
+              <div class="semester-row">
+                <i class="far fa-calendar-alt"></i> Semester 4
+              </div>
+            </div>
+          </div>
+          <div class="header-actions">
+            <div class="icon-wrap" id="clockIcon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="icon-wrap" id="notifIcon">
+              <i class="fas fa-message"></i>
+              <span style="position:absolute; top:-4px; right:-4px; background:#ff3b5c; color:#fff; font-size:8px; font-weight:700; width:16px; height:16px; border-radius:50%; display:flex; align-items:center; justify-content:center;">3</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- QUIZ SECTION (Fisika Tata Surya) -->
+      <div class="content" id="quizContent">
+        <div class="card">
+          <div class="card-title"><i class="fas fa-satellite"></i> Quiz Tata Surya</div>
+          <p style="font-size:13px; color:#6b7b93; margin-bottom:16px;">10 soal pilihan ganda tentang Fisika Tata Surya.</p>
+
+          <!-- Soal 1 (Jawaban: A) -->
+          <div class="quiz-item" data-quiz="1">
+            <div class="quiz-header">
+              <h4>Soal 1</h4>
+              <span class="badge easy">Mudah</span>
+            </div>
+            <p>Planet terbesar dalam Tata Surya adalah ...</p>
+            <div class="options">
+              <label><input type="radio" name="q1" value="A" /> A. Jupiter</label>
+              <label><input type="radio" name="q1" value="B" /> B. Saturnus</label>
+              <label><input type="radio" name="q1" value="C" /> C. Uranus</label>
+              <label><input type="radio" name="q1" value="D" /> D. Neptunus</label>
+            </div>
+            <div class="quiz-footer">
+              <span></span>
+              <button class="btn-jawab" data-quiz="1">Jawab</button>
+              <span class="feedback" id="feedback1"></span>
+            </div>
+          </div>
+
+          <!-- Soal 2 (Jawaban: B) -->
+          <div class="quiz-item" data-quiz="2">
+            <div class="quiz-header">
+              <h4>Soal 2</h4>
+              <span class="badge easy">Mudah</span>
+            </div>
+            <p>Planet yang dikenal sebagai "Bintang Kejora" atau "Bintang Fajar" adalah ...</p>
+            <div class="options">
+              <label><input type="radio" name="q2" value="A" /> A. Mars</label>
+              <label><input type="radio" name="q2" value="B" /> B. Venus</label>
+              <label><input type="radio" name="q2" value="C" /> C. Merkurius</label>
+              <label><input type="radio" name="q2" value="D" /> D. Jupiter</label>
+            </div>
+            <div class="quiz-footer">
+              <span></span>
+              <button class="btn-jawab" data-quiz="2">Jawab</button>
+              <span class="feedback" id="feedback2"></span>
+            </div>
+          </div>
+
+          <!-- Soal 3 (Jawaban: A) -->
+          <div class="quiz-item" data-quiz="3">
+            <div class="quiz-header">
+              <h4>Soal 3</h4>
+              <span class="badge medium">Sedang</span>
+            </div>
+            <p>Satelit alami Bumi adalah ...</p>
+            <div class="options">
+              <label><input type="radio" name="q3" value="A" /> A. Bulan</label>
+              <label><input type="radio" name="q3" value="B" /> B. Phobos</label>
+              <label><input type="radio" name="q3" value="C" /> C. Deimos</label>
+              <label><input type="radio" name="q3" value="D" /> D. Europa</label>
+            </div>
+            <div class="quiz-footer">
+              <span></span>
+              <button class="btn-jawab" data-quiz="3">Jawab</button>
+              <span class="feedback" id="feedback3"></span>
+            </div>
+          </div>
+
+          <!-- Soal 4 (Jawaban: D) -->
+          <div class="quiz-item" data-quiz="4">
+            <div class="quiz-header">
+              <h4>Soal 4</h4>
+              <span class="badge medium">Sedang</span>
+            </div>
+            <p>Planet yang memiliki periode rotasi tercepat (hari terpendek) adalah ...</p>
+            <div class="options">
+              <label><input type="radio" name="q4" value="A" /> A. Bumi</label>
+              <label><input type="radio" name="q4" value="B" /> B. Venus</label>
+              <label><input type="radio" name="q4" value="C" /> C. Mars</label>
+              <label><input type="radio" name="q4" value="D" /> D. Jupiter</label>
+            </div>
+            <div class="quiz-footer">
+              <span></span>
+              <button class="btn-jawab" data-quiz="4">Jawab</button>
+              <span class="feedback" id="feedback4"></span>
+            </div>
+          </div>
+
+          <!-- Soal 5 (Jawaban: D) -->
+          <div class="quiz-item" data-quiz="5">
+            <div class="quiz-header">
+              <h4>Soal 5</h4>
+              <span class="badge hard">Sulit</span>
+            </div>
+            <p>Hukum Kepler III menyatakan bahwa kuadrat periode orbit planet sebanding dengan ...</p>
+            <div class="options">
+              <label><input type="radio" name="q5" value="A" /> A. Jarak planet ke Matahari</label>
+              <label><input type="radio" name="q5" value="B" /> B. Massa planet</label>
+              <label><input type="radio" name="q5" value="C" /> C. Kecepatan orbit planet</label>
+              <label><input type="radio" name="q5" value="D" /> D. Pangkat tiga jarak rata-rata planet ke Matahari</label>
+            </div>
+            <div class="quiz-footer">
+              <span></span>
+              <button class="btn-jawab" data-quiz="5">Jawab</button>
+              <span class="feedback" id="feedback5"></span>
+            </div>
+          </div>
+
+          <!-- Soal 6 (Jawaban: A) -->
+          <div class="quiz-item" data-quiz="6">
+            <div class="quiz-header">
+              <h4>Soal 6</h4>
+              <span class="badge medium">Sedang</span>
+            </div>
+            <p>Planet yang memiliki jumlah satelit terbanyak adalah ...</p>
+            <div class="options">
+              <label><input type="radio" name="q6" value="A" /> A. Jupiter</label>
+              <label><input type="radio" name="q6" value="B" /> B. Saturnus</label>
+              <label><input type="radio" name="q6" value="C" /> C. Uranus</label>
+              <label><input type="radio" name="q6" value="D" /> D. Neptunus</label>
+            </div>
+            <div class="quiz-footer">
+              <span></span>
+              <button class="btn-jawab" data-quiz="6">Jawab</button>
+              <span class="feedback" id="feedback6"></span>
+            </div>
+          </div>
+
+          <!-- Soal 7 (Jawaban: C) -->
+          <div class="quiz-item" data-quiz="7">
+            <div class="quiz-header">
+              <h4>Soal 7</h4>
+              <span class="badge hard">Sulit</span>
+            </div>
+            <p>Gaya yang menyebabkan planet tetap berada pada orbitnya mengelilingi Matahari adalah ...</p>
+            <div class="options">
+              <label><input type="radio" name="q7" value="A" /> A. Gaya listrik</label>
+              <label><input type="radio" name="q7" value="B" /> B. Gaya magnet</label>
+              <label><input type="radio" name="q7" value="C" /> C. Gaya gravitasi</label>
+              <label><input type="radio" name="q7" value="D" /> D. Gaya nuklir</label>
+            </div>
+            <div class="quiz-footer">
+              <span></span>
+              <button class="btn-jawab" data-quiz="7">Jawab</button>
+              <span class="feedback" id="feedback7"></span>
+            </div>
+          </div>
+
+          <!-- Soal 8 (Jawaban: A) -->
+          <div class="quiz-item" data-quiz="8">
+            <div class="quiz-header">
+              <h4>Soal 8</h4>
+              <span class="badge easy">Mudah</span>
+            </div>
+            <p>Planet terdekat dari Matahari adalah ...</p>
+            <div class="options">
+              <label><input type="radio" name="q8" value="A" /> A. Merkurius</label>
+              <label><input type="radio" name="q8" value="B" /> B. Venus</label>
+              <label><input type="radio" name="q8" value="C" /> C. Bumi</label>
+              <label><input type="radio" name="q8" value="D" /> D. Mars</label>
+            </div>
+            <div class="quiz-footer">
+              <span></span>
+              <button class="btn-jawab" data-quiz="8">Jawab</button>
+              <span class="feedback" id="feedback8"></span>
+            </div>
+          </div>
+
+          <!-- Soal 9 (Jawaban: D) -->
+          <div class="quiz-item" data-quiz="9">
+            <div class="quiz-header">
+              <h4>Soal 9</h4>
+              <span class="badge medium">Sedang</span>
+            </div>
+            <p>Gerhana Matahari terjadi ketika ...</p>
+            <div class="options">
+              <label><input type="radio" name="q9" value="A" /> A. Bumi berada di antara Matahari dan Bulan</label>
+              <label><input type="radio" name="q9" value="B" /> B. Bulan berada di belakang Bumi</label>
+              <label><input type="radio" name="q9" value="C" /> C. Matahari berada di antara Bumi dan Bulan</label>
+              <label><input type="radio" name="q9" value="D" /> D. Bulan berada di antara Matahari dan Bumi</label>
+            </div>
+            <div class="quiz-footer">
+              <span></span>
+              <button class="btn-jawab" data-quiz="9">Jawab</button>
+              <span class="feedback" id="feedback9"></span>
+            </div>
+          </div>
+
+          <!-- Soal 10 (Jawaban: C) -->
+          <div class="quiz-item" data-quiz="10">
+            <div class="quiz-header">
+              <h4>Soal 10</h4>
+              <span class="badge hard">Sulit</span>
+            </div>
+            <p>Berdasarkan Hukum Kepler III, jika jarak rata-rata sebuah planet ke Matahari adalah 4 kali jarak Bumi-Matahari, maka periode orbit planet tersebut adalah ...</p>
+            <div class="options">
+              <label><input type="radio" name="q10" value="A" /> A. 4 tahun</label>
+              <label><input type="radio" name="q10" value="B" /> B. 8 tahun</label>
+              <label><input type="radio" name="q10" value="C" /> C. 64 tahun</label>
+              <label><input type="radio" name="q10" value="D" /> D. 16 tahun</label>
+            </div>
+            <div class="quiz-footer">
+              <span></span>
+              <button class="btn-jawab" data-quiz="10">Jawab</button>
+              <span class="feedback" id="feedback10"></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div> <!-- /scroll-content -->
+
+    <!-- BOTTOM NAV (tetap) -->
+    <div class="bottom-nav">
+      <a href="home.html" class="nav-item"><i class="fas fa-house"></i><span>Beranda</span></a>
+      <a href="#quiz" class="nav-item active"><i class="fas fa-pencil"></i><span>Soal</span></a>
+      <a href="home.html" class="nav-item"><i class="fas fa-book-open"></i><span>Materi</span></a>
+      <a href="home.html" class="nav-item"><i class="fas fa-user"></i><span>Profil</span></a>
+    </div>
+
+  </div> <!-- /phone -->
+
+  <!-- OVERLAY POPUPS (clock & notif) -->
+  <div class="overlay-popup clock-overlay" id="clockOverlay">
+    <div class="overlay-content">
+      <button class="overlay-close" id="clockClose"><i class="fas fa-xmark"></i></button>
+      <div class="clock-label">Waktu Saat Ini</div>
+      <div class="big-clock" id="fullClock">12:00 <small>WIB</small></div>
+      <div class="clock-date" id="fullDate">Senin, 28 Juni 2026</div>
+    </div>
+  </div>
+
+  <div class="overlay-popup notif-overlay" id="notifOverlay">
+    <div class="overlay-content">
+      <button class="overlay-close" id="notifClose"><i class="fas fa-xmark"></i></button>
+      <div class="notif-header">
+        <i class="fas fa-bell"></i>
+        <h2>Notifikasi</h2>
+        <span style="margin-left:auto; background:#ff3b5c; color:#fff; font-size:10px; font-weight:700; padding:2px 10px; border-radius:20px;">3 baru</span>
+      </div>
+      <div class="notif-list">
+        <div class="notif-card">
+          <div class="notif-icon green"><i class="fas fa-check-circle"></i></div>
+          <div class="notif-body">
+            <h4>Progress tersimpan</h4>
+            <p>Progress belajar Fisika Modern berhasil disimpan</p>
+          </div>
+          <span class="notif-time">2m lalu</span>
+        </div>
+        <div class="notif-card">
+          <div class="notif-icon blue"><i class="fas fa-play-circle"></i></div>
+          <div class="notif-body">
+            <h4>Live: Praktikum Fisika</h4>
+            <p>Praktikum Optik & Gelombang dimulai 15 menit lagi</p>
+          </div>
+          <span class="notif-time">15m lalu</span>
+        </div>
+        <div class="notif-card">
+          <div class="notif-icon yellow"><i class="fas fa-file-alt"></i></div>
+          <div class="notif-body">
+            <h4>Materi baru: Tata Surya</h4>
+            <p>Materi tentang Hukum Kepler telah ditambahkan</p>
+          </div>
+          <span class="notif-time">1j lalu</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       CONFETTI SCRIPT
+       ============================================================ -->
+  <script>
+    (function() {
+      'use strict';
+
+      // --- Confetti Engine ---
+      function launchConfetti() {
+        const container = document.createElement('div');
+        container.className = 'confetti-container';
+        document.body.appendChild(container);
+
+        const colors = [
+          '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4',
+          '#FFEAA7', '#DDA0DD', '#FF8A5C', '#A29BFE',
+          '#FD79A8', '#00CEC9', '#FDCB6E', '#6C5CE7'
+        ];
+
+        const shapes = ['square', 'circle', 'triangle'];
+
+        // Jumlah confetti
+        const count = 80;
+
+        for (let i = 0; i < count; i++) {
+          const piece = document.createElement('div');
+          piece.className = 'confetti-piece';
+
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          const shape = shapes[Math.floor(Math.random() * shapes.length)];
+
+          // Ukuran bervariasi
+          const size = 6 + Math.random() * 10;
+          piece.style.width = size + 'px';
+          piece.style.height = size + 'px';
+
+          // Warna
+          piece.style.backgroundColor = color;
+
+          // Bentuk
+          if (shape === 'circle') {
+            piece.style.borderRadius = '50%';
+          } else if (shape === 'triangle') {
+            piece.style.width = '0';
+            piece.style.height = '0';
+            piece.style.backgroundColor = 'transparent';
+            piece.style.borderLeft = size / 2 + 'px solid transparent';
+            piece.style.borderRight = size / 2 + 'px solid transparent';
+            piece.style.borderBottom = size + 'px solid ' + color;
+          }
+
+          // Posisi horizontal acak
+          const left = Math.random() * 100;
+          piece.style.left = left + '%';
+
+          // Durasi animasi bervariasi
+          const duration = 1.5 + Math.random() * 2.5;
+          piece.style.animationDuration = duration + 's';
+
+          // Delay acak
+          const delay = Math.random() * 0.6;
+          piece.style.animationDelay = delay + 's';
+
+          // Rotasi awal acak
+          piece.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+
+          container.appendChild(piece);
+        }
+
+        // Hapus container setelah animasi selesai
+        setTimeout(function() {
+          container.remove();
+        }, 4500);
+      }
+
+      // --- Kunci Jawaban (sesuai permintaan: 1a 2b 3a 4d 5d 6a 7c 8a 9d 10c) ---
+      const kunciJawaban = {
+        1: 'A',
+        2: 'B',
+        3: 'A',
+        4: 'D',
+        5: 'D',
+        6: 'A',
+        7: 'C',
+        8: 'A',
+        9: 'D',
+        10: 'C'
+      };
+
+      const btnJawab = document.querySelectorAll('.btn-jawab');
+
+      btnJawab.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const quizId = this.dataset.quiz;
+          const item = this.closest('.quiz-item');
+          const radioName = 'q' + quizId;
+          const selected = item.querySelector('input[name="' + radioName + '"]:checked');
+          const feedback = document.getElementById('feedback' + quizId);
+
+          if (!selected) {
+            feedback.textContent = '⚠️ Pilih jawaban dulu!';
+            feedback.className = 'feedback salah';
+            return;
+          }
+
+          const jawabanUser = selected.value;
+          const jawabanBenar = kunciJawaban[quizId];
+
+          if (jawabanUser === jawabanBenar) {
+            feedback.textContent = '✅ Benar! 🎉';
+            feedback.className = 'feedback benar';
+            // 🎊 LUNCURKAN CONFETTI!
+            launchConfetti();
+          } else {
+            feedback.textContent = '❌ Salah. Jawaban: ' + jawabanBenar;
+            feedback.className = 'feedback salah';
+          }
+        });
+      });
+
+      // ============================================================
+      // CLOCK & NOTIF OVERLAY (tetap)
+      // ============================================================
+      const clockOverlay = document.getElementById('clockOverlay');
+      const notifOverlay = document.getElementById('notifOverlay');
+      const clockIcon = document.getElementById('clockIcon');
+      const notifIcon = document.getElementById('notifIcon');
+      const clockClose = document.getElementById('clockClose');
+      const notifClose = document.getElementById('notifClose');
+      const fullClock = document.getElementById('fullClock');
+      const fullDate = document.getElementById('fullDate');
+
+      function updateClock() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        fullClock.innerHTML = hours + ':' + minutes + ' <small>WIB</small>';
+        const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+        const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober',
+          'November', 'Desember'
+        ];
+        const dayName = days[now.getDay()];
+        const day = now.getDate();
+        const month = months[now.getMonth()];
+        const year = now.getFullYear();
+        fullDate.textContent = dayName + ', ' + day + ' ' + month + ' ' + year;
+      }
+      updateClock();
+      setInterval(updateClock, 10000);
+
+      function openOverlay(overlay) {
+        overlay.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeOverlay(overlay) {
+        overlay.classList.remove('show');
+        document.body.style.overflow = '';
+      }
+
+      clockIcon.addEventListener('click', function(e) {
+        e.stopPropagation();
+        closeOverlay(notifOverlay);
+        openOverlay(clockOverlay);
+      });
+
+      notifIcon.addEventListener('click', function(e) {
+        e.stopPropagation();
+        closeOverlay(clockOverlay);
+        openOverlay(notifOverlay);
+      });
+
+      clockClose.addEventListener('click', function() { closeOverlay(clockOverlay); });
+      notifClose.addEventListener('click', function() { closeOverlay(notifOverlay); });
+
+      clockOverlay.addEventListener('click', function(e) {
+        if (e.target === clockOverlay) closeOverlay(clockOverlay);
+      });
+
+      notifOverlay.addEventListener('click', function(e) {
+        if (e.target === notifOverlay) closeOverlay(notifOverlay);
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          closeOverlay(clockOverlay);
+          closeOverlay(notifOverlay);
+        }
+      });
+
+      // ============================================================
+      // NAVIGASI BOTTOM NAV
+      // ============================================================
+      const navItems = document.querySelectorAll('.nav-item');
+      navItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+          navItems.forEach(n => n.classList.remove('active'));
+          this.classList.add('active');
+          document.querySelector('.scroll-content').scrollTop = 0;
+        });
+      });
+
+    })();
+  </script>
+
+</body>
+</html>
