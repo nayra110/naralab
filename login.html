@@ -298,14 +298,9 @@
             color: #51cf66;
         }
 
-        /* Mode Register */
-        .register-mode .btn-login {
-            background: #FFFFFF;
-            color: #6A00FF;
-        }
-
-        .register-mode .btn-login:hover {
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+        /* Mode Register - tampilkan field tambahan */
+        .register-mode .input-group.extra-field {
+            display: block !important;
         }
 
         /* Animasi */
@@ -363,8 +358,8 @@
 
         <!-- Form -->
         <div class="form-container">
-            <!-- Input Username (untuk register) / Email (untuk login) -->
-            <div class="input-group" id="usernameGroup">
+            <!-- Input Username (untuk register) -->
+            <div class="input-group" id="usernameGroup" style="display:none;">
                 <i class="fas fa-user"></i>
                 <input type="text" id="username" placeholder="Username">
             </div>
@@ -379,6 +374,18 @@
             <div class="input-group">
                 <i class="fas fa-lock"></i>
                 <input type="password" id="password" placeholder="Password">
+            </div>
+
+            <!-- Field Semester (hanya untuk register) -->
+            <div class="input-group extra-field" id="semesterGroup" style="display:none;">
+                <i class="fas fa-graduation-cap"></i>
+                <input type="text" id="semester" placeholder="Semester (contoh: 3)">
+            </div>
+
+            <!-- Field Prodi (hanya untuk register) -->
+            <div class="input-group extra-field" id="prodiGroup" style="display:none;">
+                <i class="fas fa-book-open"></i>
+                <input type="text" id="prodi" placeholder="Program Studi (contoh: Teknik Informatika)">
             </div>
 
             <!-- Pesan -->
@@ -417,7 +424,7 @@
                 const users = this.getUsers();
                 return users[email] || null;
             },
-            createUser(email, password, username) {
+            createUser(email, password, username, semester, prodi) {
                 const users = this.getUsers();
                 if (users[email]) {
                     return { success: false, message: 'Email sudah terdaftar' };
@@ -426,6 +433,8 @@
                     username: username,
                     password: password,
                     email: email,
+                    semester: semester || '',
+                    prodi: prodi || '',
                     createdAt: new Date().toISOString()
                 };
                 this.saveUsers(users);
@@ -443,6 +452,8 @@
                 localStorage.setItem('naralab_session', JSON.stringify({
                     email: email,
                     username: user.username,
+                    semester: user.semester || '',
+                    prodi: user.prodi || '',
                     loginTime: new Date().toISOString()
                 }));
                 return { success: true, message: 'Login berhasil' };
@@ -460,6 +471,8 @@
         const usernameInput = document.getElementById('username');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
+        const semesterInput = document.getElementById('semester');
+        const prodiInput = document.getElementById('prodi');
         const submitBtn = document.getElementById('submitBtn');
         const googleBtn = document.getElementById('googleBtn');
         const toggleLink = document.getElementById('toggleLink');
@@ -468,6 +481,8 @@
         const subtitle = document.getElementById('subtitle');
         const message = document.getElementById('message');
         const usernameGroup = document.getElementById('usernameGroup');
+        const semesterGroup = document.getElementById('semesterGroup');
+        const prodiGroup = document.getElementById('prodiGroup');
         const loginContainer = document.getElementById('loginContainer');
 
         // Mode state
@@ -486,6 +501,8 @@
                 toggleMode.textContent = 'Login sekarang';
                 toggleLink.innerHTML = 'Sudah punya akun? <a href="#" id="toggleMode">Login sekarang</a>';
                 usernameGroup.style.display = 'block';
+                semesterGroup.style.display = 'block';
+                prodiGroup.style.display = 'block';
                 loginContainer.classList.add('register-mode');
             } else {
                 // Mode Login
@@ -495,6 +512,8 @@
                 toggleMode.textContent = 'Daftar sekarang';
                 toggleLink.innerHTML = 'Belum punya akun? <a href="#" id="toggleMode">Daftar sekarang</a>';
                 usernameGroup.style.display = 'none';
+                semesterGroup.style.display = 'none';
+                prodiGroup.style.display = 'none';
                 loginContainer.classList.remove('register-mode');
             }
             
@@ -513,6 +532,8 @@
             const email = emailInput.value.trim();
             const password = passwordInput.value;
             const username = usernameInput.value.trim();
+            const semester = semesterInput.value.trim();
+            const prodi = prodiInput.value.trim();
 
             // Validasi
             if (!email || !password) {
@@ -520,15 +541,25 @@
                 return;
             }
 
-            if (isRegisterMode && !username) {
-                showMessage('Username wajib diisi untuk daftar!', 'error');
-                return;
+            if (isRegisterMode) {
+                if (!username) {
+                    showMessage('Username wajib diisi untuk daftar!', 'error');
+                    return;
+                }
+                if (!semester) {
+                    showMessage('Semester wajib diisi!', 'error');
+                    return;
+                }
+                if (!prodi) {
+                    showMessage('Program Studi wajib diisi!', 'error');
+                    return;
+                }
             }
 
             try {
                 if (isRegisterMode) {
                     // REGISTER
-                    const result = DB.createUser(email, password, username);
+                    const result = DB.createUser(email, password, username, semester, prodi);
                     if (result.success) {
                         showMessage('Akun berhasil dibuat! Mengarahkan...', 'success');
                         setTimeout(() => {
@@ -561,12 +592,14 @@
                 const dummyEmail = 'user.google@gmail.com';
                 const dummyUsername = 'User Google';
                 const dummyPassword = 'google_123';
+                const dummySemester = '5';
+                const dummyProdi = 'Sistem Informasi';
                 
                 // Cek apakah user sudah ada
                 let user = DB.getUser(dummyEmail);
                 if (!user) {
                     // Buat akun baru
-                    DB.createUser(dummyEmail, dummyPassword, dummyUsername);
+                    DB.createUser(dummyEmail, dummyPassword, dummyUsername, dummySemester, dummyProdi);
                 }
                 
                 // Login
@@ -616,6 +649,8 @@
 
         // Set initial mode
         usernameGroup.style.display = 'none';
+        semesterGroup.style.display = 'none';
+        prodiGroup.style.display = 'none';
     </script>
 </body>
 </html>
