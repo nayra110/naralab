@@ -99,7 +99,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      text-decoration: none;
     }
 
     .avatar-frame:hover {
@@ -2058,35 +2057,36 @@
 </div>
 
 <script>
-  // ============================================================
-  // AMBIL DATA DARI LOCALSTORAGE (dari halaman login)
-  // ============================================================
-  function getSessionData() {
-    const session = localStorage.getItem('naralab_session');
-    if (session) {
-      try {
-        return JSON.parse(session);
-      } catch (e) {
-        return null;
+  // Chart.js
+  (function() {
+    const ctx = document.getElementById('progressChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Soal selesai', 'Penyelesaian', 'Target Bulanan', 'Peningkatan'],
+        datasets: [{
+          data: [42, 28, 18, 12],
+          backgroundColor: ['#1d8cff', '#ff9627', '#7bcf3b', '#ff4c78'],
+          borderWidth: 0,
+          borderRadius: 8,
+          spacing: 5,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '70%',
+        plugins: {
+          legend: { display: false },
+          tooltip: { enabled: false }
+        },
+        hover: { mode: null }
       }
-    }
-    return null;
-  }
-
-  function getAllUsers() {
-    const users = localStorage.getItem('naralab_users');
-    if (users) {
-      try {
-        return JSON.parse(users);
-      } catch (e) {
-        return null;
-      }
-    }
-    return null;
-  }
+    });
+  })();
 
   // ============================================================
-  // INDEXED DB - PROFIL STORAGE (untuk menyimpan perubahan)
+  // INDEXED DB - PROFIL STORAGE
   // ============================================================
   const DB_NAME = 'FisikakuDB';
   const STORE_NAME = 'profil';
@@ -2109,7 +2109,7 @@
     });
   }
 
-  function saveProfileToDB(data) {
+  function saveProfile(data) {
     return new Promise((resolve, reject) => {
       if (!db) return reject('DB not open');
       const tx = db.transaction(STORE_NAME, 'readwrite');
@@ -2120,7 +2120,7 @@
     });
   }
 
-  function loadProfileFromDB() {
+  function loadProfile() {
     return new Promise((resolve, reject) => {
       if (!db) return reject('DB not open');
       const tx = db.transaction(STORE_NAME, 'readonly');
@@ -2129,6 +2129,21 @@
       request.onsuccess = () => resolve(request.result || null);
       request.onerror = () => reject(request.error);
     });
+  }
+
+  // ============================================================
+  // LOGIN SESSION HELPER
+  // ============================================================
+  function getLoginSession() {
+    try {
+      const session = localStorage.getItem('naralab_session');
+      if (session) {
+        return JSON.parse(session);
+      }
+    } catch (e) {
+      console.warn('Gagal membaca session:', e);
+    }
+    return null;
   }
 
   // ============================================================
@@ -2155,30 +2170,31 @@
     const headerProdi = document.getElementById('headerProdi');
     const headerSemester = document.getElementById('headerSemester');
 
-    // --- AMBIL DATA DARI SESSION & USERS ---
-    const session = getSessionData();
-    let userData = null;
-    
-    if (session && session.email) {
-      const allUsers = getAllUsers();
-      if (allUsers && allUsers[session.email]) {
-        userData = allUsers[session.email];
-      }
-    }
-
-    // Default data (jika tidak ada session)
+    // Data default (akan ditimpa dari session/login)
     let profileData = {
-      name: userData ? userData.username : 'Nayla Arziki',
-      nim: '202401001',
-      prodi: userData ? userData.prodi || 'Pendidikan Fisika' : 'Pendidikan Fisika',
-      semester: userData ? userData.semester || '4' : '4',
-      bio: 'Mahasiswa Pendidikan Fisika semester 4, tertarik pada fisika kuantum dan edukasi.',
+      name: 'Mahasiswa',
+      nim: 'NIM tidak tersedia',
+      prodi: 'Program Studi tidak tersedia',
+      semester: '1',
+      bio: '',
       avatar: null
     };
 
-    // Jika userData punya email, kita bisa gunakan sebagai identifier
-    if (userData && userData.email) {
-      profileData.email = userData.email;
+    // Ambil data dari session login
+    const session = getLoginSession();
+    if (session) {
+      // Ambil data dari session yang disimpan saat login
+      if (session.username) {
+        profileData.name = session.username;
+      }
+      if (session.prodi) {
+        profileData.prodi = session.prodi;
+      }
+      if (session.semester) {
+        profileData.semester = session.semester;
+      }
+      // NIM tidak ada di session, bisa diisi default atau dari DB
+      // Kita akan coba ambil dari DB nanti
     }
 
     function showToast(msg, duration = 2500) {
@@ -2214,27 +2230,49 @@
       inputName.value = profileData.name || '';
       inputNim.value = profileData.nim || '';
       inputProdi.value = profileData.prodi || '';
-      inputSemester.value = profileData.semester || '4';
+      inputSemester.value = profileData.semester || '1';
       inputBio.value = profileData.bio || '';
     }
 
     async function loadFromDB() {
       try {
         await openDB();
-        const data = await loadProfileFromDB();
+        const data = await loadProfile();
         if (data) {
-          // Gabungkan dengan data dari session, tapi prioritas data dari session
-          profileData = { ...profileData, ...data };
-          // Tapi pastikan data dari session tetap diutamakan untuk name, prodi, semester
-          if (userData) {
-            if (userData.username) profileData.name = userData.username;
-            if (userData.prodi) profileData.prodi = userData.prodi;
-            if (userData.semester) profileData.semester = userData.semester;
+          // Gabungkan dengan data dari session, session lebih prioritas untuk nama, prodi, semester
+          if (!session || !session.username) {
+            // Jika tidak ada session, gunakan data dari DB
+            profileData = { ...profileData, ...data };
+          } else {
+            // Jika ada session, gunakan data session untuk field yang relevan
+            profileData = { 
+              ...profileData, 
+              ...data, 
+              name: session.username || data.name || profileData.name,
+              prodi: session.prodi || data.prodi || profileData.prodi,
+              semester: session.semester || data.semester || profileData.semester,
+              nim: data.nim || profileData.nim,
+              bio: data.bio || profileData.bio,
+              avatar: data.avatar || profileData.avatar
+            };
+          }
+        } else {
+          // Tidak ada data di DB, gunakan session jika ada
+          if (session) {
+            profileData.name = session.username || profileData.name;
+            profileData.prodi = session.prodi || profileData.prodi;
+            profileData.semester = session.semester || profileData.semester;
           }
         }
         updateUI();
       } catch (e) {
         console.warn('DB error, using default:', e);
+        // Gunakan session jika ada
+        if (session) {
+          profileData.name = session.username || profileData.name;
+          profileData.prodi = session.prodi || profileData.prodi;
+          profileData.semester = session.semester || profileData.semester;
+        }
         updateUI();
       }
     }
@@ -2245,12 +2283,12 @@
           name: inputName.value.trim() || profileData.name,
           nim: inputNim.value.trim() || profileData.nim,
           prodi: inputProdi.value.trim() || profileData.prodi,
-          semester: inputSemester.value || '4',
+          semester: inputSemester.value || profileData.semester,
           bio: inputBio.value.trim() || '',
           avatar: profileData.avatar || null
         };
         profileData = { ...profileData, ...data };
-        await saveProfileToDB(profileData);
+        await saveProfile(profileData);
         updateUI();
         showToast('✅ Profil berhasil disimpan!');
       } catch (e) {
@@ -2317,8 +2355,9 @@
     });
 
     // ============================================================
-    // SOAL & MATERI NAVIGATION
+    // SOAL & MATERI NAVIGATION - Redirect ke HTML terpisah
     // ============================================================
+    // Tombol Kerjakan Soal
     document.querySelectorAll('.btn-kerjakan').forEach(btn => {
       btn.addEventListener('click', function(e) {
         e.stopPropagation();
@@ -2327,6 +2366,7 @@
       });
     });
 
+    // Klik pada item soal juga bisa navigasi
     document.querySelectorAll('.soal-item').forEach(item => {
       item.addEventListener('click', function(e) {
         if (e.target.classList.contains('btn-kerjakan')) return;
@@ -2335,6 +2375,7 @@
       });
     });
 
+    // Tombol Baca Materi
     document.querySelectorAll('.btn-baca').forEach(btn => {
       btn.addEventListener('click', function(e) {
         e.stopPropagation();
@@ -2343,6 +2384,7 @@
       });
     });
 
+    // Klik pada item materi juga bisa navigasi
     document.querySelectorAll('.materi-item').forEach(item => {
       item.addEventListener('click', function(e) {
         if (e.target.classList.contains('btn-baca')) return;
@@ -2533,35 +2575,7 @@
     sliderWrapper.addEventListener('mouseenter', stopAutoPlay);
     sliderWrapper.addEventListener('mouseleave', startAutoPlay);
 
-    // ============================================================
-    // Chart.js
-    // ============================================================
-    const ctx = document.getElementById('progressChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels: ['Soal selesai', 'Penyelesaian', 'Target Bulanan', 'Peningkatan'],
-        datasets: [{
-          data: [42, 28, 18, 12],
-          backgroundColor: ['#1d8cff', '#ff9627', '#7bcf3b', '#ff4c78'],
-          borderWidth: 0,
-          borderRadius: 8,
-          spacing: 5,
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        cutout: '70%',
-        plugins: {
-          legend: { display: false },
-          tooltip: { enabled: false }
-        },
-        hover: { mode: null }
-      }
-    });
-
-    // Load profile data from DB
+    // Load profile data from DB and session
     loadFromDB();
 
     // Set default page
