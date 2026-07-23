@@ -2146,6 +2146,18 @@
     return null;
   }
 
+  function updateSessionWithProfile(data) {
+    try {
+      const session = getLoginSession();
+      if (session) {
+        session.username = data.name || session.username;
+        session.prodi = data.prodi || session.prodi;
+        session.semester = data.semester || session.semester;
+        localStorage.setItem('naralab_session', JSON.stringify(session));
+      }
+    } catch (e) {}
+  }
+
   // ============================================================
   // MAIN CONTROLLER
   // ============================================================
@@ -2170,7 +2182,7 @@
     const headerProdi = document.getElementById('headerProdi');
     const headerSemester = document.getElementById('headerSemester');
 
-    // Data default (akan ditimpa dari session/login)
+    // Data default
     let profileData = {
       name: 'Mahasiswa',
       nim: 'NIM tidak tersedia',
@@ -2183,18 +2195,9 @@
     // Ambil data dari session login
     const session = getLoginSession();
     if (session) {
-      // Ambil data dari session yang disimpan saat login
-      if (session.username) {
-        profileData.name = session.username;
-      }
-      if (session.prodi) {
-        profileData.prodi = session.prodi;
-      }
-      if (session.semester) {
-        profileData.semester = session.semester;
-      }
-      // NIM tidak ada di session, bisa diisi default atau dari DB
-      // Kita akan coba ambil dari DB nanti
+      if (session.username) profileData.name = session.username;
+      if (session.prodi) profileData.prodi = session.prodi;
+      if (session.semester) profileData.semester = session.semester;
     }
 
     function showToast(msg, duration = 2500) {
@@ -2239,12 +2242,8 @@
         await openDB();
         const data = await loadProfile();
         if (data) {
-          // Gabungkan dengan data dari session, session lebih prioritas untuk nama, prodi, semester
-          if (!session || !session.username) {
-            // Jika tidak ada session, gunakan data dari DB
-            profileData = { ...profileData, ...data };
-          } else {
-            // Jika ada session, gunakan data session untuk field yang relevan
+          // Gabungkan: session lebih prioritas untuk nama, prodi, semester
+          if (session) {
             profileData = { 
               ...profileData, 
               ...data, 
@@ -2255,6 +2254,8 @@
               bio: data.bio || profileData.bio,
               avatar: data.avatar || profileData.avatar
             };
+          } else {
+            profileData = { ...profileData, ...data };
           }
         } else {
           // Tidak ada data di DB, gunakan session jika ada
@@ -2264,10 +2265,11 @@
             profileData.semester = session.semester || profileData.semester;
           }
         }
+        // Update session dengan data terbaru
+        updateSessionWithProfile(profileData);
         updateUI();
       } catch (e) {
         console.warn('DB error, using default:', e);
-        // Gunakan session jika ada
         if (session) {
           profileData.name = session.username || profileData.name;
           profileData.prodi = session.prodi || profileData.prodi;
@@ -2289,6 +2291,8 @@
         };
         profileData = { ...profileData, ...data };
         await saveProfile(profileData);
+        // Update session agar sinkron
+        updateSessionWithProfile(profileData);
         updateUI();
         showToast('✅ Profil berhasil disimpan!');
       } catch (e) {
@@ -2357,7 +2361,6 @@
     // ============================================================
     // SOAL & MATERI NAVIGATION - Redirect ke HTML terpisah
     // ============================================================
-    // Tombol Kerjakan Soal
     document.querySelectorAll('.btn-kerjakan').forEach(btn => {
       btn.addEventListener('click', function(e) {
         e.stopPropagation();
@@ -2366,7 +2369,6 @@
       });
     });
 
-    // Klik pada item soal juga bisa navigasi
     document.querySelectorAll('.soal-item').forEach(item => {
       item.addEventListener('click', function(e) {
         if (e.target.classList.contains('btn-kerjakan')) return;
@@ -2375,7 +2377,6 @@
       });
     });
 
-    // Tombol Baca Materi
     document.querySelectorAll('.btn-baca').forEach(btn => {
       btn.addEventListener('click', function(e) {
         e.stopPropagation();
@@ -2384,7 +2385,6 @@
       });
     });
 
-    // Klik pada item materi juga bisa navigasi
     document.querySelectorAll('.materi-item').forEach(item => {
       item.addEventListener('click', function(e) {
         if (e.target.classList.contains('btn-baca')) return;
