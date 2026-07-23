@@ -187,7 +187,7 @@
         }
 
         /* ============================================================
-           FULLSCREEN OVERLAY POPUP (untuk clock & notif)
+           OVERLAY POPUP
            ============================================================ */
         .overlay-popup {
             position: fixed;
@@ -272,7 +272,6 @@
             transform: rotate(90deg);
         }
 
-        /* --- CLOCK OVERLAY --- */
         .clock-overlay .overlay-content {
             text-align: center;
         }
@@ -309,7 +308,6 @@
             margin-bottom: 4px;
         }
 
-        /* --- NOTIFICATION OVERLAY --- */
         .notif-overlay .overlay-content {
             padding: 24px 20px;
         }
@@ -422,7 +420,7 @@
         }
 
         /* ============================================================
-           QUIZ SECTION
+           QUIZ SECTION — STEP BY STEP
            ============================================================ */
         .content {
             margin-top: -46px;
@@ -443,6 +441,7 @@
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
                 box-shadow 0.4s ease,
                 border-color 0.3s ease;
+            min-height: 360px;
         }
 
         .card:hover {
@@ -470,241 +469,294 @@
             opacity: 0.7;
         }
 
-        /* ===== SKOR BADGE ===== */
-        .score-badge {
+        /* --- Progress header --- */
+        .quiz-progress-header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            background: linear-gradient(135deg, #4b1dd6, #7f3eff);
-            border-radius: 18px;
-            padding: 10px 18px;
-            margin-bottom: 18px;
-            color: #fff;
-            box-shadow: 0 6px 20px rgba(75, 29, 214, 0.25);
-            transition: all 0.3s ease;
-        }
-
-        .score-badge .score-label {
-            font-size: 13px;
-            font-weight: 600;
-            opacity: 0.9;
-            display: flex;
             align-items: center;
-            gap: 8px;
+            margin-bottom: 16px;
+            gap: 12px;
         }
 
-        .score-badge .score-label i {
-            font-size: 16px;
-        }
-
-        .score-badge .score-value {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 2px 16px;
-            border-radius: 30px;
-            backdrop-filter: blur(4px);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .score-badge .score-value .total {
+        .quiz-progress-header .q-counter {
             font-size: 14px;
-            font-weight: 600;
-            opacity: 0.7;
+            font-weight: 700;
+            color: #1a2538;
+            background: rgba(75, 29, 214, 0.06);
+            padding: 4px 14px;
+            border-radius: 20px;
         }
 
-        .score-badge .progress-ring {
-            display: flex;
-            align-items: center;
-            gap: 6px;
+        .quiz-progress-header .q-counter span {
+            color: #4b1dd6;
         }
 
-        .progress-mini {
-            width: 80px;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.2);
+        .progress-track {
+            flex: 1;
+            height: 5px;
+            background: rgba(0, 0, 0, 0.06);
             border-radius: 10px;
             overflow: hidden;
+            min-width: 60px;
         }
 
-        .progress-mini .fill {
+        .progress-track .fill {
             height: 100%;
-            background: #fff;
+            background: linear-gradient(90deg, #4b1dd6, #7f3eff);
             border-radius: 10px;
+            transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
             width: 0%;
-            transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        /* --- Quiz Item --- */
-        .quiz-item {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 16px;
-            margin-bottom: 14px;
-            border: 1px solid rgba(0, 0, 0, 0.04);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-            transition: all 0.3s ease;
-            position: relative;
+        .progress-track .fill.done {
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
         }
 
-        .quiz-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(75, 29, 214, 0.06);
-            border-color: rgba(75, 29, 214, 0.08);
+        /* --- Question block --- */
+        .question-block {
+            animation: fadeSlide 0.35s ease;
         }
 
-        .quiz-item .quiz-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 6px;
+        @keyframes fadeSlide {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .quiz-item .quiz-header h4 {
-            font-size: 14px;
+        .question-block .q-text {
+            font-size: 15px;
             font-weight: 600;
             color: #1a2538;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            padding: 8px 4px;
         }
 
-        .quiz-item .quiz-header .badge {
-            font-size: 9px;
-            font-weight: 700;
-            padding: 2px 12px;
-            border-radius: 20px;
-            background: rgba(75, 29, 214, 0.08);
-            color: #4b1dd6;
-            white-space: nowrap;
+        .question-block .options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 20px;
         }
 
-        .quiz-item .quiz-header .badge.hard {
-            background: rgba(231, 76, 60, 0.1);
-            color: #e74c3c;
-        }
-        .quiz-item .quiz-header .badge.medium {
-            background: rgba(243, 156, 18, 0.1);
-            color: #f39c12;
-        }
-        .quiz-item .quiz-header .badge.easy {
-            background: rgba(46, 204, 113, 0.1);
-            color: #2ecc71;
-        }
-
-        .quiz-item .quiz-header .status-icon {
-            font-size: 16px;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
+        .question-block .options label {
             display: flex;
             align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.04);
-            transition: all 0.3s ease;
-        }
-
-        .quiz-item .quiz-header .status-icon.done-correct {
-            background: rgba(46, 204, 113, 0.15);
-            color: #2ecc71;
-        }
-
-        .quiz-item .quiz-header .status-icon.done-wrong {
-            background: rgba(231, 76, 60, 0.12);
-            color: #e74c3c;
-        }
-
-        .quiz-item .quiz-header .status-icon i {
+            gap: 12px;
             font-size: 13px;
-        }
-
-        .quiz-item p {
-            font-size: 13px;
-            color: #3d4a5e;
-            line-height: 1.5;
-            margin-bottom: 6px;
+            color: #2e3a4f;
+            background: rgba(0, 0, 0, 0.02);
+            padding: 10px 14px;
+            border-radius: 14px;
+            border: 1.5px solid transparent;
+            transition: all 0.25s ease;
+            cursor: pointer;
             font-weight: 500;
         }
 
-        .quiz-item .options {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            margin: 8px 0 10px 0;
+        .question-block .options label:hover {
+            background: rgba(75, 29, 214, 0.04);
+            border-color: rgba(75, 29, 214, 0.15);
         }
 
-        .quiz-item .options label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 12px;
-            color: #3d4a5e;
-            background: rgba(0, 0, 0, 0.02);
-            padding: 8px 12px;
-            border-radius: 12px;
-            border: 1px solid transparent;
-            transition: all 0.2s ease;
+        .question-block .options label.selected {
+            background: rgba(75, 29, 214, 0.06);
+            border-color: #4b1dd6;
+            box-shadow: 0 0 0 3px rgba(75, 29, 214, 0.08);
+        }
+
+        .question-block .options input[type="radio"] {
+            accent-color: #4b1dd6;
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
             cursor: pointer;
         }
 
-        .quiz-item .options label:hover {
-            background: rgba(75, 29, 214, 0.04);
-            border-color: rgba(75, 29, 214, 0.1);
-        }
-
-        .quiz-item .options input[type="radio"] {
-            accent-color: #4b1dd6;
-            width: 16px;
-            height: 16px;
-            flex-shrink: 0;
-        }
-
-        .quiz-item .quiz-footer {
+        /* --- Nav buttons --- */
+        .quiz-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 12px;
             margin-top: 8px;
-            padding-top: 10px;
+            padding-top: 14px;
             border-top: 1px solid rgba(0, 0, 0, 0.04);
         }
 
-        .quiz-item .quiz-footer .btn-jawab {
-            padding: 6px 20px;
-            border: none;
-            border-radius: 16px;
-            background: #4b1dd6;
-            color: #fff;
-            font-size: 11px;
+        .quiz-nav .btn-prev {
+            padding: 8px 18px;
+            border: 1.5px solid rgba(0, 0, 0, 0.08);
+            border-radius: 20px;
+            background: transparent;
+            color: #6b7b93;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .quiz-item .quiz-footer .btn-jawab:hover {
-            background: #7f3eff;
-            transform: scale(1.04);
+        .quiz-nav .btn-prev:hover:not(:disabled) {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.15);
+            transform: translateX(-2px);
         }
 
-        .quiz-item .quiz-footer .btn-jawab:disabled {
+        .quiz-nav .btn-prev:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .quiz-nav .btn-next {
+            padding: 10px 28px;
+            border: none;
+            border-radius: 24px;
+            background: linear-gradient(135deg, #4b1dd6, #7f3eff);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 16px rgba(75, 29, 214, 0.25);
+            letter-spacing: 0.2px;
+        }
+
+        .quiz-nav .btn-next:hover:not(:disabled) {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 28px rgba(75, 29, 214, 0.35);
+        }
+
+        .quiz-nav .btn-next:disabled {
             opacity: 0.4;
             cursor: not-allowed;
             transform: none;
+            box-shadow: none;
         }
 
-        .quiz-item .quiz-footer .feedback {
-            font-size: 12px;
+        .quiz-nav .btn-next:active:not(:disabled) {
+            transform: scale(0.96);
+        }
+
+        .quiz-nav .btn-next .icon-right {
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .quiz-nav .btn-next:hover:not(:disabled) .icon-right {
+            transform: translateX(4px);
+        }
+
+        /* --- RESULTS SCREEN --- */
+        .results-screen {
+            animation: fadeSlide 0.5s ease;
+            text-align: center;
+            padding: 12px 4px 8px;
+        }
+
+        .results-screen .result-icon {
+            font-size: 64px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .results-screen .result-score {
+            font-size: 48px;
+            font-weight: 800;
+            color: #1a2538;
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+
+        .results-screen .result-score .denom {
+            font-size: 24px;
             font-weight: 600;
-            transition: all 0.3s ease;
+            color: #8d9bb0;
         }
 
-        .quiz-item .quiz-footer .feedback.benar {
+        .results-screen .result-label {
+            font-size: 14px;
+            color: #6b7b93;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        .results-screen .result-message {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a2538;
+            margin-top: 12px;
+            padding: 12px 16px;
+            background: rgba(75, 29, 214, 0.05);
+            border-radius: 16px;
+            border: 1px solid rgba(75, 29, 214, 0.08);
+        }
+
+        .results-screen .result-detail {
+            margin-top: 16px;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .results-screen .result-detail .stat-item {
+            text-align: center;
+        }
+
+        .results-screen .result-detail .stat-item .num {
+            font-size: 28px;
+            font-weight: 700;
+            display: block;
+        }
+
+        .results-screen .result-detail .stat-item .num.green {
             color: #2ecc71;
         }
-        .quiz-item .quiz-footer .feedback.salah {
+        .results-screen .result-detail .stat-item .num.red {
             color: #e74c3c;
         }
-        .quiz-item .quiz-footer .feedback.neutral {
+
+        .results-screen .result-detail .stat-item .lbl {
+            font-size: 11px;
+            font-weight: 500;
             color: #8d9bb0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .results-screen .btn-restart {
+            margin-top: 20px;
+            padding: 12px 36px;
+            border: none;
+            border-radius: 28px;
+            background: linear-gradient(135deg, #4b1dd6, #7f3eff);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(75, 29, 214, 0.25);
+            letter-spacing: 0.3px;
+        }
+
+        .results-screen .btn-restart:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 28px rgba(75, 29, 214, 0.35);
+        }
+
+        .results-screen .btn-restart:active {
+            transform: scale(0.96);
         }
 
         /* ----- BOTTOM NAV ----- */
@@ -813,6 +865,7 @@
             }
             .card {
                 padding: 16px 14px;
+                min-height: 300px;
             }
             .bottom-nav {
                 border-radius: 0;
@@ -825,39 +878,51 @@
             .clock-overlay .big-clock {
                 font-size: 48px;
             }
-            .score-badge {
+            .question-block .q-text {
+                font-size: 14px;
+            }
+            .question-block .options label {
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+            .results-screen .result-score {
+                font-size: 40px;
+            }
+            .quiz-nav {
                 flex-wrap: wrap;
                 gap: 8px;
-                padding: 12px 16px;
             }
-            .score-badge .score-value {
-                font-size: 18px;
-                padding: 0 12px;
+            .quiz-nav .btn-next {
+                flex: 1;
+                justify-content: center;
+                padding: 10px 20px;
+                font-size: 12px;
             }
-            .progress-mini {
-                width: 60px;
+            .quiz-nav .btn-prev {
+                padding: 8px 14px;
+                font-size: 11px;
             }
         }
 
         @media (max-width: 360px) {
-            .quiz-item .options label {
+            .question-block .options label {
                 font-size: 11px;
                 padding: 6px 10px;
+                gap: 8px;
             }
-            .quiz-item .quiz-header h4 {
+            .question-block .q-text {
                 font-size: 13px;
             }
-            .score-badge .score-label {
-                font-size: 11px;
+            .quiz-progress-header .q-counter {
+                font-size: 12px;
+                padding: 2px 10px;
             }
-            .score-badge .score-value {
-                font-size: 16px;
+            .results-screen .result-score {
+                font-size: 34px;
             }
         }
 
-        /* ============================================================
-           CONFETTI STYLES
-           ============================================================ */
+        /* ----- CONFETTI ----- */
         .confetti-container {
             position: fixed;
             top: 0;
@@ -888,13 +953,12 @@
             }
         }
 
-        /* animasi pulse untuk skor baru */
         @keyframes scorePop {
             0% {
                 transform: scale(1);
             }
             50% {
-                transform: scale(1.25);
+                transform: scale(1.2);
                 color: #ffd700;
             }
             100% {
@@ -905,6 +969,21 @@
         .score-pop {
             animation: scorePop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+
+        /* utility */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+        .mt-8 {
+            margin-top: 8px;
+        }
+        .mt-12 {
+            margin-top: 12px;
+        }
     </style>
 </head>
 <body>
@@ -913,19 +992,22 @@
         <!-- SCROLLABLE CONTENT -->
         <div class="scroll-content">
 
-            <!-- HEADER (tetap) -->
+            <!-- HEADER -->
             <header class="header">
                 <div class="profile-row">
                     <div class="profile-left">
-                        <div class="avatar-frame">
-                            <div class="avatar-placeholder"><i class="fas fa-user"></i></div>
+                        <div class="avatar-frame" id="headerAvatar">
+                            <div class="avatar-placeholder" id="headerAvatarPlaceholder">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <img src="" alt="avatar" id="headerAvatarImg" style="display:none;" />
                         </div>
                         <div>
-                            <div class="greeting">Hai, Nayla Arziki</div>
-                            <div class="sub-text-compact">
+                            <div class="greeting" id="headerGreeting">Hai, Nayla Arziki</div>
+                            <div class="sub-text-compact" id="headerProdi">
                                 <i class="fas fa-graduation-cap"></i> Pendidikan Fisika
                             </div>
-                            <div class="semester-row">
+                            <div class="semester-row" id="headerSemester">
                                 <i class="far fa-calendar-alt"></i> Semester 4
                             </div>
                         </div>
@@ -944,235 +1026,20 @@
 
             <!-- QUIZ SECTION -->
             <div class="content" id="quizContent">
-                <div class="card">
-                    <div class="card-title"><i class="fas fa-satellite"></i> Quiz Tata Surya</div>
+                <div class="card" id="quizCard">
+                    <div class="card-title"><i class="fas fa-flask"></i> Quiz Astronomi Tata Surya</div>
 
-                    <!-- ===== SKOR BADGE ===== -->
-                    <div class="score-badge" id="scoreBadge">
-                        <div class="score-label">
-                            <i class="fas fa-star"></i>
-                            <span>Skor Kamu</span>
-                        </div>
-                        <div class="progress-ring">
-                            <div class="progress-mini">
-                                <div class="fill" id="progressFill" style="width:0%;"></div>
-                            </div>
-                            <div class="score-value" id="scoreDisplay">
-                                0 <span class="total">/ 10</span>
-                            </div>
+                    <!-- Progress header -->
+                    <div class="quiz-progress-header">
+                        <div class="q-counter" id="qCounter">Soal <span id="currentNum">1</span> / 10</div>
+                        <div class="progress-track">
+                            <div class="fill" id="progressFill" style="width:0%;"></div>
                         </div>
                     </div>
 
-                    <p style="font-size:13px; color:#6b7b93; margin-bottom:16px;">10 soal pilihan ganda tentang Fisika Tata Surya. Klik <strong>Jawab</strong> untuk mengecek.</p>
-
-                    <!-- Soal 1 (Jawaban: A) -->
-                    <div class="quiz-item" data-quiz="1">
-                        <div class="quiz-header">
-                            <h4>Soal 1</h4>
-                            <span class="badge easy">Mudah</span>
-                            <span class="status-icon" id="status1"><i class="far fa-circle"></i></span>
-                        </div>
-                        <p>Planet terbesar dalam Tata Surya adalah ...</p>
-                        <div class="options">
-                            <label><input type="radio" name="q1" value="A" /> A. Jupiter</label>
-                            <label><input type="radio" name="q1" value="B" /> B. Saturnus</label>
-                            <label><input type="radio" name="q1" value="C" /> C. Uranus</label>
-                            <label><input type="radio" name="q1" value="D" /> D. Neptunus</label>
-                        </div>
-                        <div class="quiz-footer">
-                            <span></span>
-                            <button class="btn-jawab" data-quiz="1">Jawab</button>
-                            <span class="feedback neutral" id="feedback1">⏳ Belum dijawab</span>
-                        </div>
-                    </div>
-
-                    <!-- Soal 2 (Jawaban: B) -->
-                    <div class="quiz-item" data-quiz="2">
-                        <div class="quiz-header">
-                            <h4>Soal 2</h4>
-                            <span class="badge easy">Mudah</span>
-                            <span class="status-icon" id="status2"><i class="far fa-circle"></i></span>
-                        </div>
-                        <p>Planet yang dikenal sebagai "Bintang Kejora" atau "Bintang Fajar" adalah ...</p>
-                        <div class="options">
-                            <label><input type="radio" name="q2" value="A" /> A. Mars</label>
-                            <label><input type="radio" name="q2" value="B" /> B. Venus</label>
-                            <label><input type="radio" name="q2" value="C" /> C. Merkurius</label>
-                            <label><input type="radio" name="q2" value="D" /> D. Jupiter</label>
-                        </div>
-                        <div class="quiz-footer">
-                            <span></span>
-                            <button class="btn-jawab" data-quiz="2">Jawab</button>
-                            <span class="feedback neutral" id="feedback2">⏳ Belum dijawab</span>
-                        </div>
-                    </div>
-
-                    <!-- Soal 3 (Jawaban: A) -->
-                    <div class="quiz-item" data-quiz="3">
-                        <div class="quiz-header">
-                            <h4>Soal 3</h4>
-                            <span class="badge medium">Sedang</span>
-                            <span class="status-icon" id="status3"><i class="far fa-circle"></i></span>
-                        </div>
-                        <p>Satelit alami Bumi adalah ...</p>
-                        <div class="options">
-                            <label><input type="radio" name="q3" value="A" /> A. Bulan</label>
-                            <label><input type="radio" name="q3" value="B" /> B. Phobos</label>
-                            <label><input type="radio" name="q3" value="C" /> C. Deimos</label>
-                            <label><input type="radio" name="q3" value="D" /> D. Europa</label>
-                        </div>
-                        <div class="quiz-footer">
-                            <span></span>
-                            <button class="btn-jawab" data-quiz="3">Jawab</button>
-                            <span class="feedback neutral" id="feedback3">⏳ Belum dijawab</span>
-                        </div>
-                    </div>
-
-                    <!-- Soal 4 (Jawaban: D) -->
-                    <div class="quiz-item" data-quiz="4">
-                        <div class="quiz-header">
-                            <h4>Soal 4</h4>
-                            <span class="badge medium">Sedang</span>
-                            <span class="status-icon" id="status4"><i class="far fa-circle"></i></span>
-                        </div>
-                        <p>Planet yang memiliki periode rotasi tercepat (hari terpendek) adalah ...</p>
-                        <div class="options">
-                            <label><input type="radio" name="q4" value="A" /> A. Bumi</label>
-                            <label><input type="radio" name="q4" value="B" /> B. Venus</label>
-                            <label><input type="radio" name="q4" value="C" /> C. Mars</label>
-                            <label><input type="radio" name="q4" value="D" /> D. Jupiter</label>
-                        </div>
-                        <div class="quiz-footer">
-                            <span></span>
-                            <button class="btn-jawab" data-quiz="4">Jawab</button>
-                            <span class="feedback neutral" id="feedback4">⏳ Belum dijawab</span>
-                        </div>
-                    </div>
-
-                    <!-- Soal 5 (Jawaban: D) -->
-                    <div class="quiz-item" data-quiz="5">
-                        <div class="quiz-header">
-                            <h4>Soal 5</h4>
-                            <span class="badge hard">Sulit</span>
-                            <span class="status-icon" id="status5"><i class="far fa-circle"></i></span>
-                        </div>
-                        <p>Hukum Kepler III menyatakan bahwa kuadrat periode orbit planet sebanding dengan ...</p>
-                        <div class="options">
-                            <label><input type="radio" name="q5" value="A" /> A. Jarak planet ke Matahari</label>
-                            <label><input type="radio" name="q5" value="B" /> B. Massa planet</label>
-                            <label><input type="radio" name="q5" value="C" /> C. Kecepatan orbit planet</label>
-                            <label><input type="radio" name="q5" value="D" /> D. Pangkat tiga jarak rata-rata planet ke Matahari</label>
-                        </div>
-                        <div class="quiz-footer">
-                            <span></span>
-                            <button class="btn-jawab" data-quiz="5">Jawab</button>
-                            <span class="feedback neutral" id="feedback5">⏳ Belum dijawab</span>
-                        </div>
-                    </div>
-
-                    <!-- Soal 6 (Jawaban: A) -->
-                    <div class="quiz-item" data-quiz="6">
-                        <div class="quiz-header">
-                            <h4>Soal 6</h4>
-                            <span class="badge medium">Sedang</span>
-                            <span class="status-icon" id="status6"><i class="far fa-circle"></i></span>
-                        </div>
-                        <p>Planet yang memiliki jumlah satelit terbanyak adalah ...</p>
-                        <div class="options">
-                            <label><input type="radio" name="q6" value="A" /> A. Jupiter</label>
-                            <label><input type="radio" name="q6" value="B" /> B. Saturnus</label>
-                            <label><input type="radio" name="q6" value="C" /> C. Uranus</label>
-                            <label><input type="radio" name="q6" value="D" /> D. Neptunus</label>
-                        </div>
-                        <div class="quiz-footer">
-                            <span></span>
-                            <button class="btn-jawab" data-quiz="6">Jawab</button>
-                            <span class="feedback neutral" id="feedback6">⏳ Belum dijawab</span>
-                        </div>
-                    </div>
-
-                    <!-- Soal 7 (Jawaban: C) -->
-                    <div class="quiz-item" data-quiz="7">
-                        <div class="quiz-header">
-                            <h4>Soal 7</h4>
-                            <span class="badge hard">Sulit</span>
-                            <span class="status-icon" id="status7"><i class="far fa-circle"></i></span>
-                        </div>
-                        <p>Gaya yang menyebabkan planet tetap berada pada orbitnya mengelilingi Matahari adalah ...</p>
-                        <div class="options">
-                            <label><input type="radio" name="q7" value="A" /> A. Gaya listrik</label>
-                            <label><input type="radio" name="q7" value="B" /> B. Gaya magnet</label>
-                            <label><input type="radio" name="q7" value="C" /> C. Gaya gravitasi</label>
-                            <label><input type="radio" name="q7" value="D" /> D. Gaya nuklir</label>
-                        </div>
-                        <div class="quiz-footer">
-                            <span></span>
-                            <button class="btn-jawab" data-quiz="7">Jawab</button>
-                            <span class="feedback neutral" id="feedback7">⏳ Belum dijawab</span>
-                        </div>
-                    </div>
-
-                    <!-- Soal 8 (Jawaban: A) -->
-                    <div class="quiz-item" data-quiz="8">
-                        <div class="quiz-header">
-                            <h4>Soal 8</h4>
-                            <span class="badge easy">Mudah</span>
-                            <span class="status-icon" id="status8"><i class="far fa-circle"></i></span>
-                        </div>
-                        <p>Planet terdekat dari Matahari adalah ...</p>
-                        <div class="options">
-                            <label><input type="radio" name="q8" value="A" /> A. Merkurius</label>
-                            <label><input type="radio" name="q8" value="B" /> B. Venus</label>
-                            <label><input type="radio" name="q8" value="C" /> C. Bumi</label>
-                            <label><input type="radio" name="q8" value="D" /> D. Mars</label>
-                        </div>
-                        <div class="quiz-footer">
-                            <span></span>
-                            <button class="btn-jawab" data-quiz="8">Jawab</button>
-                            <span class="feedback neutral" id="feedback8">⏳ Belum dijawab</span>
-                        </div>
-                    </div>
-
-                    <!-- Soal 9 (Jawaban: D) -->
-                    <div class="quiz-item" data-quiz="9">
-                        <div class="quiz-header">
-                            <h4>Soal 9</h4>
-                            <span class="badge medium">Sedang</span>
-                            <span class="status-icon" id="status9"><i class="far fa-circle"></i></span>
-                        </div>
-                        <p>Gerhana Matahari terjadi ketika ...</p>
-                        <div class="options">
-                            <label><input type="radio" name="q9" value="A" /> A. Bumi berada di antara Matahari dan Bulan</label>
-                            <label><input type="radio" name="q9" value="B" /> B. Bulan berada di belakang Bumi</label>
-                            <label><input type="radio" name="q9" value="C" /> C. Matahari berada di antara Bumi dan Bulan</label>
-                            <label><input type="radio" name="q9" value="D" /> D. Bulan berada di antara Matahari dan Bumi</label>
-                        </div>
-                        <div class="quiz-footer">
-                            <span></span>
-                            <button class="btn-jawab" data-quiz="9">Jawab</button>
-                            <span class="feedback neutral" id="feedback9">⏳ Belum dijawab</span>
-                        </div>
-                    </div>
-
-                    <!-- Soal 10 (Jawaban: C) -->
-                    <div class="quiz-item" data-quiz="10">
-                        <div class="quiz-header">
-                            <h4>Soal 10</h4>
-                            <span class="badge hard">Sulit</span>
-                            <span class="status-icon" id="status10"><i class="far fa-circle"></i></span>
-                        </div>
-                        <p>Berdasarkan Hukum Kepler III, jika jarak rata-rata sebuah planet ke Matahari adalah 4 kali jarak Bumi-Matahari, maka periode orbit planet tersebut adalah ...</p>
-                        <div class="options">
-                            <label><input type="radio" name="q10" value="A" /> A. 4 tahun</label>
-                            <label><input type="radio" name="q10" value="B" /> B. 8 tahun</label>
-                            <label><input type="radio" name="q10" value="C" /> C. 64 tahun</label>
-                            <label><input type="radio" name="q10" value="D" /> D. 16 tahun</label>
-                        </div>
-                        <div class="quiz-footer">
-                            <span></span>
-                            <button class="btn-jawab" data-quiz="10">Jawab</button>
-                            <span class="feedback neutral" id="feedback10">⏳ Belum dijawab</span>
-                        </div>
+                    <!-- DYNAMIC QUIZ AREA -->
+                    <div id="quizArea">
+                        <!-- akan di-render oleh JS -->
                     </div>
 
                 </div>
@@ -1180,7 +1047,7 @@
 
         </div> <!-- /scroll-content -->
 
-        <!-- BOTTOM NAV (tetap) -->
+        <!-- BOTTOM NAV -->
         <div class="bottom-nav">
             <a href="home.html" class="nav-item"><i class="fas fa-house"></i><span>Beranda</span></a>
             <a href="#quiz" class="nav-item active"><i class="fas fa-pencil"></i><span>Soal</span></a>
@@ -1190,7 +1057,7 @@
 
     </div> <!-- /phone -->
 
-    <!-- OVERLAY POPUPS (clock & notif) -->
+    <!-- OVERLAY POPUPS -->
     <div class="overlay-popup clock-overlay" id="clockOverlay">
         <div class="overlay-content">
             <button class="overlay-close" id="clockClose"><i class="fas fa-xmark"></i></button>
@@ -1228,8 +1095,8 @@
                 <div class="notif-card">
                     <div class="notif-icon yellow"><i class="fas fa-file-alt"></i></div>
                     <div class="notif-body">
-                        <h4>Materi baru: Tata Surya</h4>
-                        <p>Materi tentang Hukum Kepler telah ditambahkan</p>
+                        <h4>Materi baru: Mekanika</h4>
+                        <p>Materi Kinematika & Dinamika telah ditambahkan</p>
                     </div>
                     <span class="notif-time">1j lalu</span>
                 </div>
@@ -1238,13 +1105,484 @@
     </div>
 
     <!-- ============================================================
-       SCRIPT
-       ============================================================ -->
+    SCRIPT
+    ============================================================ -->
     <script>
         (function() {
             'use strict';
 
-            // --- Confetti Engine ---
+            // =============================================================
+            // INDEXED DB - PROFIL STORAGE (sama seperti di dashboard)
+            // =============================================================
+            const DB_NAME = 'FisikakuDB';
+            const STORE_NAME = 'profil';
+            let db = null;
+
+            function openDB() {
+                return new Promise((resolve, reject) => {
+                    const request = indexedDB.open(DB_NAME, 1);
+                    request.onerror = () => reject(request.error);
+                    request.onsuccess = () => {
+                        db = request.result;
+                        resolve(db);
+                    };
+                    request.onupgradeneeded = (e) => {
+                        const db = e.target.result;
+                        if (!db.objectStoreNames.contains(STORE_NAME)) {
+                            db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+                        }
+                    };
+                });
+            }
+
+            function loadProfile() {
+                return new Promise((resolve, reject) => {
+                    if (!db) return reject('DB not open');
+                    const tx = db.transaction(STORE_NAME, 'readonly');
+                    const store = tx.objectStore(STORE_NAME);
+                    const request = store.get('user');
+                    request.onsuccess = () => resolve(request.result || null);
+                    request.onerror = () => reject(request.error);
+                });
+            }
+
+            // =============================================================
+            // LOGIN SESSION HELPER
+            // =============================================================
+            function getLoginSession() {
+                try {
+                    const session = localStorage.getItem('naralab_session');
+                    if (session) {
+                        return JSON.parse(session);
+                    }
+                } catch (e) {
+                    console.warn('Gagal membaca session:', e);
+                }
+                return null;
+            }
+
+            // =============================================================
+            // DATA SOAL - ASTRONOMI TATA SURYA
+            // Kunci: 1d, 2c, 3c, 4d, 5a, 6c, 7b, 8d, 9b, 10d
+            // =============================================================
+            const soalData = [{
+                id: 1,
+                text: 'Planet terbesar di tata surya adalah?',
+                options: [
+                    'A. Saturnus',
+                    'B. Neptunus',
+                    'C. Bumi',
+                    'D. Jupiter'
+                ],
+                correct: 3 // D
+            }, {
+                id: 2,
+                text: 'Planet dengan cincin yang paling jelas terlihat dari Bumi adalah?',
+                options: [
+                    'A. Jupiter',
+                    'B. Uranus',
+                    'C. Saturnus',
+                    'D. Neptunus'
+                ],
+                correct: 2 // C
+            }, {
+                id: 3,
+                text: 'Planet yang paling dekat dengan Matahari adalah?',
+                options: [
+                    'A. Venus',
+                    'B. Bumi',
+                    'C. Merkurius',
+                    'D. Mars'
+                ],
+                correct: 2 // C
+            }, {
+                id: 4,
+                text: 'Planet yang dikenal sebagai "bintang kejora" atau "bintang senja" adalah?',
+                options: [
+                    'A. Mars',
+                    'B. Jupiter',
+                    'C. Saturnus',
+                    'D. Venus'
+                ],
+                correct: 3 // D
+            }, {
+                id: 5,
+                text: 'Planet terluar di tata surya (sebelum Pluto diklasifikasikan ulang) adalah?',
+                options: [
+                    'A. Neptunus',
+                    'B. Uranus',
+                    'C. Saturnus',
+                    'D. Jupiter'
+                ],
+                correct: 0 // A
+            }, {
+                id: 6,
+                text: 'Planet yang memiliki rotasi paling cepat (waktu rotasi terpendek) adalah?',
+                options: [
+                    'A. Bumi',
+                    'B. Mars',
+                    'C. Jupiter',
+                    'D. Venus'
+                ],
+                correct: 2 // C
+            }, {
+                id: 7,
+                text: 'Planet yang memiliki sumbu rotasi miring hampir 90 derajat adalah?',
+                options: [
+                    'A. Neptunus',
+                    'B. Uranus',
+                    'C. Saturnus',
+                    'D. Bumi'
+                ],
+                correct: 1 // B
+            }, {
+                id: 8,
+                text: 'Planet terkecil di tata surya adalah?',
+                options: [
+                    'A. Mars',
+                    'B. Venus',
+                    'C. Bumi',
+                    'D. Merkurius'
+                ],
+                correct: 3 // D
+            }, {
+                id: 9,
+                text: 'Planet yang memiliki atmosfer paling tebal di antara planet kebumian adalah?',
+                options: [
+                    'A. Bumi',
+                    'B. Venus',
+                    'C. Mars',
+                    'D. Merkurius'
+                ],
+                correct: 1 // B
+            }, {
+                id: 10,
+                text: 'Bulan terbesar di tata surya adalah?',
+                options: [
+                    'A. Titan (milik Saturnus)',
+                    'B. Callisto (milik Jupiter)',
+                    'C. Io (milik Jupiter)',
+                    'D. Ganymede (milik Jupiter)'
+                ],
+                correct: 3 // D
+            }];
+
+            const totalSoal = soalData.length;
+
+            // =============================================================
+            // STATE
+            // =============================================================
+            let currentIndex = 0; // 0-based
+            const userAnswers = new Array(totalSoal).fill(null); // index of selected option, or null
+            let quizFinished = false;
+
+            // DOM refs
+            const quizArea = document.getElementById('quizArea');
+            const currentNumEl = document.getElementById('currentNum');
+            const progressFill = document.getElementById('progressFill');
+            const qCounter = document.getElementById('qCounter');
+
+            // DOM header refs
+            const headerGreeting = document.getElementById('headerGreeting');
+            const headerProdi = document.getElementById('headerProdi');
+            const headerSemester = document.getElementById('headerSemester');
+            const headerAvatarImg = document.getElementById('headerAvatarImg');
+            const headerAvatarPlaceholder = document.getElementById('headerAvatarPlaceholder');
+
+            // =============================================================
+            // FUNGSI UPDATE HEADER DARI DATA PROFIL
+            // =============================================================
+            function updateHeader(profile) {
+                // profile: { name, prodi, semester, avatar }
+                if (profile) {
+                    headerGreeting.textContent = 'Hai, ' + (profile.name || 'Mahasiswa');
+                    headerProdi.innerHTML = '<i class="fas fa-graduation-cap"></i> ' + (profile.prodi || 'Program Studi tidak tersedia');
+                    headerSemester.innerHTML = '<i class="far fa-calendar-alt"></i> Semester ' + (profile.semester || '1');
+
+                    if (profile.avatar) {
+                        headerAvatarImg.src = profile.avatar;
+                        headerAvatarImg.style.display = 'block';
+                        headerAvatarPlaceholder.style.display = 'none';
+                    } else {
+                        headerAvatarImg.style.display = 'none';
+                        headerAvatarPlaceholder.style.display = 'flex';
+                    }
+                }
+            }
+
+            // =============================================================
+            // AMBIL DATA PROFIL DARI DB + SESSION
+            // =============================================================
+            async function loadProfileDataAndUpdate() {
+                try {
+                    await openDB();
+                    const dbData = await loadProfile();
+                    const session = getLoginSession();
+
+                    let profile = {
+                        name: 'Mahasiswa',
+                        prodi: 'Program Studi tidak tersedia',
+                        semester: '1',
+                        avatar: null
+                    };
+
+                    if (session) {
+                        profile.name = session.username || profile.name;
+                        profile.prodi = session.prodi || profile.prodi;
+                        profile.semester = session.semester || profile.semester;
+                    }
+
+                    if (dbData) {
+                        // Gabungkan, session lebih prioritas untuk nama, prodi, semester
+                        profile = {
+                            ...profile,
+                            ...dbData,
+                            name: session?.username || dbData.name || profile.name,
+                            prodi: session?.prodi || dbData.prodi || profile.prodi,
+                            semester: session?.semester || dbData.semester || profile.semester,
+                            avatar: dbData.avatar || profile.avatar
+                        };
+                    }
+
+                    updateHeader(profile);
+                } catch (e) {
+                    console.warn('Gagal load profil:', e);
+                    // fallback: coba session saja
+                    const session = getLoginSession();
+                    if (session) {
+                        updateHeader({
+                            name: session.username || 'Mahasiswa',
+                            prodi: session.prodi || 'Program Studi tidak tersedia',
+                            semester: session.semester || '1',
+                            avatar: null
+                        });
+                    }
+                }
+            }
+
+            // =============================================================
+            // RENDER FUNCTIONS (quiz)
+            // =============================================================
+
+            function render() {
+                if (quizFinished) {
+                    renderResults();
+                    return;
+                }
+
+                const q = soalData[currentIndex];
+                const selectedIdx = userAnswers[currentIndex];
+                const isLast = (currentIndex === totalSoal - 1);
+
+                // Update progress header
+                currentNumEl.textContent = currentIndex + 1;
+                const pct = ((currentIndex) / totalSoal) * 100;
+                progressFill.style.width = pct + '%';
+                progressFill.classList.remove('done');
+
+                // Build HTML
+                let html = `<div class="question-block">`;
+                html += `<div class="q-text">${q.text}</div>`;
+                html += `<div class="options">`;
+
+                q.options.forEach((opt, idx) => {
+                    const checked = (selectedIdx === idx) ? 'checked' : '';
+                    const selectedClass = (selectedIdx === idx) ? 'selected' : '';
+                    html += `
+                        <label class="${selectedClass}">
+                            <input type="radio" name="q${q.id}" value="${idx}" ${checked} />
+                            ${opt}
+                        </label>
+                    `;
+                });
+
+                html += `</div>`;
+
+                // Navigation
+                html += `<div class="quiz-nav">`;
+                // Previous button
+                const prevDisabled = (currentIndex === 0) ? 'disabled' : '';
+                html += `
+                    <button class="btn-prev" id="btnPrev" ${prevDisabled}>
+                        <i class="fas fa-chevron-left"></i> Kembali
+                    </button>
+                `;
+
+                // Next / Selesai button
+                const nextLabel = isLast ? 'Selesai' : 'Selanjutnya';
+                const nextIcon = isLast ? '<i class="fas fa-flag-checkered"></i>' :
+                    '<i class="fas fa-chevron-right icon-right"></i>';
+                const disabledAttr = (selectedIdx === null) ? 'disabled' : '';
+                html += `
+                    <button class="btn-next" id="btnNext" ${disabledAttr}>
+                        ${nextLabel} ${nextIcon}
+                    </button>
+                `;
+
+                html += `</div>`;
+                html += `</div>`;
+
+                quizArea.innerHTML = html;
+
+                // --- Event listeners ---
+                // Radio change: update state & enable/disable Next
+                const radios = quizArea.querySelectorAll('input[type="radio"]');
+                radios.forEach((radio, idx) => {
+                    radio.addEventListener('change', function() {
+                        const val = parseInt(this.value);
+                        userAnswers[currentIndex] = val;
+                        // Update label styles
+                        const labels = quizArea.querySelectorAll('.options label');
+                        labels.forEach((l, i) => {
+                            l.classList.toggle('selected', i === val);
+                        });
+                        // Enable Next
+                        const nextBtn = document.getElementById('btnNext');
+                        if (nextBtn) nextBtn.disabled = false;
+                    });
+                });
+
+                // Previous button
+                const prevBtn = document.getElementById('btnPrev');
+                if (prevBtn) {
+                    prevBtn.addEventListener('click', function() {
+                        if (currentIndex > 0) {
+                            currentIndex--;
+                            render();
+                            document.querySelector('.scroll-content').scrollTop = 0;
+                        }
+                    });
+                }
+
+                // Next button
+                const nextBtn = document.getElementById('btnNext');
+                if (nextBtn) {
+                    nextBtn.addEventListener('click', function() {
+                        if (this.disabled) return;
+                        if (isLast) {
+                            quizFinished = true;
+                            render();
+                            const correctCount = countCorrect();
+                            if (correctCount === totalSoal) {
+                                launchConfetti();
+                                setTimeout(launchConfetti, 600);
+                            }
+                        } else {
+                            currentIndex++;
+                            render();
+                            document.querySelector('.scroll-content').scrollTop = 0;
+                        }
+                    });
+                }
+
+                const card = document.getElementById('quizCard');
+                if (card) {
+                    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            }
+
+            // =============================================================
+            // RESULTS
+            // =============================================================
+            function countCorrect() {
+                let correct = 0;
+                for (let i = 0; i < totalSoal; i++) {
+                    if (userAnswers[i] !== null && userAnswers[i] === soalData[i].correct) {
+                        correct++;
+                    }
+                }
+                return correct;
+            }
+
+            function renderResults() {
+                const correctCount = countCorrect();
+                const wrongCount = totalSoal - correctCount;
+                const pct = (correctCount / totalSoal) * 100;
+
+                progressFill.style.width = '100%';
+                progressFill.classList.add('done');
+                currentNumEl.textContent = '✓';
+
+                let icon, message, color;
+                if (correctCount === totalSoal) {
+                    icon = '🎉';
+                    message = 'Sempurna! Nilai 10/10! Kamu benar-benar menguasai astronomi tata surya! 🚀';
+                    color = '#2ecc71';
+                } else if (correctCount >= 7) {
+                    icon = '🌟';
+                    message = 'Bagus! Skor ' + correctCount + '/10. Pertahankan semangat belajarmu! 💪';
+                    color = '#4b1dd6';
+                } else if (correctCount >= 4) {
+                    icon = '📖';
+                    message = 'Terus belajar! Skor ' + correctCount + '/10. Baca ulang materi tata surya ya. 📚';
+                    color = '#f39c12';
+                } else {
+                    icon = '💪';
+                    message = 'Jangan menyerah! Skor ' + correctCount +
+                    '/10. Coba pelajari lagi astronomi tata surya. 🧠';
+                    color = '#e74c3c';
+                }
+
+                let html = `
+                    <div class="results-screen">
+                        <span class="result-icon">${icon}</span>
+                        <div class="result-score">
+                            ${correctCount} <span class="denom">/ ${totalSoal}</span>
+                        </div>
+                        <div class="result-label">Jawaban Benar</div>
+                        <div class="result-message" style="border-color:${color}20; background:${color}08;">
+                            ${message}
+                        </div>
+                        <div class="result-detail">
+                            <div class="stat-item">
+                                <span class="num green">${correctCount}</span>
+                                <span class="lbl">Benar</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="num red">${wrongCount}</span>
+                                <span class="lbl">Salah</span>
+                            </div>
+                        </div>
+                        <button class="btn-restart" id="btnRestart">
+                            <i class="fas fa-rotate-right"></i> Ulangi Quiz
+                        </button>
+                    </div>
+                `;
+
+                quizArea.innerHTML = html;
+
+                const restartBtn = document.getElementById('btnRestart');
+                if (restartBtn) {
+                    restartBtn.addEventListener('click', function() {
+                        resetQuiz();
+                    });
+                }
+
+                if (correctCount === totalSoal) {
+                    launchConfetti();
+                    setTimeout(launchConfetti, 600);
+                    setTimeout(launchConfetti, 1200);
+                }
+
+                document.querySelector('.scroll-content').scrollTop = 0;
+            }
+
+            // =============================================================
+            // RESET
+            // =============================================================
+            function resetQuiz() {
+                currentIndex = 0;
+                for (let i = 0; i < totalSoal; i++) {
+                    userAnswers[i] = null;
+                }
+                quizFinished = false;
+                render();
+                document.querySelector('.scroll-content').scrollTop = 0;
+            }
+
+            // =============================================================
+            // CONFETTI
+            // =============================================================
             function launchConfetti() {
                 const container = document.createElement('div');
                 container.className = 'confetti-container';
@@ -1255,17 +1593,15 @@
                     '#FFEAA7', '#DDA0DD', '#FF8A5C', '#A29BFE',
                     '#FD79A8', '#00CEC9', '#FDCB6E', '#6C5CE7'
                 ];
-
                 const shapes = ['square', 'circle', 'triangle'];
-                const count = 80;
+                const count = 70;
 
                 for (let i = 0; i < count; i++) {
                     const piece = document.createElement('div');
                     piece.className = 'confetti-piece';
-
                     const color = colors[Math.floor(Math.random() * colors.length)];
                     const shape = shapes[Math.floor(Math.random() * shapes.length)];
-                    const size = 6 + Math.random() * 10;
+                    const size = 5 + Math.random() * 10;
                     piece.style.width = size + 'px';
                     piece.style.height = size + 'px';
                     piece.style.backgroundColor = color;
@@ -1288,172 +1624,12 @@
                     container.appendChild(piece);
                 }
 
-                setTimeout(function() { container.remove(); }, 4500);
+                setTimeout(() => container.remove(), 4500);
             }
 
-            // --- KUNCI JAWABAN (1a 2b 3a 4d 5d 6a 7c 8a 9d 10c) ---
-            const kunciJawaban = {
-                1: 'A',
-                2: 'B',
-                3: 'A',
-                4: 'D',
-                5: 'D',
-                6: 'A',
-                7: 'C',
-                8: 'A',
-                9: 'D',
-                10: 'C'
-            };
-
-            // --- STATE SKOR ---
-            let correctCount = 0;
-            const totalSoal = 10;
-            const answered = {}; // track per question: 'correct' or 'wrong' or undefined
-
-            // DOM refs
-            const scoreDisplay = document.getElementById('scoreDisplay');
-            const progressFill = document.getElementById('progressFill');
-            const scoreBadge = document.getElementById('scoreBadge');
-
-            function updateScoreUI() {
-                const scoreText = correctCount + ' <span class="total">/ ' + totalSoal + '</span>';
-                scoreDisplay.innerHTML = scoreText;
-                const pct = (correctCount / totalSoal) * 100;
-                progressFill.style.width = pct + '%';
-
-                // animasi pop pada angka skor
-                scoreDisplay.classList.remove('score-pop');
-                // force reflow
-                void scoreDisplay.offsetWidth;
-                scoreDisplay.classList.add('score-pop');
-
-                // ubah warna badge berdasarkan skor
-                if (correctCount === totalSoal) {
-                    scoreBadge.style.background = 'linear-gradient(135deg, #2ecc71, #27ae60)';
-                } else if (correctCount >= 7) {
-                    scoreBadge.style.background = 'linear-gradient(135deg, #4b1dd6, #7f3eff)';
-                } else if (correctCount >= 4) {
-                    scoreBadge.style.background = 'linear-gradient(135deg, #f39c12, #e67e22)';
-                } else {
-                    scoreBadge.style.background = 'linear-gradient(135deg, #4b1dd6, #7f3eff)';
-                }
-            }
-
-            function updateStatusIcon(quizId, isCorrect) {
-                const statusEl = document.getElementById('status' + quizId);
-                if (!statusEl) return;
-                if (isCorrect === true) {
-                    statusEl.className = 'status-icon done-correct';
-                    statusEl.innerHTML = '<i class="fas fa-check-circle"></i>';
-                } else if (isCorrect === false) {
-                    statusEl.className = 'status-icon done-wrong';
-                    statusEl.innerHTML = '<i class="fas fa-times-circle"></i>';
-                } else {
-                    statusEl.className = 'status-icon';
-                    statusEl.innerHTML = '<i class="far fa-circle"></i>';
-                }
-            }
-
-            function updateFeedback(quizId, isCorrect, jawabanBenar) {
-                const feedback = document.getElementById('feedback' + quizId);
-                if (!feedback) return;
-                if (isCorrect === true) {
-                    feedback.textContent = '✅ Benar! +1';
-                    feedback.className = 'feedback benar';
-                } else if (isCorrect === false) {
-                    feedback.textContent = '❌ Salah. Jawaban: ' + jawabanBenar;
-                    feedback.className = 'feedback salah';
-                } else {
-                    feedback.textContent = '⏳ Belum dijawab';
-                    feedback.className = 'feedback neutral';
-                }
-            }
-
-            // --- EVENT JAWAB ---
-            const btnJawab = document.querySelectorAll('.btn-jawab');
-
-            btnJawab.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const quizId = parseInt(this.dataset.quiz);
-                    const item = this.closest('.quiz-item');
-                    const radioName = 'q' + quizId;
-                    const selected = item.querySelector('input[name="' + radioName + '"]:checked');
-                    const feedback = document.getElementById('feedback' + quizId);
-
-                    // Jika sudah dijawab, tidak bisa dijawab lagi
-                    if (answered[quizId] !== undefined) {
-                        feedback.textContent = '⏳ Sudah dijawab';
-                        feedback.className = 'feedback neutral';
-                        return;
-                    }
-
-                    if (!selected) {
-                        feedback.textContent = '⚠️ Pilih jawaban dulu!';
-                        feedback.className = 'feedback salah';
-                        return;
-                    }
-
-                    const jawabanUser = selected.value;
-                    const jawabanBenar = kunciJawaban[quizId];
-                    const isCorrect = (jawabanUser === jawabanBenar);
-
-                    // Simpan state
-                    answered[quizId] = isCorrect;
-                    if (isCorrect) {
-                        correctCount++;
-                    }
-
-                    // Update UI
-                    updateStatusIcon(quizId, isCorrect);
-                    updateFeedback(quizId, isCorrect, jawabanBenar);
-                    updateScoreUI();
-
-                    // Disable tombol
-                    this.disabled = true;
-
-                    // Confetti jika benar
-                    if (isCorrect) {
-                        launchConfetti();
-                    }
-
-                    // Jika semua soal sudah dijawab, tampilkan pesan special
-                    const totalAnswered = Object.keys(answered).length;
-                    if (totalAnswered === totalSoal) {
-                        setTimeout(() => {
-                            const msg = document.createElement('div');
-                            msg.style.cssText =
-                                'text-align:center; padding:14px; margin-top:8px; background:rgba(46,204,113,0.08); border-radius:16px; font-weight:600; color:#2ecc71; border:1px solid rgba(46,204,113,0.15);';
-                            if (correctCount === totalSoal) {
-                                msg.innerHTML =
-                                    '🎉 <strong>Sempurna!</strong> Nilai 10/10! Kamu benar-benar menguasai Tata Surya! 🚀';
-                                launchConfetti();
-                                setTimeout(launchConfetti, 800);
-                            } else if (correctCount >= 7) {
-                                msg.innerHTML =
-                                    '🌟 <strong>Bagus!</strong> Skor ' + correctCount +
-                                    '/10. Pertahankan semangat belajarmu! 💪';
-                            } else if (correctCount >= 4) {
-                                msg.innerHTML =
-                                    '📖 <strong>Terus belajar!</strong> Skor ' + correctCount +
-                                    '/10. Baca ulang materi Tata Surya ya. 📚';
-                            } else {
-                                msg.innerHTML =
-                                    '💪 <strong>Jangan menyerah!</strong> Skor ' + correctCount +
-                                    '/10. Coba pelajari lagi Fisika Tata Surya. 🧠';
-                            }
-                            const card = document.querySelector('.card');
-                            const existing = document.querySelector('.quiz-result-msg');
-                            if (existing) existing.remove();
-                            msg.className = 'quiz-result-msg';
-                            card.insertBefore(msg, card.querySelector('.quiz-item'));
-                        }, 400);
-                    }
-                });
-            });
-
-            // ============================================================
-            // CLOCK & NOTIF OVERLAY (tetap)
-            // ============================================================
+            // =============================================================
+            // CLOCK & NOTIF OVERLAY
+            // =============================================================
             const clockOverlay = document.getElementById('clockOverlay');
             const notifOverlay = document.getElementById('notifOverlay');
             const clockIcon = document.getElementById('clockIcon');
@@ -1521,9 +1697,9 @@
                 }
             });
 
-            // ============================================================
+            // =============================================================
             // NAVIGASI BOTTOM NAV
-            // ============================================================
+            // =============================================================
             const navItems = document.querySelectorAll('.nav-item');
             navItems.forEach(item => {
                 item.addEventListener('click', function(e) {
@@ -1531,6 +1707,17 @@
                     this.classList.add('active');
                     document.querySelector('.scroll-content').scrollTop = 0;
                 });
+            });
+
+            // =============================================================
+            // START — load profil & render quiz
+            // =============================================================
+            // Tunggu hingga profil dimuat, lalu render quiz
+            loadProfileDataAndUpdate().then(() => {
+                render();
+            }).catch(() => {
+                // Jika gagal, tetap render quiz dengan data default
+                render();
             });
 
         })();
