@@ -835,20 +835,23 @@
         <!-- SCROLLABLE CONTENT -->
         <div class="scroll-content">
 
-            <!-- HEADER (tetap) -->
+            <!-- HEADER (dinamis) -->
             <header class="header">
                 <div class="profile-row">
                     <div class="profile-left">
-                        <div class="avatar-frame">
-                            <div class="avatar-placeholder"><i class="fas fa-user"></i></div>
+                        <div class="avatar-frame" id="headerAvatar">
+                            <div class="avatar-placeholder" id="headerAvatarPlaceholder">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <img src="" alt="avatar" id="headerAvatarImg" style="display:none;" />
                         </div>
                         <div>
-                            <div class="greeting">Hai, Nayla Arziki</div>
-                            <div class="sub-text-compact">
-                                <i class="fas fa-graduation-cap"></i> Pendidikan Fisika
+                            <div class="greeting" id="headerGreeting">Hai, Mahasiswa</div>
+                            <div class="sub-text-compact" id="headerProdi">
+                                <i class="fas fa-graduation-cap"></i> Program Studi tidak tersedia
                             </div>
-                            <div class="semester-row">
-                                <i class="far fa-calendar-alt"></i> Semester 4
+                            <div class="semester-row" id="headerSemester">
+                                <i class="far fa-calendar-alt"></i> Semester 1
                             </div>
                         </div>
                     </div>
@@ -1075,13 +1078,141 @@
     </div>
 
     <!-- ============================================================
-    SCRIPT — Clock, Notif, & Interaksi
+    SCRIPT — IndexedDB, Profil, Clock, Notif, & Interaksi
     ============================================================ -->
     <script>
         (function() {
             'use strict';
 
-            // --- CLOCK ---
+            // =============================================================
+            // INDEXED DB - PROFIL STORAGE (sama seperti di dashboard)
+            // =============================================================
+            const DB_NAME = 'FisikakuDB';
+            const STORE_NAME = 'profil';
+            let db = null;
+
+            function openDB() {
+                return new Promise((resolve, reject) => {
+                    const request = indexedDB.open(DB_NAME, 1);
+                    request.onerror = () => reject(request.error);
+                    request.onsuccess = () => {
+                        db = request.result;
+                        resolve(db);
+                    };
+                    request.onupgradeneeded = (e) => {
+                        const db = e.target.result;
+                        if (!db.objectStoreNames.contains(STORE_NAME)) {
+                            db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+                        }
+                    };
+                });
+            }
+
+            function loadProfile() {
+                return new Promise((resolve, reject) => {
+                    if (!db) return reject('DB not open');
+                    const tx = db.transaction(STORE_NAME, 'readonly');
+                    const store = tx.objectStore(STORE_NAME);
+                    const request = store.get('user');
+                    request.onsuccess = () => resolve(request.result || null);
+                    request.onerror = () => reject(request.error);
+                });
+            }
+
+            // =============================================================
+            // LOGIN SESSION HELPER
+            // =============================================================
+            function getLoginSession() {
+                try {
+                    const session = localStorage.getItem('naralab_session');
+                    if (session) {
+                        return JSON.parse(session);
+                    }
+                } catch (e) {
+                    console.warn('Gagal membaca session:', e);
+                }
+                return null;
+            }
+
+            // =============================================================
+            // FUNGSI UPDATE HEADER DARI DATA PROFIL
+            // =============================================================
+            const headerGreeting = document.getElementById('headerGreeting');
+            const headerProdi = document.getElementById('headerProdi');
+            const headerSemester = document.getElementById('headerSemester');
+            const headerAvatarImg = document.getElementById('headerAvatarImg');
+            const headerAvatarPlaceholder = document.getElementById('headerAvatarPlaceholder');
+
+            function updateHeader(profile) {
+                if (profile) {
+                    headerGreeting.textContent = 'Hai, ' + (profile.name || 'Mahasiswa');
+                    headerProdi.innerHTML = '<i class="fas fa-graduation-cap"></i> ' + (profile.prodi || 'Program Studi tidak tersedia');
+                    headerSemester.innerHTML = '<i class="far fa-calendar-alt"></i> Semester ' + (profile.semester || '1');
+
+                    if (profile.avatar) {
+                        headerAvatarImg.src = profile.avatar;
+                        headerAvatarImg.style.display = 'block';
+                        headerAvatarPlaceholder.style.display = 'none';
+                    } else {
+                        headerAvatarImg.style.display = 'none';
+                        headerAvatarPlaceholder.style.display = 'flex';
+                    }
+                }
+            }
+
+            // =============================================================
+            // AMBIL DATA PROFIL DARI DB + SESSION
+            // =============================================================
+            async function loadProfileDataAndUpdate() {
+                try {
+                    await openDB();
+                    const dbData = await loadProfile();
+                    const session = getLoginSession();
+
+                    let profile = {
+                        name: 'Mahasiswa',
+                        prodi: 'Program Studi tidak tersedia',
+                        semester: '1',
+                        avatar: null
+                    };
+
+                    if (session) {
+                        profile.name = session.username || profile.name;
+                        profile.prodi = session.prodi || profile.prodi;
+                        profile.semester = session.semester || profile.semester;
+                    }
+
+                    if (dbData) {
+                        // Gabungkan, session lebih prioritas untuk nama, prodi, semester
+                        profile = {
+                            ...profile,
+                            ...dbData,
+                            name: session?.username || dbData.name || profile.name,
+                            prodi: session?.prodi || dbData.prodi || profile.prodi,
+                            semester: session?.semester || dbData.semester || profile.semester,
+                            avatar: dbData.avatar || profile.avatar
+                        };
+                    }
+
+                    updateHeader(profile);
+                } catch (e) {
+                    console.warn('Gagal load profil:', e);
+                    // fallback: coba session saja
+                    const session = getLoginSession();
+                    if (session) {
+                        updateHeader({
+                            name: session.username || 'Mahasiswa',
+                            prodi: session.prodi || 'Program Studi tidak tersedia',
+                            semester: session.semester || '1',
+                            avatar: null
+                        });
+                    }
+                }
+            }
+
+            // =============================================================
+            // CLOCK
+            // =============================================================
             const clockOverlay = document.getElementById('clockOverlay');
             const notifOverlay = document.getElementById('notifOverlay');
             const clockIcon = document.getElementById('clockIcon');
@@ -1149,7 +1280,9 @@
                 }
             });
 
-            // --- NAVIGASI BOTTOM ---
+            // =============================================================
+            // NAVIGASI BOTTOM
+            // =============================================================
             const navItems = document.querySelectorAll('.nav-item');
             navItems.forEach(item => {
                 item.addEventListener('click', function(e) {
@@ -1159,7 +1292,9 @@
                 });
             });
 
-            // --- CONFETTI (tetap sebagai aksen) ---
+            // =============================================================
+            // CONFETTI (aksen pembuka)
+            // =============================================================
             function launchConfetti() {
                 const container = document.createElement('div');
                 container.className = 'confetti-container';
@@ -1172,7 +1307,6 @@
                 ];
 
                 const shapes = ['square', 'circle', 'triangle'];
-
                 const count = 60;
 
                 for (let i = 0; i < count; i++) {
@@ -1217,10 +1351,17 @@
                 }, 4500);
             }
 
-            // panggil confetti sekali untuk kesan 'membuka majalah'
-            setTimeout(launchConfetti, 800);
+            // =============================================================
+            // START — load profil, lalu konfeti
+            // =============================================================
+            loadProfileDataAndUpdate().then(() => {
+                // setelah profil dimuat, beri efek konfeti
+                setTimeout(launchConfetti, 400);
+            }).catch(() => {
+                // tetap jalankan konfeti meskipun gagal
+                setTimeout(launchConfetti, 400);
+            });
 
-            // (optional) konfeti saat scroll ke bawah — tapi cukup sekali saja
         })();
     </script>
 
