@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Naralab - Login</title>
-    <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * {
@@ -22,7 +21,6 @@
             background: #f0f0f0;
         }
 
-        /* Login Container */
         .login-container {
             width: 100%;
             max-width: 400px;
@@ -40,7 +38,6 @@
             border-radius: 20px;
         }
 
-        /* Efek dekoratif background */
         .login-container::before {
             content: '';
             position: absolute;
@@ -65,7 +62,6 @@
             pointer-events: none;
         }
 
-        /* Partikel dekoratif */
         .particle {
             position: absolute;
             background: rgba(255, 255, 255, 0.08);
@@ -98,7 +94,6 @@
             animation-delay: 4s;
         }
 
-        /* Logo kecil */
         .logo-small {
             font-size: 34px;
             color: #FFFFFF;
@@ -108,7 +103,6 @@
             position: relative;
         }
 
-        /* Judul halaman */
         .page-title {
             color: #FFFFFF;
             font-size: 24px;
@@ -124,7 +118,6 @@
             font-weight: 300;
         }
 
-        /* Subtitle */
         .subtitle {
             color: rgba(255, 255, 255, 0.6);
             font-size: 12px;
@@ -135,7 +128,6 @@
             position: relative;
         }
 
-        /* Form container */
         .form-container {
             width: 100%;
             max-width: 280px;
@@ -143,7 +135,6 @@
             position: relative;
         }
 
-        /* Input group */
         .input-group {
             position: relative;
             margin-bottom: 10px;
@@ -181,7 +172,6 @@
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
         }
 
-        /* Tombol Login */
         .btn-login {
             width: 100%;
             padding: 11px;
@@ -206,7 +196,6 @@
             transform: scale(0.98);
         }
 
-        /* Divider */
         .divider-text {
             color: rgba(255, 255, 255, 0.4);
             font-size: 11px;
@@ -229,7 +218,6 @@
             margin: 0 8px;
         }
 
-        /* Tombol Google */
         .btn-google {
             width: 100%;
             padding: 10px;
@@ -257,7 +245,6 @@
             color: #FFFFFF;
         }
 
-        /* Link daftar */
         .register-link {
             color: rgba(255, 255, 255, 0.6);
             font-size: 12px;
@@ -279,7 +266,6 @@
             text-decoration: underline;
         }
 
-        /* Pesan error/sukses */
         .message {
             font-size: 12px;
             font-weight: 300;
@@ -298,12 +284,10 @@
             color: #51cf66;
         }
 
-        /* Mode Register - tampilkan field tambahan */
         .register-mode .input-group.extra-field {
             display: block !important;
         }
 
-        /* Animasi */
         @keyframes floatParticle {
             0%, 100% {
                 transform: translate(0, 0) scale(1);
@@ -313,7 +297,6 @@
             }
         }
 
-        /* Responsive */
         @media (max-width: 480px) {
             .login-container {
                 max-height: 100vh;
@@ -344,66 +327,51 @@
 <body>
 
     <div class="login-container" id="loginContainer">
-        <!-- Partikel dekoratif -->
         <div class="particle particle-1"></div>
         <div class="particle particle-2"></div>
         <div class="particle particle-3"></div>
 
-        <!-- Logo kecil -->
         <i class="fas fa-flask logo-small"></i>
-
-        <!-- Judul -->
         <h1 class="page-title" id="pageTitle">Nara<span>Lab</span></h1>
         <p class="subtitle" id="subtitle">• Login •</p>
 
-        <!-- Form -->
         <div class="form-container">
-            <!-- Input Username (untuk register) -->
             <div class="input-group" id="usernameGroup" style="display:none;">
                 <i class="fas fa-user"></i>
                 <input type="text" id="username" placeholder="Username">
             </div>
 
-            <!-- Input Email -->
             <div class="input-group">
                 <i class="fas fa-envelope"></i>
                 <input type="email" id="email" placeholder="Email (Gmail)">
             </div>
 
-            <!-- Input Password -->
             <div class="input-group">
                 <i class="fas fa-lock"></i>
                 <input type="password" id="password" placeholder="Password">
             </div>
 
-            <!-- Field Semester (hanya untuk register) -->
             <div class="input-group extra-field" id="semesterGroup" style="display:none;">
                 <i class="fas fa-graduation-cap"></i>
                 <input type="text" id="semester" placeholder="Semester (contoh: 3)">
             </div>
 
-            <!-- Field Prodi (hanya untuk register) -->
             <div class="input-group extra-field" id="prodiGroup" style="display:none;">
                 <i class="fas fa-book-open"></i>
                 <input type="text" id="prodi" placeholder="Program Studi (contoh: Teknik Informatika)">
             </div>
 
-            <!-- Pesan -->
             <div class="message" id="message"></div>
 
-            <!-- Tombol Login/Daftar -->
             <button class="btn-login" id="submitBtn">Login</button>
 
-            <!-- Divider -->
             <div class="divider-text">atau</div>
 
-            <!-- Tombol Google -->
             <button class="btn-google" id="googleBtn">
                 <i class="fab fa-google"></i>
                 Login dengan Google
             </button>
 
-            <!-- Link ganti mode -->
             <p class="register-link" id="toggleLink">
                 Belum punya akun? <a href="#" id="toggleMode">Daftar sekarang</a>
             </p>
@@ -448,7 +416,6 @@
                 if (user.password !== password) {
                     return { success: false, message: 'Password salah' };
                 }
-                // Simpan session
                 localStorage.setItem('naralab_session', JSON.stringify({
                     email: email,
                     username: user.username,
@@ -485,16 +452,14 @@
         const prodiGroup = document.getElementById('prodiGroup');
         const loginContainer = document.getElementById('loginContainer');
 
-        // Mode state
         let isRegisterMode = false;
 
-        // Toggle mode
-        toggleMode.addEventListener('click', (e) => {
+        // Handler untuk toggle mode (agar bisa di-reattach)
+        function toggleModeHandler(e) {
             e.preventDefault();
             isRegisterMode = !isRegisterMode;
-            
+
             if (isRegisterMode) {
-                // Mode Register
                 pageTitle.innerHTML = 'Daftar <span>Akun</span>';
                 subtitle.textContent = '• Buat Akun Baru •';
                 submitBtn.textContent = 'Daftar';
@@ -505,7 +470,6 @@
                 prodiGroup.style.display = 'block';
                 loginContainer.classList.add('register-mode');
             } else {
-                // Mode Login
                 pageTitle.innerHTML = 'Nara<span>Lab</span>';
                 subtitle.textContent = '• Login •';
                 submitBtn.textContent = 'Login';
@@ -516,16 +480,14 @@
                 prodiGroup.style.display = 'none';
                 loginContainer.classList.remove('register-mode');
             }
-            
-            // Re-attach event listener untuk toggle baru
+
+            // Re-attach event listener untuk toggle yang baru
             document.getElementById('toggleMode').addEventListener('click', toggleModeHandler);
             message.textContent = '';
-        });
-
-        function toggleModeHandler(e) {
-            e.preventDefault();
-            toggleMode.click();
         }
+
+        // Pasang event listener awal
+        toggleMode.addEventListener('click', toggleModeHandler);
 
         // Submit form
         submitBtn.addEventListener('click', async () => {
@@ -535,7 +497,6 @@
             const semester = semesterInput.value.trim();
             const prodi = prodiInput.value.trim();
 
-            // Validasi
             if (!email || !password) {
                 showMessage('Email dan password wajib diisi!', 'error');
                 return;
@@ -561,10 +522,32 @@
                     // REGISTER
                     const result = DB.createUser(email, password, username, semester, prodi);
                     if (result.success) {
-                        showMessage('Akun berhasil dibuat! Mengarahkan...', 'success');
-                        setTimeout(() => {
-                            window.location.href = 'home.html';
-                        }, 2000);
+                        showMessage('Akun berhasil dibuat! Silakan login.', 'success');
+
+                        // Kosongkan semua field
+                        usernameInput.value = '';
+                        emailInput.value = '';
+                        passwordInput.value = '';
+                        semesterInput.value = '';
+                        prodiInput.value = '';
+
+                        // Ubah mode ke login
+                        isRegisterMode = false;
+                        pageTitle.innerHTML = 'Nara<span>Lab</span>';
+                        subtitle.textContent = '• Login •';
+                        submitBtn.textContent = 'Login';
+                        toggleMode.textContent = 'Daftar sekarang';
+                        toggleLink.innerHTML = 'Belum punya akun? <a href="#" id="toggleMode">Daftar sekarang</a>';
+                        usernameGroup.style.display = 'none';
+                        semesterGroup.style.display = 'none';
+                        prodiGroup.style.display = 'none';
+                        loginContainer.classList.remove('register-mode');
+
+                        // Re-attach event listener untuk toggle baru
+                        document.getElementById('toggleMode').addEventListener('click', toggleModeHandler);
+
+                        // Fokus ke email agar siap login
+                        emailInput.focus();
                     } else {
                         showMessage(result.message, 'error');
                     }
@@ -588,21 +571,17 @@
         // Login dengan Google (simulasi)
         googleBtn.addEventListener('click', async () => {
             try {
-                // Simulasi login Google dengan data dummy
                 const dummyEmail = 'user.google@gmail.com';
                 const dummyUsername = 'User Google';
                 const dummyPassword = 'google_123';
                 const dummySemester = '5';
                 const dummyProdi = 'Sistem Informasi';
-                
-                // Cek apakah user sudah ada
+
                 let user = DB.getUser(dummyEmail);
                 if (!user) {
-                    // Buat akun baru
                     DB.createUser(dummyEmail, dummyPassword, dummyUsername, dummySemester, dummyProdi);
                 }
-                
-                // Login
+
                 const result = DB.loginUser(dummyEmail, dummyPassword);
                 if (result.success) {
                     showMessage('Login Google berhasil! Mengarahkan...', 'success');
@@ -615,29 +594,26 @@
             }
         });
 
-        // Helper function untuk menampilkan pesan
+        // Helper untuk menampilkan pesan
         function showMessage(text, type) {
             message.textContent = text;
             message.className = 'message ' + type;
-            
-            // Reset setelah 3 detik
+
             if (text !== '') {
                 setTimeout(() => {
                     if (message.textContent === text) {
                         message.textContent = '';
                         message.className = 'message';
                     }
-                }, 3000);
+                }, 4000);
             }
         }
 
         // Cek status login
         const session = DB.getSession();
         if (session) {
-            // Jika sudah login, redirect ke home
-            console.log('User sudah login:', session.email);
-            // Uncomment untuk redirect otomatis saat halaman dimuat
-            // window.location.href = 'home.html';
+            // Jika sudah login, arahkan ke home
+            window.location.href = 'home.html';
         }
 
         // Enter key untuk submit
