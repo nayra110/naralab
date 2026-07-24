@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Naralab — Coming Soon</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        /* ── reset & base ── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f3ff;
+            padding: 20px;
+        }
+
+        /* ── card ── */
+        .coming-card {
+            background: linear-gradient(145deg, #6A00FF 0%, #8B3DFF 100%);
+            max-width: 480px;
+            width: 100%;
+            padding: 48px 32px 40px;
+            border-radius: 32px;
+            box-shadow: 0 24px 60px rgba(106, 0, 255, 0.35);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* decorative orbs */
+        .coming-card::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .coming-card::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -80px;
+            width: 220px;
+            height: 220px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* floating particles (tiny) */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.07);
+            pointer-events: none;
+            animation: floatParticle 7s ease-in-out infinite;
+        }
+        .particle-1 {
+            width: 32px;
+            height: 32px;
+            top: 18%;
+            left: 12%;
+            animation-delay: 0s;
+        }
+        .particle-2 {
+            width: 18px;
+            height: 18px;
+            bottom: 22%;
+            right: 14%;
+            animation-delay: 2.4s;
+        }
+        .particle-3 {
+            width: 12px;
+            height: 12px;
+            top: 32%;
+            right: 18%;
+            animation-delay: 4.8s;
+        }
+
+        @keyframes floatParticle {
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(12px, -18px) scale(1.2);
+            }
+        }
+
+        /* ── content ── */
+        .icon-wrap {
+            font-size: 52px;
+            color: #fff;
+            margin-bottom: 12px;
+            display: inline-block;
+            text-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand {
+            font-size: 38px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 1;
+        }
+        .brand span {
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .badge {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 6px 20px;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.16);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.20);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            color: #fff;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+        }
+
+        .title-main {
+            margin-top: 22px;
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+        .title-main i {
+            margin: 0 4px;
+        }
+
+        .desc {
+            margin-top: 12px;
+            font-size: 15px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+            max-width: 340px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .divider-line {
+            width: 60px;
+            height: 2px;
+            margin: 22px auto 20px;
+            background: rgba(255, 255, 255, 0.20);
+            border-radius: 4px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .notify-text {
+            font-size: 14px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.85);
+            position: relative;
+            z-index: 1;
+        }
+        .notify-text i {
+            margin-right: 6px;
+            opacity: 0.7;
+        }
+
+        .social-links {
+            margin-top: 26px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.10);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            font-size: 18px;
+            transition: all 0.25s ease;
+            text-decoration: none;
+        }
+        .social-links a:hover {
+            background: rgba(255, 255, 255, 0.22);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .footer-note {
+            margin-top: 28px;
+            font-size: 12px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.35);
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── responsive ── */
+        @media (max-width: 480px) {
+            .coming-card {
+                padding: 36px 20px 32px;
+                border-radius: 24px;
+            }
+            .brand {
+                font-size: 30px;
+            }
+            .icon-wrap {
+                font-size: 42px;
+            }
+            .title-main {
+                font-size: 22px;
+            }
+            .desc {
+                font-size: 14px;
+            }
+            .social-links a {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="coming-card">
+        <!-- decorative particles -->
+        <div class="particle particle-1"></div>
+        <div class="particle particle-2"></div>
+        <div class="particle particle-3"></div>
+
+        <!-- icon -->
+        <div class="icon-wrap">
+            <i class="fas fa-flask"></i>
+        </div>
+
+        <!-- brand name -->
+        <div class="brand">Nara<span>Lab</span></div>
+
+        <!-- badge -->
+        <div class="badge">
+            <i class="fas fa-clock" style="margin-right:6px;"></i> coming soon
+        </div>
+
+        <!-- main message -->
+        <h1 class="title-main">
+            <i class="fas fa-rocket" style="opacity:0.6;"></i>
+            Segera Hadir
+            <i class="fas fa-rocket" style="opacity:0.6;"></i>
+        </h1>
+
+        <p class="desc">
+            Kami sedang mempersiapkan sesuatu yang luar biasa.
+            Nantikan pembaruan dari Naralab dalam waktu dekat!
+        </p>
+
+        <div class="divider-line"></div>
+
+        <p class="notify-text">
+            <i class="fas fa-bell"></i> Pantau terus untuk info selanjutnya
+        </p>
+
+
+        <div class="footer-note">
+            &copy; 2026 Nayla
+        </div>
+    </div>
+
+</body>
+</html>
