@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Nara AI · Fisikaku</title>
+
+    <!-- Google Font & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+
+    <!-- ===== KaTeX (LaTeX Rendering) ===== -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js">
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js">
+    </script>
+
+    <style>
+        /* ----- RESET & BASE ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #eef2f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Inter', -apple-system, sans-serif;
+            padding: 16px;
+            overflow-x: hidden;
+        }
+
+        /* ----- PHONE FRAME ----- */
+        .phone {
+            width: 100%;
+            max-width: 390px;
+            background: #f8fcff;
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(0, 20, 40, 0.12);
+            overflow: hidden;
+            position: relative;
+            min-height: 700px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ============================================================
+           HOME — NARA AI CHAT
+           ============================================================ */
+        .home-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #f8fcff;
+            overflow: hidden;
+            border-radius: 40px 40px 0 0;
+        }
+
+        /* Header AI */
+        .ai-header {
+            padding: 18px 20px 12px 20px;
+            background: linear-gradient(145deg, #4b1dd6, #7f3eff);
+            color: #fff;
+            border-bottom-left-radius: 28px;
+            border-bottom-right-radius: 28px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;
+            position: relative;
+            box-shadow: 0 6px 20px rgba(75, 29, 214, 0.20);
+        }
+
+        .ai-header .avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
+        }
+
+        .ai-header .info {
+            flex: 1;
+        }
+
+        .ai-header .info h2 {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.2px;
+            line-height: 1.2;
+        }
+
+        .ai-header .info p {
+            font-size: 11px;
+            opacity: 0.8;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ai-header .info p .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #2ecc71;
+            display: inline-block;
+            animation: pulse-dot 1.8s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.4;
+                transform: scale(0.8);
+            }
+        }
+
+        /* Chat messages */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 16px 8px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: #f8fcff;
+            scroll-behavior: smooth;
+        }
+
+        .chat-messages .message {
+            max-width: 88%;
+            padding: 10px 14px;
+            border-radius: 20px;
+            font-size: 13.5px;
+            line-height: 1.6;
+            word-wrap: break-word;
+            animation: fadeUp 0.3s ease;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .chat-messages .message.ai {
+            align-self: flex-start;
+            background: #ffffff;
+            border: 1px solid rgba(75, 29, 214, 0.06);
+            border-bottom-left-radius: 6px;
+            color: #1a2538;
+        }
+
+        .chat-messages .message.user {
+            align-self: flex-end;
+            background: #4b1dd6;
+            color: #fff;
+            border-bottom-right-radius: 6px;
+        }
+
+        .chat-messages .message .time {
+            font-size: 9px;
+            opacity: 0.5;
+            margin-top: 4px;
+            display: block;
+            text-align: right;
+        }
+
+        .chat-messages .message.user .time {
+            opacity: 0.7;
+        }
+
+        /* LaTeX styling inside messages */
+        .chat-messages .message.ai .katex-display {
+            margin: 6px 0 4px;
+        }
+        .chat-messages .message.ai .katex {
+            font-size: 1.05em;
+        }
+        .chat-messages .message.ai .katex-display>.katex {
+            font-size: 1.15em;
+        }
+
+        .chat-messages .message.ai ul,
+        .chat-messages .message.ai ol {
+            padding-left: 20px;
+            margin: 4px 0;
+        }
+        .chat-messages .message.ai li {
+            margin-bottom: 2px;
+        }
+        .chat-messages .message.ai strong {
+            color: #4b1dd6;
+            font-weight: 700;
+        }
+        .chat-messages .message.ai .section-title {
+            font-weight: 700;
+            color: #1a2538;
+            display: block;
+            margin-top: 4px;
+            font-size: 13px;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Typing indicator */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 10px 14px;
+            background: #ffffff;
+            border: 1px solid rgba(75, 29, 214, 0.06);
+            border-radius: 20px;
+            border-bottom-left-radius: 6px;
+            align-self: flex-start;
+            max-width: 56px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+        }
+        .typing-indicator span {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            background: #4b1dd6;
+            border-radius: 50%;
+            animation: dotPulse 1.2s infinite;
+        }
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes dotPulse {
+            0%,
+            60%,
+            100% {
+                opacity: 0.2;
+                transform: scale(0.8);
+            }
+            30% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+        }
+
+        /* Chat input */
+        .chat-input-area {
+            padding: 10px 16px 14px 16px;
+            background: #ffffff;
+            border-top: 1px solid rgba(0, 0, 0, 0.04);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 30px;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            background: #f0f4fe;
+            transition: all 0.3s ease;
+            outline: none;
+            color: #1a2538;
+        }
+
+        .chat-input-area input:focus {
+            border-color: #4b1dd6;
+            box-shadow: 0 0 0 3px rgba(75, 29, 214, 0.06);
+            background: #ffffff;
+        }
+
+        .chat-input-area button {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(145deg, #4b1dd6, #7f3eff);
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(75, 29, 214, 0.15);
+        }
+
+        .chat-input-area button:hover {
+            transform: scale(1.08) rotate(5deg);
+            box-shadow: 0 8px 24px rgba(75, 29, 214, 0.25);
+        }
+
+        .chat-input-area button:active {
+            transform: scale(0.92);
+        }
+        .chat-input-area button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Quick chips */
+        .quick-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 0 16px 10px;
+            justify-content: center;
+            background: #f8fcff;
+            flex-shrink: 0;
+        }
+        .quick-chips button {
+            background: transparent;
+            border: 1px solid #d0d8e0;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            font-weight: 500;
+            color: #3a4e5a;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .quick-chips button:active {
+            transform: scale(0.94);
+            background: #4b1dd6;
+            color: white;
+            border-color: #4b1dd6;
+        }
+        .quick-chips button:hover {
+            border-color: #4b1dd6;
+            color: #4b1dd6;
+        }
+
+        /* ============================================================
+           KONTEN KOSONG UNTUK MENU LAIN
+           ============================================================ */
+        .empty-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #b0c0d0;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            padding: 40px 20px;
+            text-align: center;
+            background: #f8fcff;
+            min-height: 400px;
+        }
+
+        .empty-content.hidden {
+            display: none;
+        }
+
+        /* ============================================================
+           BOTTOM NAV — semua tombol adalah link ke home.html
+           ============================================================ */
+        .bottom-nav {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 10px 18px 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.02);
+            z-index: 50;
+            border-radius: 0 0 40px 40px;
+            flex-shrink: 0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 10.5px;
+            font-weight: 600;
+            color: #8d9bb0;
+            gap: 3px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            text-decoration: none;
+            padding: 4px 12px;
+            border-radius: 16px;
+            position: relative;
+            background: none;
+            border: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .nav-item i {
+            font-size: 22px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .nav-item span {
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active {
+            color: #4b1dd6;
+        }
+
+        .nav-item.active i {
+            transform: scale(1.02);
+        }
+
+        .nav-item:hover {
+            color: #4b1dd6;
+            transform: translateY(-3px);
+        }
+
+        .nav-item:hover i {
+            transform: scale(1.15) rotate(-5deg);
+        }
+
+        .nav-item.active:hover i {
+            transform: scale(1.2) rotate(-5deg);
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #4b1dd6, #7f3eff);
+            border-radius: 4px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: translateX(-50%);
+        }
+
+        .nav-item.active::after {
+            width: 24px;
+        }
+
+        .nav-item:hover::after {
+            width: 28px;
+        }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 420px) {
+            body {
+                padding: 0;
+            }
+            .phone {
+                border-radius: 0;
+                max-width: 100%;
+                box-shadow: none;
+                min-height: 100vh;
+            }
+            .bottom-nav {
+                border-radius: 0;
+            }
+            .home-content {
+                border-radius: 0;
+            }
+            .ai-header {
+                border-radius: 0 0 24px 24px;
+            }
+            .chat-messages {
+                padding: 12px 12px 6px;
+            }
+            .chat-messages .message {
+                font-size: 12px;
+                padding: 8px 12px;
+                max-width: 92%;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .nav-item {
+                font-size: 9px;
+                padding: 2px 8px;
+            }
+            .nav-item i {
+                font-size: 18px;
+            }
+            .ai-header .info h2 {
+                font-size: 16px;
+            }
+            .chat-messages .message {
+                font-size: 11px;
+                padding: 6px 10px;
+                max-width: 94%;
+            }
+            .chat-input-area input {
+                font-size: 11px;
+                padding: 8px 12px;
+            }
+            .chat-input-area button {
+                width: 38px;
+                height: 38px;
+                font-size: 15px;
+            }
+            .quick-chips button {
+                font-size: 0.5rem;
+                padding: 3px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone">
+
+        <!-- ==========================================================
+        HOME — NARA AI (aktif secara default)
+        ========================================================== -->
+        <div class="home-content" id="homeContent">
+            <!-- Header AI -->
+            <div class="ai-header">
+                <div class="avatar">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="info">
+                    <h2>Nara AI</h2>
+                    <p>
+                        <span class="dot"></span> Aktif · Siap membantu
+                    </p>
+                </div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div class="chat-messages" id="chatMessages">
+                <!-- Pesan sambutan dari AI -->
+                <div class="message ai welcome-msg">
+                    Halo! Saya <strong>Nara AI</strong> 👋<br />
+                    Asisten fisika cerdas yang siap membantu menjelaskan konsep, rumus, dan soal-soal fisika. Tanyakan apa saja — dari mekanika hingga relativitas!
+                    <br /><br />
+                    <strong>💡 Contoh:</strong> "Jelaskan hukum Newton" atau "Apa itu entropi?"<br />
+                    <span style="font-size:0.7rem; opacity:0.6;">📐 Saya bisa menulis <strong>LaTeX</strong> untuk rumus! Contoh: \( E = mc^2 \) atau $$ F = ma $$</span>
+                    <span class="time">Sekarang</span>
+                </div>
+            </div>
+
+            <!-- Quick Chips -->
+            <div class="quick-chips">
+                <button data-q="apa itu termodinamika">Termodinamika</button>
+                <button data-q="hukum 1 termodinamika">Hukum I</button>
+                <button data-q="hukum 2 termodinamika">Hukum II</button>
+                <button data-q="apa itu entropi">Entropi</button>
+                <button data-q="jelaskan hukum newton">Hukum Newton</button>
+                <button data-q="relativitas khusus">Relativitas</button>
+                <button data-q="siapa pembuatmu">Siapa pembuatmu?</button>
+            </div>
+
+            <!-- Input Area -->
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" placeholder="Tanyakan sesuatu..." autocomplete="off" />
+                <button id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <!-- ==========================================================
+        KONTEN KOSONG UNTUK MENU LAIN (Soal, Materi, Profil)
+        ========================================================== -->
+        <div class="empty-content hidden" id="emptyContent">
+            <!-- Menu ini sengaja dikosongkan — hanya tampil jika bukan Home -->
+        </div>
+
+        <!-- ==========================================================
+        BOTTOM NAV — SEMUA LINK KE home.html
+        ========================================================== -->
+        <div class="bottom-nav">
+            <!-- Beranda tetap sebagai tombol aktif (tidak perlu link) -->
+            <button class="nav-item active" data-page="home">
+                <i class="fas fa-house"></i>
+                <span>Beranda</span>
+            </button>
+            <!-- Soal → home.html -->
+            <a href="home.html" class="nav-item" data-page="soal">
+                <i class="fas fa-pencil"></i>
+                <span>Soal</span>
+            </a>
+            <!-- Materi → home.html -->
+            <a href="home.html" class="nav-item" data-page="materi">
+                <i class="fas fa-book-open"></i>
+                <span>Materi</span>
+            </a>
+            <!-- Profil → home.html -->
+            <a href="home.html" class="nav-item" data-page="profil">
+                <i class="fas fa-user"></i>
+                <span>Profil</span>
+            </a>
+        </div>
+
+    </div>
+    <!-- /phone -->
+
+    <script>
+        // ================================================================
+        // KONFIGURASI GROQ AI (sama seperti Woli)
+        // ================================================================
+        const WORKER_URL = "https://nayra-ai.astrob379.workers.dev";
+        let isProcessing = false;
+
+        // ================================================================
+        // ELEMEN DOM
+        // ================================================================
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        // ================================================================
+        // RENDER LATEX MENGGUNAKAN KaTeX (auto-render)
+        // ================================================================
+        function renderLatex(element) {
+            if (typeof renderMathInElement === 'function') {
+                try {
+                    renderMathInElement(element, {
+                        delimiters: [
+                            { left: '$$', right: '$$', display: true },
+                            { left: '\\[', right: '\\]', display: true },
+                            { left: '\\(', right: '\\)', display: false },
+                            { left: '$', right: '$', display: false }
+                        ],
+                        throwOnError: false,
+                        errorColor: '#4b1dd6'
+                    });
+                } catch (e) {
+                    console.warn('LaTeX render error:', e);
+                }
+            } else {
+                setTimeout(() => renderLatex(element), 300);
+            }
+        }
+
+        // ================================================================
+        // TYPING INDICATOR
+        // ================================================================
+        function showTyping() {
+            const typing = document.createElement('div');
+            typing.className = 'typing-indicator';
+            typing.id = 'typingIndicator';
+            typing.innerHTML = '<span></span><span></span><span></span>';
+            chatMessages.appendChild(typing);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeTyping() {
+            const el = document.getElementById('typingIndicator');
+            if (el) el.remove();
+        }
+
+        // ================================================================
+        // TAMBAH PESAN KE CHAT
+        // ================================================================
+        function addMessage(text, sender = 'user') {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${sender}`;
+
+            const now = new Date();
+            const timeStr = now.getHours().toString().padStart(2, '0') + ':' +
+                now.getMinutes().toString().padStart(2, '0');
+
+            // Proses teks untuk AI (bold, bullet, section title)
+            let content = text;
+            if (sender === 'ai') {
+                content = content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                content = content.replace(/^[•\-]\s+(.*)$/gm, '<li>$1</li>');
+                content = content.replace(/^(\d+)\.\s+(.*)$/gm, '<li>$2</li>');
+                if (content.includes('<li>')) {
+                    content = content.replace(/((?:<li>.*?<\/li>\s*)+)/g, '<ul>$1</ul>');
+                }
+                content = content.replace(/\*\*(.*?):\*\*/g, '<span class="section-title">$1:</span>');
+                content = content.replace(/\n/g, '<br>');
+            }
+
+            msgDiv.innerHTML = content + `<span class="time">${timeStr}</span>`;
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            if (sender === 'ai') {
+                renderLatex(msgDiv);
+            }
+
+            return msgDiv;
+        }
+
+        // ================================================================
+        // CEK PERTANYAAN TENTANG PEMBUAT (langsung balas tanpa API)
+        // ================================================================
+        function handleCreatorQuestion(question) {
+            const lower = question.toLowerCase();
+            const keywords = [
+                'dibuat oleh', 'siapa pembuat', 'kamu dibuat', 'pencipta',
+                'dibuat siapa', 'by siapa', 'diciptakan oleh', 'pembuatmu',
+                'siapakah pembuat', 'dibuat oleh siapa'
+            ];
+            if (keywords.some(kw => lower.includes(kw))) {
+                return "Saya Nara AI, dibuat oleh mahasiswa atas nama **Nayla Arziki Ramadani Yuva** dari **Universitas Ahmad Dahlan**. 🎓";
+            }
+            return null;
+        }
+
+        // ================================================================
+        // CALL GROQ API
+        // ================================================================
+        async function callGroq(prompt) {
+            const response = await fetch(WORKER_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    messages: [{
+                        role: "system",
+                        content: `Anda adalah Nara AI, asisten fisika yang cerdas, ramah, dan bersemangat. Anda ahli dalam termodinamika, mekanika, listrik, magnet, optik, dan fisika modern. Gunakan bahasa Indonesia yang baik, jelas, dan mudah dipahami. Suka memberi analogi sederhana dan contoh sehari-hari. Jaga agar jawaban tetap akurat dan informatif.
+
+                        **PENTING:** Untuk menulis rumus matematika atau fisika, gunakan format LaTeX:
+                        - Inline: \\( E = mc^2 \\)
+                        - Display (baris sendiri): $$ F = ma $$
+                        - Atau gunakan \\[ ... \\] untuk display math.
+
+                        Gunakan LaTeX untuk semua persamaan dan rumus agar mudah dibaca.
+                        Format jawaban:
+                        - Gunakan **teks tebal** untuk kata kunci
+                        - Gunakan bullet points (•) untuk poin-poin penting
+                        - Gunakan **Judul:** untuk bagian-bagian penting
+                        - Pisahkan paragraf dengan jelas
+                        - Maksimal 300 kata.
+
+                        **Jika pengguna menanyakan siapa yang membuat Anda, atau pertanyaan serupa tentang asal-usul Anda, jawablah dengan: "Saya Nara AI, dibuat oleh mahasiswa atas nama Nayla Arziki Ramadani Yuva dari Universitas Ahmad Dahlan."`
+                    }, {
+                        role: "user",
+                        content: prompt
+                    }]
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || "Worker Error");
+            }
+
+            return data.choices?.[0]?.message?.content || "Tidak ada respons dari Nara AI.";
+        }
+
+        // ================================================================
+        // KIRIM PERTANYAAN KE NARA AI
+        // ================================================================
+        async function askAI(question) {
+            if (isProcessing) return;
+            if (!question.trim()) return;
+
+            // Cek apakah pertanyaan tentang pembuat — langsung balas tanpa API
+            const directResponse = handleCreatorQuestion(question);
+            if (directResponse) {
+                addMessage(directResponse, 'ai');
+                return;
+            }
+
+            isProcessing = true;
+            sendBtn.disabled = true;
+
+            addMessage(question, 'user');
+            chatInput.value = '';
+
+            showTyping();
+
+            try {
+                const prompt =
+                    `Anda adalah Nara AI, asisten fisika cerdas. Pengguna bertanya: "${question}"
+
+                Berikan jawaban yang informatif, akurat, dan mudah dipahami. Gunakan bahasa Indonesia yang hangat dan bersahabat.
+
+                Format jawaban:
+                - Gunakan **teks tebal** untuk kata kunci
+                - Gunakan bullet points (•) untuk poin-poin penting
+                - Gunakan **Judul:** untuk bagian-bagian penting
+                - Pisahkan paragraf dengan jelas
+                - **WAJIB** gunakan LaTeX untuk semua rumus matematika/fisika.
+                - Maksimal 300 kata.`;
+
+                const response = await callGroq(prompt);
+                removeTyping();
+                addMessage(response, 'ai');
+            } catch (error) {
+                removeTyping();
+                addMessage(`⚠️ Maaf, terjadi kesalahan: ${error.message}. Coba lagi nanti!`, 'ai');
+            }
+
+            isProcessing = false;
+            sendBtn.disabled = false;
+            chatInput.focus();
+        }
+
+        // ================================================================
+        // EVENT LISTENERS
+        // ================================================================
+        sendBtn.addEventListener('click', () => askAI(chatInput.value));
+
+        chatInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                askAI(chatInput.value);
+            }
+        });
+
+        document.querySelectorAll('.quick-chips button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const q = btn.getAttribute('data-q');
+                if (q) askAI(q);
+            });
+        });
+
+        // ================================================================
+        // NAVIGASI — toggle antara Home (AI) dan kosong
+        // ================================================================
+        const navItems = document.querySelectorAll('.nav-item');
+        const homeContent = document.getElementById('homeContent');
+        const emptyContent = document.getElementById('emptyContent');
+
+        function showPage(page) {
+            homeContent.style.display = 'none';
+            emptyContent.classList.add('hidden');
+
+            if (page === 'home') {
+                homeContent.style.display = 'flex';
+            } else {
+                emptyContent.classList.remove('hidden');
+            }
+
+            navItems.forEach(n => n.classList.remove('active'));
+            document.querySelector(`.nav-item[data-page="${page}"]`).classList.add('active');
+        }
+
+        navItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                // Jika tombol adalah link (a), biarkan navigasi default
+                if (this.tagName === 'A') return;
+                // Jika tombol biasa (button), tangani navigasi internal
+                const page = this.dataset.page;
+                showPage(page);
+            });
+        });
+
+        // ================================================================
+        // INISIALISASI
+        // ================================================================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Render LaTeX pada pesan sambutan
+            const welcome = document.querySelector('.welcome-msg');
+            if (welcome) {
+                setTimeout(() => renderLatex(welcome), 400);
+            }
+            chatInput.focus();
+            showPage('home');
+        });
+
+        console.log('🧠 Nara AI · Asisten Fisika Cerdas');
+        console.log('📐 LaTeX support enabled via KaTeX');
+        console.log('🤖 Model: Groq via Worker');
+        console.log('🎨 Terintegrasi dengan API Groq seperti Woli');
+        console.log('👩‍🎓 Dibuat oleh Nayla Arziki Ramadani Yuva (Universitas Ahmad Dahlan)');
+        console.log('🔗 Menu Soal, Materi, Profil → home.html');
+    </script>
+
+</body>
+</html>
