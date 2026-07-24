@@ -189,6 +189,105 @@
             opacity: 1;
         }
 
+        /* ----- LOGOUT CONFIRM OVERLAY ----- */
+        .logout-confirm-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: overlayFadeIn 0.25s ease;
+            padding: 24px;
+        }
+
+        .logout-confirm-overlay.show {
+            display: flex;
+        }
+
+        .logout-confirm-box {
+            background: #fff;
+            border-radius: 32px;
+            padding: 32px 28px 28px;
+            max-width: 340px;
+            width: 100%;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+            animation: contentPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-align: center;
+            position: relative;
+        }
+
+        .logout-confirm-box .icon {
+            font-size: 56px;
+            color: #ff3b5c;
+            margin-bottom: 12px;
+        }
+
+        .logout-confirm-box h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a2538;
+            margin-bottom: 6px;
+        }
+
+        .logout-confirm-box p {
+            font-size: 14px;
+            color: #6b7b93;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .logout-confirm-box .btn-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .logout-confirm-box .btn-group button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 18px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .logout-confirm-box .btn-cancel {
+            background: #f0f4fe;
+            color: #3d4a5e;
+        }
+
+        .logout-confirm-box .btn-cancel:hover {
+            background: #e4eaf6;
+            transform: translateY(-2px);
+        }
+
+        .logout-confirm-box .btn-logout {
+            background: #ff3b5c;
+            color: #fff;
+        }
+
+        .logout-confirm-box .btn-logout:hover {
+            background: #e62a4a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 59, 92, 0.35);
+        }
+
+        .logout-confirm-box .btn-logout:active {
+            transform: scale(0.95);
+        }
+
+        .logout-confirm-box .btn-cancel:active {
+            transform: scale(0.95);
+        }
+
         /* ============================================================
            FULLSCREEN OVERLAY POPUP (Clock only)
            ============================================================ */
@@ -204,7 +303,7 @@
             display: none;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
+            z-index: 9998;
             animation: overlayFadeIn 0.3s ease;
             padding: 24px;
         }
@@ -226,6 +325,17 @@
             }
         }
 
+        @keyframes contentPop {
+            from {
+                opacity: 0;
+                transform: scale(0.85) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
         .overlay-content {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
@@ -238,17 +348,6 @@
             animation: contentPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
             border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        @keyframes contentPop {
-            from {
-                opacity: 0;
-                transform: scale(0.85) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
         }
 
         .overlay-close {
@@ -758,6 +857,7 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            cursor: pointer;
         }
 
         .subject-item::before {
@@ -867,9 +967,10 @@
             color: #1abc9c;
             background: rgba(26, 188, 156, 0.08);
         }
+        /* AI item - child ke-8 (warna ungu/teknologi) */
         .subject-item:nth-child(8) .subject-icon {
-            color: #f39c12;
-            background: rgba(243, 156, 18, 0.08);
+            color: #8e44ad;
+            background: rgba(142, 68, 173, 0.10);
         }
 
         .subject-item:nth-child(1):hover .subject-icon {
@@ -901,8 +1002,8 @@
             box-shadow: 0 8px 20px rgba(26, 188, 156, 0.12);
         }
         .subject-item:nth-child(8):hover .subject-icon {
-            background: rgba(243, 156, 18, 0.16);
-            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.12);
+            background: rgba(142, 68, 173, 0.20);
+            box-shadow: 0 8px 20px rgba(142, 68, 173, 0.15);
         }
 
         .subject-item .progress-badge {
@@ -948,7 +1049,7 @@
             background: #1abc9c;
         }
         .subject-item:nth-child(8) .progress-badge {
-            background: #f39c12;
+            background: #8e44ad;
         }
 
         /* ============================================================
@@ -1668,7 +1769,7 @@
                         <div class="icon-wrap" id="clockIcon">
                             <i class="fas fa-clock"></i>
                         </div>
-                        <!-- Tombol Logout (dulunya notifikasi) -->
+                        <!-- Tombol Logout -->
                         <div class="icon-wrap" id="logoutIcon" title="Logout">
                             <i class="fas fa-right-from-bracket"></i>
                         </div>
@@ -1776,42 +1877,45 @@
                 <div class="card">
                     <div class="card-title"><i class="fas fa-grid-2"></i> Mata Kuliah Aktif</div>
                     <div class="subject-grid">
-                        <a href="#fisika-modern" class="subject-item">
+                        <!-- Semua link diubah ke soal1.html dengan parameter subject -->
+                        <a href="soal1.html?subject=fisika-modern" class="subject-item">
                             <div class="subject-icon"><i class="fas fa-atom"></i></div>
                             <span>Fisika Modern</span>
                             <span class="progress-badge">78%</span>
                         </a>
-                        <a href="#mekanika" class="subject-item">
+                        <a href="soal1.html?subject=mekanika" class="subject-item">
                             <div class="subject-icon"><i class="fas fa-arrow-right-arrow-left"></i></div>
                             <span>Mekanika</span>
                             <span class="progress-badge">62%</span>
                         </a>
-                        <a href="#elektronika" class="subject-item">
+                        <a href="soal1.html?subject=elektronika" class="subject-item">
                             <div class="subject-icon"><i class="fas fa-bolt"></i></div>
                             <span>Elektronika</span>
                             <span class="progress-badge">45%</span>
                         </a>
-                        <a href="#astronomi" class="subject-item">
+                        <a href="soal1.html?subject=astronomi" class="subject-item">
                             <div class="subject-icon"><i class="fas fa-rocket"></i></div>
                             <span>Astronomi</span>
                             <span class="progress-badge">35%</span>
                         </a>
-                        <a href="#listrik-magnet" class="subject-item">
+                        <a href="soal1.html?subject=listrik-magnet" class="subject-item">
                             <div class="subject-icon"><i class="fas fa-magnet"></i></div>
                             <span>Listrik Magnet</span>
                             <span class="progress-badge">82%</span>
                         </a>
-                        <a href="#fisika-matematika" class="subject-item">
+                        <a href="soal1.html?subject=fisika-matematika" class="subject-item">
                             <div class="subject-icon"><i class="fas fa-square-root-variable"></i></div>
                             <span>Fisika Matematika</span>
                             <span class="progress-badge">56%</span>
                         </a>
-                        <a href="#vr-fisika" class="subject-item">
-                            <div class="subject-icon"><i class="fas fa-vr-cardboard"></i></div>
-                            <span>VR Fisika</span>
-                            <span class="progress-badge">41%</span>
+                        <!-- VR Fisika diubah menjadi AI -->
+                        <a href="soal1.html?subject=ai" class="subject-item">
+                            <div class="subject-icon"><i class="fas fa-brain"></i></div>
+                            <span>AI</span>
+                            <span class="progress-badge">73%</span>
                         </a>
-                        <a href="#ar-fisika" class="subject-item">
+                        <!-- AR Fisika tetap -->
+                        <a href="soal1.html?subject=ar-fisika" class="subject-item">
                             <div class="subject-icon"><i class="fas fa-cubes"></i></div>
                             <span>AR Fisika</span>
                             <span class="progress-badge">29%</span>
@@ -2065,7 +2169,7 @@
     </div>
     <!-- /phone -->
 
-    <!-- CLOCK OVERLAY (notifikasi sudah dihapus) -->
+    <!-- CLOCK OVERLAY -->
     <div class="overlay-popup clock-overlay" id="clockOverlay">
         <div class="overlay-content">
             <button class="overlay-close" id="clockClose"><i class="fas fa-xmark"></i></button>
@@ -2075,7 +2179,20 @@
         </div>
     </div>
 
-    <!-- TOAST untuk notifikasi logout -->
+    <!-- LOGOUT CONFIRM OVERLAY -->
+    <div class="logout-confirm-overlay" id="logoutConfirmOverlay">
+        <div class="logout-confirm-box">
+            <div class="icon"><i class="fas fa-right-from-bracket"></i></div>
+            <h3>Konfirmasi Logout</h3>
+            <p>Apakah Anda yakin ingin keluar dari aplikasi? Semua sesi akan dihapus.</p>
+            <div class="btn-group">
+                <button class="btn-cancel" id="logoutCancel">Batal</button>
+                <button class="btn-logout" id="logoutConfirm">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
     <div class="profile-page">
         <div class="toast" id="toast"></div>
     </div>
@@ -2183,29 +2300,90 @@
         }
 
         // ============================================================
-        // LOGOUT FUNCTION
+        // LOGOUT FUNCTION - dengan konfirmasi & close browser
         // ============================================================
         function performLogout() {
-            // Konfirmasi logout
-            if (!confirm('Apakah Anda yakin ingin keluar?')) return;
+            // Tampilkan overlay konfirmasi
+            const overlay = document.getElementById('logoutConfirmOverlay');
+            overlay.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
 
+        function executeLogout() {
             try {
-                // Hapus session dari localStorage
+                // Hapus semua data session
                 localStorage.removeItem('naralab_session');
-                // Hapus juga data login lainnya jika ada
                 localStorage.removeItem('naralab_username');
                 localStorage.removeItem('naralab_password');
+                sessionStorage.clear();
+
+                // Hapus juga data dari IndexedDB jika ada
+                if (db) {
+                    try {
+                        const tx = db.transaction(STORE_NAME, 'readwrite');
+                        const store = tx.objectStore(STORE_NAME);
+                        store.delete('user');
+                    } catch (e) { /* ignore */ }
+                }
 
                 // Tampilkan toast
-                showToast('👋 Anda telah logout. Mengalihkan...');
+                showToast('👋 Logout berhasil!');
 
-                // Redirect ke login.html setelah delay
+                // Tutup overlay
+                const overlay = document.getElementById('logoutConfirmOverlay');
+                overlay.classList.remove('show');
+                document.body.style.overflow = '';
+
+                // Delay sebentar agar toast terlihat
                 setTimeout(() => {
-                    window.location.href = 'login.html';
-                }, 600);
+                    // =====================================================
+                    // STRATEGI MENUTUP BROWSER / TAB
+                    // =====================================================
+
+                    // 1. Coba window.close() - hanya works untuk window yang dibuka oleh script
+                    try {
+                        window.close();
+                    } catch (e) {
+                        // ignored
+                    }
+
+                    // 2. Coba redirect ke about:blank - akan mengganti konten tab
+                    //    Ini adalah cara paling ampuh untuk "mengosongkan" tab
+                    setTimeout(() => {
+                        try {
+                            window.location.replace('about:blank');
+                        } catch (e) {
+                            // ignored
+                        }
+                    }, 200);
+
+                    // 3. Fallback: redirect ke login.html jika about:blank gagal
+                    setTimeout(() => {
+                        try {
+                            window.location.replace('login.html');
+                        } catch (e) {
+                            // ignored
+                        }
+                    }, 500);
+
+                    // 4. Extra: coba teknik lain untuk browser yang mendukung
+                    //    Buka window kosong lalu tutup
+                    setTimeout(() => {
+                        try {
+                            const blank = window.open('', '_self');
+                            if (blank) blank.close();
+                        } catch (e) {
+                            // ignored
+                        }
+                    }, 300);
+
+                }, 400);
+
             } catch (e) {
                 console.error('Logout error:', e);
                 showToast('❌ Gagal logout: ' + e.message);
+                document.getElementById('logoutConfirmOverlay').classList.remove('show');
+                document.body.style.overflow = '';
             }
         }
 
@@ -2251,6 +2429,45 @@
                 if (session.semester) profileData.semester = session.semester;
             }
 
+            // --- LOGOUT BUTTON ---
+            const logoutIcon = document.getElementById('logoutIcon');
+            if (logoutIcon) {
+                logoutIcon.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    performLogout();
+                });
+            }
+
+            // --- LOGOUT CONFIRM OVERLAY ---
+            const logoutOverlay = document.getElementById('logoutConfirmOverlay');
+            const logoutCancel = document.getElementById('logoutCancel');
+            const logoutConfirm = document.getElementById('logoutConfirm');
+
+            logoutCancel.addEventListener('click', function() {
+                logoutOverlay.classList.remove('show');
+                document.body.style.overflow = '';
+            });
+
+            logoutConfirm.addEventListener('click', function() {
+                executeLogout();
+            });
+
+            // Tutup overlay jika klik di luar
+            logoutOverlay.addEventListener('click', function(e) {
+                if (e.target === logoutOverlay) {
+                    logoutOverlay.classList.remove('show');
+                    document.body.style.overflow = '';
+                }
+            });
+
+            // ESC untuk menutup overlay
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && logoutOverlay.classList.contains('show')) {
+                    logoutOverlay.classList.remove('show');
+                    document.body.style.overflow = '';
+                }
+            });
+
             function showToast(msg, duration = 2500) {
                 toast.textContent = msg;
                 toast.classList.add('show');
@@ -2293,7 +2510,6 @@
                     await openDB();
                     const data = await loadProfile();
                     if (data) {
-                        // Gabungkan: session lebih prioritas untuk nama, prodi, semester
                         if (session) {
                             profileData = {
                                 ...profileData,
@@ -2309,14 +2525,12 @@
                             profileData = { ...profileData, ...data };
                         }
                     } else {
-                        // Tidak ada data di DB, gunakan session jika ada
                         if (session) {
                             profileData.name = session.username || profileData.name;
                             profileData.prodi = session.prodi || profileData.prodi;
                             profileData.semester = session.semester || profileData.semester;
                         }
                     }
-                    // Update session dengan data terbaru
                     updateSessionWithProfile(profileData);
                     updateUI();
                 } catch (e) {
@@ -2342,7 +2556,6 @@
                     };
                     profileData = { ...profileData, ...data };
                     await saveProfile(profileData);
-                    // Update session agar sinkron
                     updateSessionWithProfile(profileData);
                     updateUI();
                     showToast('✅ Profil berhasil disimpan!');
@@ -2374,17 +2587,6 @@
             });
 
             saveBtn.addEventListener('click', saveToDB);
-
-            // ============================================================
-            // LOGOUT BUTTON
-            // ============================================================
-            const logoutIcon = document.getElementById('logoutIcon');
-            if (logoutIcon) {
-                logoutIcon.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    performLogout();
-                });
-            }
 
             // Navigation
             const navItems = document.querySelectorAll('.nav-item');
@@ -2452,6 +2654,21 @@
                     if (e.target.classList.contains('btn-baca')) return;
                     const materiId = this.dataset.materi || '1';
                     window.location.href = 'materi1.html?id=' + materiId;
+                });
+            });
+
+            // ============================================================
+            // SUBJECT ITEMS - klik masuk ke quiz soal
+            // Semua subject-item sudah memiliki href ke soal1.html
+            // dengan parameter subject yang sesuai.
+            // AR dan VR juga sudah included.
+            // ============================================================
+            // Tambahkan event listener untuk tracking klik (opsional)
+            document.querySelectorAll('.subject-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    // Biarkan navigasi default berjalan (href)
+                    // Tapi kita bisa log untuk debugging
+                    console.log('Navigasi ke:', this.href);
                 });
             });
 
